@@ -21,9 +21,6 @@ class Signin extends Component {
             [name]: event.target.value
         })
     }
- 
-
-   
 
     handleSubmit = event => {
         event.preventDefault()
