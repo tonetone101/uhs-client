@@ -1,24 +1,28 @@
 import React, {Component} from 'react'
-import {singleCarousel} from './apiCarousel'
+import { Carousel } from 'react-bootstrap';
+import {singleCarousel, list} from './apiCarousel'
 import {Link, Redirect} from 'react-router-dom'
 import {isAuthenticated} from '../auth'
 
-class Carousel extends Component {
+class Carol extends Component {
     state = {
-        carousel: '',
+        carousel: [],
         redirectToHome: false,
         redirectToSignIn: false
     }
 
-
     componentDidMount = () => {
-        const carouselId = '5df128382fa2fa8d4ec18e01'
-        console.log(this.props)
-        singleCarousel(carouselId).then(data => {
+        list().then(data => {
             if (data.error) {
                 console.log(data.error)
             } else {
-                this.setState({carousel: data })
+                this.setState({carousel: data.find(d => {
+                    if (d._id == "5df13dc7cbb9d09380910cfd") {
+                        return d
+                    }
+                }) 
+              })
+              
             }
         }) 
     }
@@ -38,49 +42,56 @@ class Carousel extends Component {
           }?${new Date().getTime()}`
         : ''
 
+        const photoOne = carousel.photo1
+        ? `${process.env.REACT_APP_API_URL}/carousel/photo/${
+            carousel.photo1
+          }?${new Date().getTime()}`
+        : ''
+
+
         return (
             <Carousel className='container'>
                 <Carousel.Item>
                     <img
                      style={{ height: "300px", width: "auto" }}
                     className="d-block w-100"
-                    // src={require("./core/person.png")}
+                    src={require("../core/SEL.jpg")}
                     alt="First slide"
                     />
                     <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                    <h3></h3>
+                    <p>We care</p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
                     style={{ height: "300px", width: "auto" }}
                     className="d-block w-100"
-                    // src={require("./core/joker.jpeg")}
+                    src={require("../core/beloved.jpg")}
                     alt="Second slide"
                     />
 
                     <Carousel.Caption>
-                    <h3>Second slide label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <h3>Beloved Community</h3>
+                    <p>Noone gets left behind</p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
                     style={{ height: "300px", width: "auto" }}
                     className="d-block w-100"
-                    // src={require("./core/avatar.jpeg")}
+                    src={require("../core/diversity.jpg")}
                     alt="Third slide"
                     />
 
                     <Carousel.Caption>
-                    <h3>Third slide label</h3>
-                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                    <h3>Sky is the limit</h3>
+                    <p></p>
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>          
-
-
+              
+                
                 // <div  >
                 //     <p className="font-italic mark">
                         
@@ -127,8 +138,7 @@ class Carousel extends Component {
 
     render() {
         const {carousel, redirectToHome, redirectToSignIn} = this.state
-        console.log(carousel)
-        
+        console.log(this.state.carousel)
         if(redirectToHome) {
             return <Redirect to={`/`} />
          } else if(redirectToSignIn) {
@@ -144,8 +154,18 @@ class Carousel extends Component {
                             </div>
                             ) : (
                                 this.renderCarousel(carousel)
+                               
                             )
                         }
+                        <div className='container mt-5'>
+                              <h2>Mission Statement</h2>
+                            {carousel.missionStatement}
+                            {
+                                isAuthenticated() && isAuthenticated().user.role === 'admin' && (
+                                    <button className='text-center btn btn-primary mt-4'>Update</button>
+                                )
+                            }
+                        </div>
                     
                 </div>
             </div>
@@ -153,4 +173,4 @@ class Carousel extends Component {
     }
 }
 
-export default Carousel
+export default Carol

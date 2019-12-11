@@ -42,9 +42,9 @@ class NewCarousel extends Component {
     handleChange = name => event => {
         this.setState({ error: "" });
         const value =
-            name === "photo" ? event.target.files[0] : event.target.value;
+            name === "photo1" ? event.target.files[0] : event.target.value;
 
-        const fileSize = name === "photo" ? event.target.files[0].size : 0;
+        const fileSize = name === "photo1" ? event.target.files[0].size : 0;
         this.carouselData.set(name, value);
         this.setState({ [name]: value, fileSize });
     };
@@ -65,6 +65,9 @@ class NewCarousel extends Component {
                         caption1: "",
                         caption2: "",
                         caption3:"",
+                        photo1: "",
+                        photo2: "",
+                        photo3: "",
                         missionStatement:"",
                         redirectToHome: true
                     });

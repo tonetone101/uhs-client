@@ -7,14 +7,14 @@ import Signup from './user/SignUp'
 import Signin from './user/SignIn'
 
 import NewCarousel from './carousel/NewCarousel'
-import Carousel from './carousel/Carousel'
+import Carol from './carousel/Carousel'
 
 
 const MainRouter = () => (
     <div>
         <Menu />
         <Switch>
-            <Route exact path="/" component={Carousel}></Route>
+            <Route exact path="/" component={Carol}></Route>
             <Route exact path="/signup" component={Signup}></Route>
             <Route exact path="/signin" component={Signin}></Route>
 
