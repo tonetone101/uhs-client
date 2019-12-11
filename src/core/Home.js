@@ -3,12 +3,13 @@ import { Carousel } from 'react-bootstrap';
 
 const Home = () => {
     return (
-        <div className='container'>
-            <Carousel>
+        <div className='mt-1'>
+            <Carousel className='container'>
                 <Carousel.Item>
                     <img
+                     style={{ height: "300px", width: "auto" }}
                     className="d-block w-100"
-                    src="holder.js/800x400?text=First slide&bg=373940"
+                    src={require("./person.png")}
                     alt="First slide"
                     />
                     <Carousel.Caption>
@@ -18,8 +19,9 @@ const Home = () => {
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
+                    style={{ height: "300px", width: "auto" }}
                     className="d-block w-100"
-                    src="holder.js/800x400?text=Second slide&bg=282c34"
+                    src={require("./joker.jpeg")}
                     alt="Second slide"
                     />
 
@@ -30,8 +32,9 @@ const Home = () => {
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
+                    style={{ height: "300px", width: "auto" }}
                     className="d-block w-100"
-                    src="holder.js/800x400?text=Third slide&bg=20232a"
+                    src={require("./avatar.jpeg")}
                     alt="Third slide"
                     />
 
@@ -41,6 +44,16 @@ const Home = () => {
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
+            <h1 className='text-center mt-5'>Mission Statement</h1>
+            <p className='container'>Lorem ipsum dolor sit amet Consectetuer adipiscing elit, Sed diam nonummy
+                Nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                Lorem ipsum dolor sit amet Consectetuer adipiscing elit, Sed diam nonummy
+                Nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                Lorem ipsum dolor sit amet Consectetuer adipiscing elit, Sed diam nonummy
+                Nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                Lorem ipsum dolor sit amet Consectetuer adipiscing elit, Sed diam nonummy
+                Nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+            </p>
         </div>
     )
 }

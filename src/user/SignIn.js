@@ -90,7 +90,7 @@ class Signin extends Component {
 
                 {this.signinForm(email, password)}
 
-                <p>
+                <p className='mt-2'>
                     <Link
                         to="/forgot-password"
                         className="btn btn-raised btn-danger"
