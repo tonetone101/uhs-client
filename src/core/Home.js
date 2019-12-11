@@ -1,5 +1,6 @@
 import React from 'react'
 import { Carousel } from 'react-bootstrap';
+import {isAuthenticated} from '../auth';
 
 const Home = () => {
     return (
@@ -43,7 +44,8 @@ const Home = () => {
                     <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
                     </Carousel.Caption>
                 </Carousel.Item>
-            </Carousel>
+            </Carousel>          
+
             <h1 className='text-center mt-5'>Mission Statement</h1>
             <p className='container'>Lorem ipsum dolor sit amet Consectetuer adipiscing elit, Sed diam nonummy
                 Nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
@@ -54,6 +56,13 @@ const Home = () => {
                 Lorem ipsum dolor sit amet Consectetuer adipiscing elit, Sed diam nonummy
                 Nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
             </p>
+            {
+                isAuthenticated() && isAuthenticated().user.role === 'admin' && (
+                    <div className='text-center'>
+                        <button className='btn btn-primary'>Update</button>
+                    </div>
+                )
+            }
         </div>
     )
 }
