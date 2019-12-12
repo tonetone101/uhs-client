@@ -24,13 +24,15 @@ const Menu = ({history}) => {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                         </NavDropdown>
+                        
                     </Nav>
                     <Nav>
+                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/events'>Upcoming Events</Link></Nav.Link>
                         {
                             !isAuthenticated() && (
                                <nav className='row'>
                                 <Nav.Link >
-                                    <Link to='/signin' style={{color: 'white'}}>
+                                    <Link className='ml-3' to='/signin' style={{color: 'white'}}>
                                         Sign In 
                                     </Link>
                                 </Nav.Link>

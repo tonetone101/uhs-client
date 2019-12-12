@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Carousel } from 'react-bootstrap';
-import {singleCarousel, list} from './apiCarousel'
+import {singleCarousel, update, list} from './apiCarousel'
 import {Link, Redirect} from 'react-router-dom'
 import {isAuthenticated} from '../auth'
 
@@ -50,7 +50,7 @@ class Carol extends Component {
 
 
         return (
-            <Carousel className='container'>
+            <Carousel className='container mt-5'>
                 <Carousel.Item>
                     <img
                      style={{ height: "300px", width: "auto" }}
@@ -162,7 +162,7 @@ class Carol extends Component {
                             {carousel.missionStatement}
                             {
                                 isAuthenticated() && isAuthenticated().user.role === 'admin' && (
-                                    <button className='text-center btn btn-primary mt-4'>Update</button>
+                                    <Link to={`/edit/carousel/${carousel._id}`} className='text-center btn btn-primary mt-4'>Update</Link>
                                 )
                             }
                         </div>
