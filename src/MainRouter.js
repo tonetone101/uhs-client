@@ -15,10 +15,14 @@ import Event from './events/Events'
 import EditEvent from './events/EditEvent'
 import SingleEvent from './events/SingleEvent'
 
+import NewFaculty from './Faculty/NewFaculty'
+import Faculty from './Faculty/Faculty'
+
+
 
 
 const MainRouter = () => (
-    <div>
+    <div style={{height: '1000px'}}>
         <Menu />
         <Switch>
             <Route exact path="/" component={Carol}></Route>
@@ -33,6 +37,8 @@ const MainRouter = () => (
             <Route exact path="/edit/event/:eventId" component={EditEvent}></Route>
             <Route exact path="/event/:eventId" component={SingleEvent}></Route>
 
+            <Route exact path="/new/faculty" component={NewFaculty}></Route>
+            <Route exact path="/faculty" component={Faculty}></Route>
         </Switch>
         
     </div>

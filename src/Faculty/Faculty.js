@@ -1,26 +1,26 @@
 import React, { Component } from "react";
-import { list, read } from "./apiEvent";
+import { list, read } from "./apiFaculty";
 import { Link } from "react-router-dom";
 import {isAuthenticated} from '../auth'
 
 
-class Events extends Component {
+class Faculty extends Component {
     constructor() {
         super();
         this.state = {
             user: '',
-            events: [],
+            faculties: [],
             page: 1
         };
     }
 
-    loadEvents = page => {
+    loadFaculties = page => {
         list(page).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
                 //console.log(data)
-                this.setState({ events: data });
+                this.setState({ faculties: data });
                 
 
             }
@@ -29,8 +29,8 @@ class Events extends Component {
 
 
     componentDidMount() {
-        this.loadEvents(this.state.events)
-        console.log(this.state.events)
+        this.loadFaculties(this.state.faculties)
+        console.log(this.state.faculties)
     }
 
     loadMore = number => {
@@ -43,51 +43,38 @@ class Events extends Component {
         this.loadEvents(this.state.page - number);
     };
 
-    renderEvents = events => {
+    renderFaculties = faculties => {
 
         return (
             <div  id='event' className='row container'>
-                {events.map((event, i) => {
-                    const posterId = event.postedBy
-                        ? `/user/${event.postedBy._id}`
+                {faculties.map((faculty, i) => {
+                    const posterId = faculty.postedBy
+                        ? `/user/${faculty.postedBy._id}`
                         : "";
-                    const posterName = event.postedBy
-                        ? event.postedBy.name
+                    const posterName = faculty.postedBy
+                        ? faculty.postedBy.name
                         : " Unknown";
 
-                        const photoUrl = event.postedBy
+                        const photoUrl = faculty.postedBy
                         ? `${process.env.REACT_APP_API_URL}/user/photo/${
                             event.postedBy._id
                           }?${new Date().getTime()}`
                         : ''
 
-                        const eventPhoto = event._id
-                        ? `${process.env.REACT_APP_API_URL}/event/photo/${
-                            event._id
+                        const facultyPhoto = faculty._id
+                        ? `${process.env.REACT_APP_API_URL}/faculty/photo/${
+                            faculty._id
                           }?${new Date().getTime()}`
                         : ''
                         
                     return (
                         <div  className="card col-md-6 mb-4" key={i}>
                             <div  >
-                                
-                               
-                                <p className="font-italic mark mt-4">
-                                    Event Posted{" "}
-
-                                    {/* <Link to={`${posterId}`}>
-                                        <img  style={{ height: "40px", borderRadius:'30px', width: "40px" }} className="img-thumbnail" src={photoUrl} alt='' />
-
-                                        {posterName}{" "}
-                                    </Link> */}
-                                    on{' '}
-                                    {new Date(event.created).toDateString()}
-                                </p>
                                 <br />
 
                                 <div className="card-text column mr-5">
                                     <p >
-                                        Event name: {event.title.substring(0, 100)}{' '}
+                                        faculty Title: {faculty.title.substring(0, 100)}{' '}
                                     </p>  
                                     
                                     {/* <p >
@@ -99,22 +86,22 @@ class Events extends Component {
                                     </p>  */}
 
                                      <p >
-                                       Location : {event.where.substring(0, 100)}{' '}
+                                      Name: {faculty.name.substring(0, 100)}{' '}
                                     </p>      
 
                                     <p >
-                                       Description : {event.body.substring(0, 100)}{' '}
+                                       About: {faculty.about.substring(0, 100)}{' '}
                                     </p>           
                                 </div>
                                                        
                              
-                                {/* <img
-                                    src={eventPhoto}
+                                <img
+                                    src={facultyPhoto}
                                     className="img-thunbnail mb-3"
                                     style={{ height: "200px", width: "100%" }}
-                                /> */}
+                                />
                                 <Link
-                                    to={`/event/${event._id}`}
+                                    to={`/faculty/${faculty._id}`}
                                     className="btn btn-raised btn-primary btn-sm mb-4"
                                 >
                                     Read more
@@ -128,23 +115,23 @@ class Events extends Component {
     };
 
     render() {
-        const { user, events } = this.state;
-        console.log(events)
+        const { user, faculties } = this.state;
+        console.log(faculties)
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">
-                    {!events.length ? "Loading..." : ""}
+                    {!faculties.length ? "Loading..." : ""}
                 </h2>
                 {
                     isAuthenticated() && isAuthenticated().user.role === 'admin' && (
                         <div>
-                            <Link className='mb-5' to='/new/event'>Add Event</Link>
+                            <Link className='mb-5' to='/new/faculty'>Add Faculty</Link>
                         </div>
                     )
                 }
                
                 <div>               
-                    {this.renderEvents(events)}
+                    {this.renderFaculties(faculties)}
                  </div>   
                
             </div>
@@ -152,4 +139,4 @@ class Events extends Component {
     }
 }
 
-export default Events;
+export default Faculty;

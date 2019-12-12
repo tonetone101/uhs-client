@@ -157,14 +157,16 @@ class Carol extends Component {
                                
                             )
                         }
-                        <div className='container mt-5'>
+                        <div className='container mt-5' style={{height: 'max-height'}}>
                               <h2>Mission Statement</h2>
                             {carousel.missionStatement}
+                            <div className='text-center'>
                             {
                                 isAuthenticated() && isAuthenticated().user.role === 'admin' && (
                                     <Link to={`/edit/carousel/${carousel._id}`} className='text-center btn btn-primary mt-4'>Update</Link>
                                 )
                             }
+                            </div>
                         </div>
                     
                 </div>

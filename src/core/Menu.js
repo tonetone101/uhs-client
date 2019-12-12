@@ -13,7 +13,7 @@ const Menu = ({history}) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/'>Home</Link></Nav.Link>
+                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/faculty'>Faculty</Link></Nav.Link>
                         <Nav.Link href="#features"><a style={{color: 'white'}}  onClick={() => {
                                                     window.open('https://skyward.iscorp.com/scripts/wsisa.dll/WService=wseduprovidenceri/seplog01.w', '_blank')
                                                 }}>Skyward</a></Nav.Link>

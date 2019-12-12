@@ -66,22 +66,23 @@ class SingleEvent extends Component {
                         {/* </Link> */}
                         {new Date(event.created).toDateString()}
                     </p>
-                    
-                    <p className="card-text">
-                        Name of event: {event.title}
-                    </p>
-                    <p className="card-text">
-                        Date: {event.date}
-                    </p>
-                    <p className="card-text">
-                        Time: {event.time}
-                    </p>
-                    <p className="card-text">
-                        Location: {event.where}
-                    </p>
-                    <p className="card-text ">
-                        Description: {event.body}
-                    </p>
+                    <div className='container' >
+                        <p className="card-text">
+                            Name of event: {event.title}
+                        </p>
+                        <p className="card-text">
+                            Date: {event.date}
+                        </p>
+                        <p className="card-text">
+                            Time: {event.time}
+                        </p>
+                        <p className="card-text">
+                            Location: {event.where}
+                        </p>
+                        <p className="card-text ">
+                            Description: {event.body}
+                        </p>
+                    </div>
                    <div >
                     <img 
                             src={photoUrl}
@@ -90,8 +91,7 @@ class SingleEvent extends Component {
                                 (i.target.src = ``)
                             }
                             className="img-thunbnail mb-3 ml-50"
-                            style={{height: '500px', width: '500px', objectFit: 'cover'}}
-                        />
+                            style={{height: '500px', width: '500px', objectFit: 'cover'}} />
                    </div>
 
                     <div className='d-inline-block mb-5'>
@@ -103,7 +103,7 @@ class SingleEvent extends Component {
                         </Link>
 
                         {isAuthenticated().user && isAuthenticated().user.role === 'admin' && (
-                            <div className='mt-5'>
+                            <div className='container mt-5'>
                                 <div >
                                     <Link
                                         to={`/edit/event/${event._id}`}
