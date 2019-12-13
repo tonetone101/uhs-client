@@ -27,6 +27,7 @@ const Menu = ({history}) => {
                         
                     </Nav>
                     <Nav>
+                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/new/student'>Register</Link></Nav.Link>
                         <Nav.Link href="#features"><Link style={{color: 'white'}} to='/events'>Upcoming Events</Link></Nav.Link>
                         {
                             !isAuthenticated() && (

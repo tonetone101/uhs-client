@@ -76,7 +76,7 @@ class NewStudent extends Component {
 
     newStudentForm = (parent, student, birthday, contact) => (
         <form>
-            <div className="form-group">
+            {/* <div className="form-group">
                 <label className="text-muted">Post Photo</label>
                 <input
                     onChange={this.handleChange("photo")}
@@ -84,7 +84,7 @@ class NewStudent extends Component {
                     accept=".xlsx, .xls, image/*, .doc, .docx,.ppt, .pptx, .txt, .pdf" 
                     className="form-control"
                 />
-            </div>
+            </div> */}
             <div className="form-group">
                 <label className="text-muted">Parent name</label>
                 <input
@@ -151,7 +151,7 @@ class NewStudent extends Component {
         }
 
         return (
-            <div >
+            <div className='container' >
                 
                             <h2 className="mt-5 mb-5">Register Student</h2>
                             <div
@@ -168,9 +168,14 @@ class NewStudent extends Component {
                             ) : (
                                 ""
                             )} 
-            
 
-                            {this.newStudentForm(parent, student, birthday, contact)}
+                            {
+                                isAuthenticated() && isAuthenticated().user ? (this.newStudentForm(parent, student, birthday, contact)) : (<div>
+                                    <p>In order to register your child, please create a user account by signing up and signing in. Once you are signed in, revisit this page. </p>
+                                </div>)
+                            }
+
+                            {/* {this.newStudentForm(parent, student, birthday, contact)} */}
                
             </div>
         );

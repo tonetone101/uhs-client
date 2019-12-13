@@ -22,10 +22,6 @@ import EditFaculty from './Faculty/EditFaculty'
 import NewStudent from './student/NewStudent'
 
 
-import NewRegister from './parents/NewRegister'
-
-
-
 const MainRouter = () => (
     <div style={{height: '1000px'}}>
         <Menu />
@@ -47,8 +43,6 @@ const MainRouter = () => (
             <Route exact path="/faculty/:facultyId" component={SingleFaculty}></Route>
             <Route exact path="/edit/faculty/:facultyId" component={EditFaculty}></Route>
             <Route exact path="/new/student" component={NewStudent}></Route>
-
-            <Route exact path="/new/register" component={NewRegister}></Route>
 
         </Switch>
         
