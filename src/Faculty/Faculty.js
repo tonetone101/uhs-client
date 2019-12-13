@@ -74,7 +74,7 @@ class Faculty extends Component {
 
                                 <div className="card-text column mr-5">
                                     <p >
-                                        faculty Title: {faculty.title.substring(0, 100)}{' '}
+                                        Faculty Title: {faculty.title.substring(0, 100)}{' '}
                                     </p>  
                                     
                                     {/* <p >

@@ -46,7 +46,7 @@ const Menu = ({history}) => {
                         }
                         
                         {
-                            isAuthenticated() && isAuthenticated().user.role === 'admin' && (
+                            isAuthenticated() && isAuthenticated().user && (
                                 <Nav.Link>
                                     <a style={{color: 'white'}}  onClick={() => signout(() => {
                                         history.push('/')
