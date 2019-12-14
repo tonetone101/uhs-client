@@ -3,6 +3,9 @@ import {Route, Switch} from 'react-router-dom'
 
 import Home from './core/Home'
 import Menu from './core/Menu'
+import Header from './core/Header'
+import TopHeader from './core/TopHeader'
+
 import Signup from './user/SignUp'
 import Signin from './user/SignIn'
 
@@ -24,6 +27,8 @@ import NewStudent from './student/NewStudent'
 
 const MainRouter = () => (
     <div style={{height: '1000px'}}>
+        <TopHeader/>
+        <Header />
         <Menu />
         <Switch>
             <Route exact path="/" component={Carol}></Route>

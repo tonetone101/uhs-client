@@ -8,6 +8,7 @@ class EditCarousel extends Component {
         super()
         this.state = { 
             id: '',
+            caption1: "",
             missionStatement: "",
             redirectToHome: false,
             error: '',
@@ -67,6 +68,7 @@ class EditCarousel extends Component {
                 else {
                     this.setState({
                         loading: false,
+                        caption1: "",
                         missionStatement: '',
                         redirectToHome: true
                     });
@@ -75,8 +77,18 @@ class EditCarousel extends Component {
         }
     };
 
-    editCarouselForm = (missionStatement) => (
+    editCarouselForm = (caption1, missionStatement) => (
         <form className='container'>
+              <div className="form-group">
+                <label className="text-muted">Header</label>
+                <input
+                    onChange={this.handleChange("caption1")}
+                    type="text"
+                    className="form-control"
+                    value={caption1}
+                />
+            </div>
+
             <div className="form-group">
                 <label className="text-muted">Mission Statement</label>
                 <textarea
@@ -99,7 +111,7 @@ class EditCarousel extends Component {
 
 
     render() {
-        const {id, missionStatement, redirectToHome, error, loading} = this.state
+        const {id, caption1, missionStatement, redirectToHome, error, loading} = this.state
 
         if (redirectToHome) {
             return <Redirect to={`/`} />;
@@ -122,7 +134,7 @@ class EditCarousel extends Component {
                     }
 
 
-                        {this.editCarouselForm(missionStatement)}
+                        {this.editCarouselForm(caption1, missionStatement)}
              
             </div>
         )

@@ -8,56 +8,25 @@ const Menu = ({history}) => {
 
     
         return (
-            <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
-                <Navbar.Brand href="#home"><Link style={{color: 'white'}} to='/'>UHS</Link></Navbar.Brand>
+            <Navbar collapseOnSelect expand="lg" variant="dark" style={{opacity: '0.5'}} >
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
-                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/faculty'>Faculty</Link></Nav.Link>
-                        <Nav.Link href="#features"><a style={{color: 'white'}}  onClick={() => {
+                    <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
+                       <div id='link'>                
+                           <Nav.Link href="#features"><Link style={{color: 'white'}} to='/faculty'>Faculty</Link></Nav.Link>
+                        </div>
+                        {/* <Nav.Link href="#features"><a style={{color: 'white'}}  onClick={() => {
                                                     window.open('https://skyward.iscorp.com/scripts/wsisa.dll/WService=wseduprovidenceri/seplog01.w', '_blank')
-                                                }}>Skyward</a></Nav.Link>
-                        <NavDropdown title="Translator" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1"><a>Spanish</a></NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2"><a>Arabian</a></NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Cambodian</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                        </NavDropdown>
+                                                }}>Skyward</a></Nav.Link> */}
                         
-                    </Nav>
-                    <Nav>
-                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/new/student'>Register</Link></Nav.Link>
-                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/events'>Upcoming Events</Link></Nav.Link>
-                        {
-                            !isAuthenticated() && (
-                               <nav className='row'>
-                                <Nav.Link >
-                                    <Link className='ml-3' to='/signin' style={{color: 'white'}}>
-                                        Sign In 
-                                    </Link>
-                                </Nav.Link>
-                                <Nav.Link>
-                                    <Link style={{color: 'white'}} to='/signup' >
-                                        Sign Up
-                                    </Link>
-                                </Nav.Link>
-                               </nav>
-                            )
-                        }
                         
-                        {
-                            isAuthenticated() && isAuthenticated().user && (
-                                <Nav.Link>
-                                    <a style={{color: 'white'}}  onClick={() => signout(() => {
-                                        history.push('/')
-                                    })}>
-                                        Sign Out
-                                    </a>
-                                </Nav.Link>
-                            )
-                        }
-
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/new/student'>Admission</Link></Nav.Link>
+                        </div>
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/events'>Upcoming Events</Link></Nav.Link>
+                        </div>
+                    
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
