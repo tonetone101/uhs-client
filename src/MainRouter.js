@@ -22,11 +22,14 @@ import NewFaculty from './Faculty/NewFaculty'
 import Faculty from './Faculty/Faculty'
 import SingleFaculty from './Faculty/SingleFaculty'
 import EditFaculty from './Faculty/EditFaculty'
-import NewStudent from './student/NewStudent'
 
+import NewStudent from './student/NewStudent'
+import Bully from './student/Bully'
+import Student from './student/Student'
+import GenderPolicy from './student/GenderPolicy'
 
 const MainRouter = () => (
-    <div style={{height: '1000px'}}>
+    <div >
         <TopHeader/>
         <Header />
         <Menu />
@@ -48,6 +51,10 @@ const MainRouter = () => (
             <Route exact path="/faculty/:facultyId" component={SingleFaculty}></Route>
             <Route exact path="/edit/faculty/:facultyId" component={EditFaculty}></Route>
             <Route exact path="/new/student" component={NewStudent}></Route>
+
+            <Route exact path="/bully" component={Bully}></Route>
+            <Route exact path="/student" component={Student}></Route>
+            <Route exact path="/genderpolicy" component={GenderPolicy}></Route>
 
         </Switch>
         

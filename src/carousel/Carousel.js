@@ -18,7 +18,7 @@ class Carol extends Component {
                 console.log(data.error)
             } else {
                 this.setState({carousel: data.find(d => {
-                    if (d._id == "5df13dc7cbb9d09380910cfd") {
+                    if (d._id == "5df6804c6b53ac295ad15f78") {
                         return d
                     }
                 }) 
@@ -132,21 +132,21 @@ class Carol extends Component {
                             }
                             </div>
                         </div>
-                        <footer>
-                        <div class="row">
-                            <div className="col d-flex justify-content-between align-items-baseline">
-                                <div className="footer-icons">
-                                        <a href="https://www.facebook.com/itskeezy.baybe" className="mx-2"><i className="fab fa-facebook"></i>
-                                        </a>
-                                        <a href="https://github.com/Antkeo1" className="mx-2"><i className="fab fa-github"></i>
-                                        </a>
-                                        <a href="https://www.linkedin.com/in/antonio-keo-63b17b168" className="mx-2"><i className="fab fa-linkedin"></i>
-                                        </a>
+                        <footer bg='primary'>
+                            <div class="container row">
+                                <div className="col d-flex justify-content-around align-items-baseline">
+                                    <div >
+                                        <p>123 Empire street | Providence, RI 02910</p>
+                                        
+                                    </div>
+                                    <div>
+                                        <p>Phone: (401) 332- 2233 | Somaly@uhSchool.org</p>
+
+                                    </div>
+                                    {/* <h5 className="text-capitalize">
+                                    &copy;2019 copyright : Coder
+                                    </h5> */}
                                 </div>
-                                <h5 className="text-capitalize">
-                                &copy;2019 copyright : Coder
-                                </h5>
-                            </div>
                             </div>
                         </footer>
                         {/* <img style={{height: '200px', marginTop: '10px'}} src={require("./community-banner.png")} /> */}

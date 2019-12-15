@@ -15,6 +15,8 @@ const Menu = ({history}) => {
                        <div id='link'>                
                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/faculty'>Faculty</Link></Nav.Link>
                         </div>
+                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/student'>Students</Link></Nav.Link>
+
                         {/* <Nav.Link href="#features"><a style={{color: 'white'}}  onClick={() => {
                                                     window.open('https://skyward.iscorp.com/scripts/wsisa.dll/WService=wseduprovidenceri/seplog01.w', '_blank')
                                                 }}>Skyward</a></Nav.Link> */}
