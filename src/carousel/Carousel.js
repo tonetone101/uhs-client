@@ -52,7 +52,7 @@ class Carol extends Component {
 
         return (
             <div >
-                <Carousel >
+                <Carousel className='container'>
                     <Carousel.Item>
                         <img
                         style={{ height: "300px", width: "auto" }}

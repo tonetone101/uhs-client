@@ -15,10 +15,12 @@ const TopHeader = ({history}) => {
                        
                         <NavDropdown title="Translator" id="collasible-nav-dropdown" style={{color: 'black'}}>
                             <NavDropdown.Item ><a onClick={() => {
-                                                    window.open('https://translate.google.com/translate?hl=&sl=en&tl=es&u=https%3A%2F%2Fwww.providenceschools.org%2FPage%2F1', '_blank')
+                                                    window.open('https://translate.google.com/translate?hl=en&tab=TT0&authuser=0&sl=en&tl=es&u=uhSchool.org', '_blank')
                                                 }}>Spanish</a></NavDropdown.Item>
                             <NavDropdown.Item ><a>Arabian</a></NavDropdown.Item>
-                            <NavDropdown.Item >Cambodian</NavDropdown.Item>
+                            <NavDropdown.Item ><a onClick={() => {
+                                                    window.open('https://translate.google.com/translate?hl=en&tab=TT0&authuser=0&sl=en&tl=km&u=www.uhSchool.org', '_blank')
+                                                }}>Cambodian</a></NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item >Separated link</NavDropdown.Item>
                         </NavDropdown>

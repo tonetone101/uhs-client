@@ -94,18 +94,20 @@ class Faculty extends Component {
                                     </p>           
                                 </div>
                                                        
-                             
-                                <img
-                                    src={facultyPhoto}
-                                    className="img-thunbnail mb-3"
-                                    style={{ height: "200px", width: "100%" }}
-                                />
-                                <Link
-                                    to={`/faculty/${faculty._id}`}
-                                    className="btn btn-raised btn-primary btn-sm mb-4"
-                                >
-                                    Read more
-                                </Link>
+                                <div className='column'>
+                                    <img
+                                        src={facultyPhoto}
+                                        className="img-thunbnail mb-3"
+                                        style={{ height: "200px", width: "300px" }}
+                                    />
+                                
+                                    <Link
+                                        to={`/faculty/${faculty._id}`}
+                                        className="btn btn-raised btn-primary btn-sm mb-4 ml-5"
+                                    >
+                                        Read more
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     );

@@ -57,50 +57,51 @@ class SingleFaculty extends Component {
         : '';
 
         return (
-                <div  >
-                    
-                    <p className="card-text">
-                        Faculty Title: {faculty.title}
-                    </p>
-                    <p className="card-text">
-                        Name: {faculty.name}
-                    </p>
-                    <p className="card-text container">
-                        About: {faculty.about}
-                    </p>
-                   <div >
-                    <img 
+                <div  className='row'>
+                     <div className='col-md-6 mt-5'>
+                        <img 
                             src={photoUrl}
                             alt=''
                             onError={i =>
                                 (i.target.src = ``)
                             }
                             className="img-thunbnail mb-3 ml-50"
-                            style={{height: '500px', width: '500px', objectFit: 'cover'}}
+                            style={{height: '500px', width: '500px', objectFit: 'cover', borderRadius: '10px'}}
                         />
                    </div>
-                   
 
-                    <div className='d-inline-block mb-5'>
+                    <div className='col-md-6 mt-5'>
+                        <p className="card-text">
+                            Faculty Title: {faculty.title}
+                        </p>
+                        <p className="card-text">
+                            Name: {faculty.name}
+                        </p>
+                        <p className="card-text">
+                            About: {faculty.about}
+                        </p>
+                    </div>
+
+                    <div className='row'>
                         <Link
                             to={`/faculty`}
-                            className="btn btn-raised btn-primary btn-sm"
+                            className="btn btn-raised btn-primary btn-sm ml-5"
                         >
                             Back to faculties
                         </Link>
 
                         {isAuthenticated().user && isAuthenticated().user.role === 'admin' && (
-                            <div className='mt-5'>
+                            <div >
                                 <div >
                                     <Link
                                         to={`/edit/faculty/${faculty._id}`}
-                                        className='btn btn-raised btn-warning'
+                                        className='btn btn-raised btn-warning ml-3'
                                     >
                                         Update Faculty
                                     </Link>
                                     <button
                                         onClick={this.deleteConfirm}
-                                        className='btn btn-raised btn-danger ml-5'
+                                        className='btn btn-raised btn-danger ml-3'
                                     >
                                         Delete 
                                     </button>
@@ -123,7 +124,7 @@ class SingleFaculty extends Component {
 
         return (
             <div>
-                           <div className='text-center'>
+                           <div className='container'>
                                 {!faculty ? ( 
                                         <div className='jumbotron text-center '>
                                             <h2>Loading....</h2>
