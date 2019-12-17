@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { isAuthenticated } from "../auth";
 import { create } from "./apiStudent";
-import { Redirect } from "react-router-dom";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect, Link } from "react-router-dom";
+import Links from './Links'
 
 class Student extends Component {
     constructor() {
@@ -55,7 +55,10 @@ class Student extends Component {
                             Student gender policy
                        </Link>
                    </li>
+                   
+                   
                </ul>
+               <Links />
             </div>
         );
     }

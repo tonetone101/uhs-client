@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Nav, NavDropdown} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
 import {signout, isAuthenticated} from '../auth';
 import {Link, withRouter} from 'react-router-dom'
 
@@ -12,18 +12,17 @@ const TopHeader = ({history}) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto " >
-                       
-                        <NavDropdown title="Translator" id="collasible-nav-dropdown" style={{color: 'black'}}>
-                            <NavDropdown.Item ><a onClick={() => {
+                    <DropdownButton id="dropdown-basic-button" title="Translator"  >
+                        <Dropdown.Item href="#/action-1"><a onClick={() => {
                                                     window.open('https://translate.google.com/translate?hl=en&tab=TT0&authuser=0&sl=en&tl=km&u=www.uhSchool.org', '_blank')
-                                                }}>Spanish</a></NavDropdown.Item>
-                            <NavDropdown.Item ><a>Arabian</a></NavDropdown.Item>
-                            <NavDropdown.Item ><a onClick={() => {
+                                                }}>Spanish</a>
+                        </Dropdown.Item>
+                        <Dropdown.Item href="#/action-2"><a onClick={() => {
                                                     window.open('https://translate.google.com/translate?hl=en&tab=TT0&authuser=0&sl=en&tl=km&u=www.uhSchool.org', '_blank')
-                                                }}>Cambodian</a></NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item >Separated link</NavDropdown.Item>
-                        </NavDropdown>
+                                                }}>Cambodian</a>
+                        </Dropdown.Item>
+                        <Dropdown.Item href="#/action-3"><a>Arabian</a></Dropdown.Item>
+                    </DropdownButton>
                         
                         {
                             !isAuthenticated() && (

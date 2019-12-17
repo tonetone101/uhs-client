@@ -27,6 +27,8 @@ import NewStudent from './student/NewStudent'
 import Bully from './student/Bully'
 import Student from './student/Student'
 import GenderPolicy from './student/GenderPolicy'
+import NewLinks from './student/NewLinks'
+
 
 const MainRouter = () => (
     <div >
@@ -54,6 +56,7 @@ const MainRouter = () => (
             <Route exact path="/bully" component={Bully}></Route>
             <Route exact path="/student" component={Student}></Route>
             <Route exact path="/genderpolicy" component={GenderPolicy}></Route>
+            <Route exact path="/newlink" component={NewLinks}></Route>
 
         </Switch>
         

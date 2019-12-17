@@ -123,7 +123,7 @@ class Carol extends Component {
                         
                         />
                     </div>
-                    <div className=' text-center mt-5 mb-5' style={{color: 'black'}}> {carousel.missionStatement}</div>
+                    <div className=' text-center mt-5 mb-5' style={{color: 'black'}}> <div className='container'>{carousel.missionStatement}</div></div>
                             <div >
                             {
                                 isAuthenticated() && isAuthenticated().user.role === 'admin' && (
