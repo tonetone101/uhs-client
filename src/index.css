@@ -8,8 +8,12 @@ body {
     font-weight: 300;
   }
 
-Nav {
-    background-color:rgb(7, 94, 207);
+#topHeader{
+  background-color:rgb(243, 247, 8);
+}
+
+#menu{
+  background-color:rgb(8, 231, 247);
 }
 
 #carol {

@@ -8,14 +8,14 @@ const TopHeader = ({history}) => {
 
     
         return (
-            <Navbar collapseOnSelect expand="lg" variant="dark" style={{height: '10px'}}>
+            <Navbar id='topHeader' collapseOnSelect expand="lg" variant="dark" >
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto " >
                        
                         <NavDropdown title="Translator" id="collasible-nav-dropdown" style={{color: 'black'}}>
                             <NavDropdown.Item ><a onClick={() => {
-                                                    window.open('https://translate.google.com/translate?hl=en&tab=TT0&authuser=0&sl=en&tl=es&u=uhSchool.org', '_blank')
+                                                    window.open('https://translate.google.com/translate?hl=en&tab=TT0&authuser=0&sl=en&tl=km&u=www.uhSchool.org', '_blank')
                                                 }}>Spanish</a></NavDropdown.Item>
                             <NavDropdown.Item ><a>Arabian</a></NavDropdown.Item>
                             <NavDropdown.Item ><a onClick={() => {

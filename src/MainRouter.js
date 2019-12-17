@@ -31,7 +31,6 @@ import GenderPolicy from './student/GenderPolicy'
 const MainRouter = () => (
     <div >
         <TopHeader/>
-        <Header />
         <Menu />
         <Switch>
             <Route exact path="/" component={Carol}></Route>

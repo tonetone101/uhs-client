@@ -85,7 +85,8 @@ class SingleFaculty extends Component {
                     <div className='row'>
                         <Link
                             to={`/faculty`}
-                            className="btn btn-raised btn-primary btn-sm ml-5"
+                            className="btn btn-raised btn-primary btn-sm "
+                            style={{marginLeft: '30px'}}
                         >
                             Back to faculties
                         </Link>

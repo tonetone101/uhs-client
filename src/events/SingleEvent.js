@@ -103,7 +103,7 @@ class SingleEvent extends Component {
                         </Link>
 
                         {isAuthenticated().user && isAuthenticated().user.role === 'admin' && (
-                            <div className='container mt-5'>
+                            <div className='mt-5'>
                                 <div >
                                     <Link
                                         to={`/edit/event/${event._id}`}

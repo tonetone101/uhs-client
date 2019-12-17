@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { list, read } from "./apiFaculty";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {isAuthenticated} from '../auth'
 
 
@@ -10,7 +10,12 @@ class Faculty extends Component {
         this.state = {
             user: '',
             faculties: [],
-            page: 1
+            page: 1,
+            term: '',
+            searched: false,
+            searchedFaculty: '',
+            error: '',
+            searching: false,
         };
     }
 
@@ -33,15 +38,22 @@ class Faculty extends Component {
         console.log(this.state.faculties)
     }
 
-    loadMore = number => {
-        this.setState({ page: this.state.page + number });
-        this.loadEvents(this.state.page + number);
-    };
+    handleChange = event => {
+        this.setState({error: ''})
+        this.setState({term: event.target.value})
+    }
 
-    loadLess = number => {
-        this.setState({ page: this.state.page - number });
-        this.loadEvents(this.state.page - number);
-    };
+    search = (e) => {
+        e.preventDefault()
+        this.state.faculties.map(staff => {
+            if (staff.name === this.state.term) {
+                this.setState({searched: true, searchedFaculty: staff})
+            } else {
+                this.setState({searching: true, error: 'Staff member not found'})
+            }
+        })
+
+    }
 
     renderFaculties = faculties => {
 
@@ -117,13 +129,25 @@ class Faculty extends Component {
     };
 
     render() {
-        const { user, faculties } = this.state;
-        console.log(faculties)
+        const { user, faculties, searched, searchedFaculty, error } = this.state;
+
+        if (searched) { return <Redirect to={`faculty/${searchedFaculty._id}`}/> } 
+
         return (
             <div className="container">
-                <h2 className="mt-5 mb-5">
-                    {!faculties.length ? "Loading..." : ""}
-                </h2>
+                <div className='row mt-4 mb-3'>
+                    <h2 className="col-md-6">
+                        Our Team
+                        {!faculties.length ? "Loading..." : ""}
+                    </h2>
+
+                    <form className="col-md-6">
+                        <input placeholder='by faculty name' type='text' value={this.state.term} onChange={this.handleChange} />
+                        <button onClick={this.search}>Search</button>
+                        {"  "}{error}
+                    </form>
+                    <hr/>
+                </div>
                 {
                     isAuthenticated() && isAuthenticated().user.role === 'admin' && (
                         <div>

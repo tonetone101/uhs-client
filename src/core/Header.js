@@ -2,6 +2,7 @@ import React from 'react'
 import { Navbar, Nav, NavDropdown} from 'react-bootstrap';
 import {signout, isAuthenticated} from '../auth';
 import {Link, withRouter} from 'react-router-dom'
+import Background from '../images/logo.png'
 
 const Header = ({history}) => {
     console.log(isAuthenticated().user)
@@ -9,11 +10,20 @@ const Header = ({history}) => {
     
         return (
             <Navbar collapseOnSelect expand="lg" style={{height: '100px'}} variant="dark">
-                <Navbar.Brand style={{marginLeft: '480px', fontSize: '50px'}}><Link style={{color: 'white'}} to='/'>University High School</Link></Navbar.Brand>
+                <Navbar.Brand >
+                    <img
+                        style={{ height: "75px", width: "75px" }}
+                        
+                        src={require("../images/banner.png")}
+                        alt="Second slide"
+                    />
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav>
-                        
+                  
+                    
+
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

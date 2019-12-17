@@ -8,10 +8,15 @@ const Menu = ({history}) => {
 
     
         return (
-            <Navbar collapseOnSelect expand="lg" variant="dark" style={{opacity: '0.5'}} >
+            <Navbar id='menu' collapseOnSelect expand="lg" variant="dark"  >
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
+                    
                     <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
+                         <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/'>Home</Link></Nav.Link>
+                        </div>
+
                        <div id='link'>                
                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/faculty'>Faculty</Link></Nav.Link>
                         </div>

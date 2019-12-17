@@ -57,38 +57,34 @@ class Carol extends Component {
                         <img
                         style={{ height: "300px", width: "auto" }}
                         className="d-block w-100"
-                        src={require("../core/SEL.jpg")}
+                        src={require("../images/logo.png")}
                         alt="First slide"
                         />
                         <Carousel.Caption>
-                        <h3></h3>
-                        <p>We care</p>
+                       
                         </Carousel.Caption>
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
                         style={{ height: "300px", width: "auto" }}
                         className="d-block w-100"
-                        src={require("../core/beloved.jpg")}
+                        src={require("../images/uhsProfile.png")}
                         alt="Second slide"
                         />
 
                         <Carousel.Caption>
-                        <h3>Beloved Community</h3>
-                        <p>Noone gets left behind</p>
+                     
                         </Carousel.Caption>
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
                         style={{ height: "300px", width: "auto" }}
                         className="d-block w-100"
-                        src={require("../core/diversity.jpg")}
+                        src={require("../images/uhsMission.png")}
                         alt="Third slide"
                         />
 
                         <Carousel.Caption>
-                        <h3>Sky is the limit</h3>
-                        <p></p>
                         </Carousel.Caption>
                     </Carousel.Item>
                 </Carousel>   
@@ -117,7 +113,27 @@ class Carol extends Component {
                                
                             )
                         }
-                        <div className='row' id='carol' style={{height: 'max-height'}}>
+                    <div>    
+                                        
+                        <img 
+                        style={{ height: "300px", width: "auto" }}
+                        className=""
+                        src={require("../images/uhsStat.png")}
+                        alt="Second slide" 
+                        
+                        />
+                    </div>
+                    <div className=' text-center mt-5 mb-5' style={{color: 'black'}}> {carousel.missionStatement}</div>
+                            <div >
+                            {
+                                isAuthenticated() && isAuthenticated().user.role === 'admin' && (
+                                    <Link to={`/edit/carousel/${carousel._id}`} className='text-center btn btn-primary mt-4 mb-4'>Update</Link>
+                                )
+                            }
+                            </div>
+                            <hr/>
+            
+                        {/* <div className='row' id='carol' style={{height: 'max-height'}}>
                               <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
                                 <div className='col-md-3 ml-5 mt-5'>
                                     <h2 style={{color: 'yellow'}}>{carousel.caption1}</h2>
@@ -131,26 +147,21 @@ class Carol extends Component {
                                 )
                             }
                             </div>
-                        </div>
-                        <footer bg='primary'>
-                            <div class="container row">
-                                <div className="col d-flex justify-content-around align-items-baseline">
+                        </div> */ }
+                        <footer >
+                            <div class="container row ml-5">
+                                <img className='col-md-6 mb-4' style={{height: '150px', marginTop: '10px'}} src={require("../images/banner.png")} /> 
+                                <div className="col-md-6 d-flex justify-content-around align-items-baseline">
                                     <div >
                                         <p>123 Empire street | Providence, RI 02910</p>
-                                        
-                                    </div>
-                                    <div>
                                         <p>Phone: (401) 332- 2233 | Somaly@uhSchool.org</p>
-
-                                    </div>
-                                    {/* <h5 className="text-capitalize">
-                                    &copy;2019 copyright : Coder
-                                    </h5> */}
+                                        <h5 className="text-capitalize">
+                                        &copy;2019 copyright : Coder
+                                        </h5> 
+                                     </div>
                                 </div>
-                            </div>
-                        </footer>
-                        {/* <img style={{height: '200px', marginTop: '10px'}} src={require("./community-banner.png")} /> */}
-
+                                </div>
+                        </footer> 
                 </div>
             </div>
         )
