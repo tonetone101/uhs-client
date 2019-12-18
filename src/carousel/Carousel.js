@@ -55,7 +55,7 @@ class Carol extends Component {
                 <Carousel className='container'>
                     <Carousel.Item>
                         <img
-                        style={{ height: "300px", width: "auto" }}
+                        style={{ height: "350px", width: "300px" }}
                         className="d-block w-100"
                         src={require("../images/logo.png")}
                         alt="First slide"
@@ -66,7 +66,7 @@ class Carol extends Component {
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
-                        style={{ height: "300px", width: "auto" }}
+                        style={{ height: "350px", width: "300px" }}
                         className="d-block w-100"
                         src={require("../images/uhsProfile.png")}
                         alt="Second slide"
@@ -78,9 +78,20 @@ class Carol extends Component {
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
-                        style={{ height: "300px", width: "auto" }}
+                        style={{ height: "350px", width: "300px" }}
                         className="d-block w-100"
                         src={require("../images/uhsMission.png")}
+                        alt="Third slide"
+                        />
+
+                        <Carousel.Caption>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                        style={{ height: "350px", width: "300px" }}
+                        className="d-block w-100"
+                        src={require("../images/uhsVision.png")}
                         alt="Third slide"
                         />
 
