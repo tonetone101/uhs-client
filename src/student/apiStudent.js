@@ -1,21 +1,5 @@
 import { isAuthenticated } from "../auth";
 
-export const create = (userId, token, student) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/student/new/${userId}`, {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`
-        },
-        body: student
-    })
-        .then(response => {
-            return response.json();
-        })
-        .catch(err => console.log(err));
-};
-
-
 export const createLink = (userId, token, link) => {
     return fetch(`${process.env.REACT_APP_API_URL}/link/new/${userId}`, {
         method: "POST",
@@ -79,6 +63,16 @@ export const read = (userId, token) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`
         }
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const singleLink = (linkId) => {
+    return fetch(`${process.env.REACT_APP_API_URL}/link/${linkId}`, {
+        method: "GET"
     })
         .then(response => {
             return response.json();

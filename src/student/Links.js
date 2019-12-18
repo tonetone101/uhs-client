@@ -29,25 +29,9 @@ class Links extends Component {
         });
     };
 
-    init = userId => {
-        const token = isAuthenticated().token;
-        read(userId, token).then(data => {
-          if (data.error) {
-            this.setState({ redirectToSignin: true });
-          } else {
-            this.setState({ user: data})
-            this.loadLinks(data._id);
-          }
-        });
-      };
-
       componentDidMount() {
          this.loadLinks()
        
-      }
-    
-      componentWillReceiveProps(props) {
-        this.loadLinks() 
       }
       
       deleteLink = () => {
@@ -103,6 +87,7 @@ class Links extends Component {
                                         >
                                             {link.body}
                                         </Link>
+                                        <Link to={`/link/${link._id}`} className='ml-2 text-danger'>view</Link>
                                     </li>
                                 </ul>
                             </div>

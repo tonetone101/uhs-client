@@ -28,6 +28,8 @@ import Bully from './student/Bully'
 import Student from './student/Student'
 import GenderPolicy from './student/GenderPolicy'
 import NewLinks from './student/NewLinks'
+import SingleLink from './student/SingleLink'
+
 
 
 const MainRouter = () => (
@@ -57,6 +59,7 @@ const MainRouter = () => (
             <Route exact path="/student" component={Student}></Route>
             <Route exact path="/genderpolicy" component={GenderPolicy}></Route>
             <Route exact path="/newlink" component={NewLinks}></Route>
+            <Route exact path="/link/:linkId" component={SingleLink}></Route>
 
         </Switch>
         

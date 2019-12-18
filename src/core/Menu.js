@@ -30,6 +30,15 @@ const Menu = ({history}) => {
                         <div id='link'>                        
                             <Nav.Link href="#features"><Link style={{color: 'white'}} to='/new/student'>Admission</Link></Nav.Link>
                         </div>
+
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/partners'>Our Partners</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/images'>Gallery</Link></Nav.Link>
+                        </div>
+
                         <div id='link'>                        
                             <Nav.Link href="#features"><Link style={{color: 'white'}} to='/events'>Upcoming Events</Link></Nav.Link>
                         </div>
