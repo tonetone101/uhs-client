@@ -24,6 +24,9 @@ import SingleFaculty from './Faculty/SingleFaculty'
 import EditFaculty from './Faculty/EditFaculty'
 
 import NewStudent from './student/NewStudent'
+import Admission from './student/Admission'
+
+
 import Bully from './student/Bully'
 import Student from './student/Student'
 import GenderPolicy from './student/GenderPolicy'
@@ -57,7 +60,10 @@ const MainRouter = () => (
             <Route exact path="/faculty" component={Faculty}></Route>
             <Route exact path="/faculty/:facultyId" component={SingleFaculty}></Route>
             <Route exact path="/edit/faculty/:facultyId" component={EditFaculty}></Route>
+            
             <Route exact path="/new/student" component={NewStudent}></Route>
+            <Route exact path="/admission" component={Admission}></Route>
+
 
             <Route exact path="/bully" component={Bully}></Route>
             <Route exact path="/student" component={Student}></Route>

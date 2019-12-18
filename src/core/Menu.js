@@ -28,7 +28,7 @@ const Menu = ({history}) => {
                         
                         
                         <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/new/student'>Admission</Link></Nav.Link>
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/admission'>Admission</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
