@@ -30,6 +30,10 @@ import GenderPolicy from './student/GenderPolicy'
 import NewLinks from './student/NewLinks'
 import SingleLink from './student/SingleLink'
 
+import NewPhoto from './gallery/NewPhoto'
+import Photo from './gallery/Photo'
+import SinglePhoto from './gallery/SinglePhoto'
+import EditPhoto from './gallery/EditPhoto'
 
 
 const MainRouter = () => (
@@ -60,6 +64,11 @@ const MainRouter = () => (
             <Route exact path="/genderpolicy" component={GenderPolicy}></Route>
             <Route exact path="/newlink" component={NewLinks}></Route>
             <Route exact path="/link/:linkId" component={SingleLink}></Route>
+
+            <Route exact path="/new/image" component={NewPhoto}></Route>
+            <Route exact path="/images" component={Photo}></Route>
+            <Route exact path="/image/:imageId" component={SinglePhoto}></Route>
+            <Route exact path="/edit/image/:imageId" component={EditPhoto}></Route>
 
         </Switch>
         
