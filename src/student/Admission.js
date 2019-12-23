@@ -24,13 +24,12 @@ class Admission extends Component {
                <ul>
                    <li>
                        <Link to='/new/student'>
-                            Pre Register
+                            Pre-registeration
                        </Link>
                    </li>
                    
                    
                </ul>
-               <Links />
             </div>
         );
     }

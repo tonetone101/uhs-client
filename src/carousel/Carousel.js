@@ -4,15 +4,30 @@ import {singleCarousel, update, list} from './apiCarousel'
 import {Link, Redirect} from 'react-router-dom'
 import {isAuthenticated} from '../auth'
 import {Animated} from "react-animated-css"
+import cookie from "react-cookies";
+
+import { googleTranslate } from "../utils/googleTranslate";
 
 class Carol extends Component {
     state = {
         carousel: [],
         redirectToHome: false,
-        redirectToSignIn: false
+        redirectToSignIn: false,
+        languageCodes: [],
+        language: cookie.load("language") ? cookie.load("language") : "en",
+        question: cookie.load("question")
+        ? cookie.load("question")
+        : "What language do you prefer to read with?"
     }
 
     componentDidMount = () => {
+        googleTranslate.getSupportedLanguages("en", function(err, languageCodes) {
+            getLanguageCodes(languageCodes); // use a callback function to setState
+          });
+      
+          const getLanguageCodes = languageCodes => {
+            this.setState({ languageCodes });
+          };
         list().then(data => {
             if (data.error) {
                 console.log(data.error)
@@ -55,7 +70,7 @@ class Carol extends Component {
                 <Carousel className='container'>
                     <Carousel.Item>
                         <img
-                        style={{ height: "350px", width: "300px" }}
+                        // style={{ height: "350px", width: "300px" }}
                         className="d-block w-100"
                         src={require("../images/logo.png")}
                         alt="First slide"
@@ -66,7 +81,7 @@ class Carol extends Component {
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
-                        style={{ height: "350px", width: "300px" }}
+                        // style={{ height: "350px", width: "300px" }}
                         className="d-block w-100"
                         src={require("../images/uhsProfile.png")}
                         alt="Second slide"
@@ -78,7 +93,7 @@ class Carol extends Component {
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
-                        style={{ height: "350px", width: "300px" }}
+                        // style={{ height: "350px", width: "300px" }}
                         className="d-block w-100"
                         src={require("../images/uhsMission.png")}
                         alt="Third slide"
@@ -89,7 +104,7 @@ class Carol extends Component {
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
-                        style={{ height: "350px", width: "300px" }}
+                        // style={{ height: "350px", width: "300px" }}
                         className="d-block w-100"
                         src={require("../images/uhsVision.png")}
                         alt="Third slide"
@@ -104,7 +119,7 @@ class Carol extends Component {
     }
 
     render() {
-        const {carousel, redirectToHome, redirectToSignIn} = this.state
+        const {carousel, redirectToHome, redirectToSignIn, languageCodes, language, question } = this.state
        
         if(redirectToHome) {
             return <Redirect to={`/`} />
@@ -114,7 +129,26 @@ class Carol extends Component {
 
         return (
             <div>
+                
                 <div className='text-center'>
+                {
+                                <div style={this.divStyle}>
+                                    
+
+                                    {/* iterate through language options to create a select box */}
+                                    <select
+                                    className="select-language"
+                                    value={language}
+                                    onChange={e => this.changeHandler(e.target.value)}
+                                    >
+                                    {languageCodes.map(lang => (
+                                        <option key={lang.language} value={lang.language}>
+                                        {lang.name}
+                                        </option>
+                                    ))}
+                                    </select>
+                                </div>
+                            }
                     {!carousel ? ( 
                             <div className='jumbotron text-center '>
                                 <h2>Loading....</h2>
@@ -134,7 +168,10 @@ class Carol extends Component {
                         
                         />
                     </div>
-                    <div className=' text-center mt-5 mb-5' style={{color: 'black'}}> <div className='container'>{carousel.missionStatement}</div></div>
+                        <div className=' text-center mt-5 mb-5' style={{color: 'black'}}> <div className='container'>
+                            <p>{question}</p>
+                        </div>
+                    </div>
                             <div >
                             {
                                 isAuthenticated() && isAuthenticated().user.role === 'admin' && (
@@ -160,6 +197,7 @@ class Carol extends Component {
                             </div>
                         </div> */ }
                         <footer >
+                            
                             <div class="container row ml-5">
                                 <img className='col-md-6 mb-4' style={{height: '150px', marginTop: '10px'}} src={require("../images/banner.png")} /> 
                                 <div className="col-md-6 d-flex justify-content-around align-items-baseline">
@@ -177,6 +215,38 @@ class Carol extends Component {
             </div>
         )
     }
+    changeHandler = language => {
+        let { question } = this.state;
+        let cookieLanguage = cookie.load("language");
+        let transQuestion = "";
+    
+        const translating = transQuestion => {
+          if (question !== transQuestion) {
+            this.setState({ question: transQuestion });
+            cookie.save("question", transQuestion, { path: "/" });
+          }
+        };
+    
+        // translate the question when selecting a different language
+        if (language !== cookieLanguage) {
+          googleTranslate.translate(this.state.carousel.missionStatement, language, function(err, translation) {
+            transQuestion = translation.translatedText;
+            translating(transQuestion);
+          });
+        }
+    
+        this.setState({ language });
+        cookie.save("language", language, { path: "/" });
+      };
+    
+      // just some inline css to center our demo
+    //   divStyle = {
+    //     display: "flex",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     height: "100vh",
+    //     width: "100wh"
+    //   };
 }
 
 export default Carol

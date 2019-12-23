@@ -38,6 +38,7 @@ import Photo from './gallery/Photo'
 import SinglePhoto from './gallery/SinglePhoto'
 import EditPhoto from './gallery/EditPhoto'
 
+import Translate from './Translate'
 
 const MainRouter = () => (
     <div >
@@ -75,6 +76,8 @@ const MainRouter = () => (
             <Route exact path="/images" component={Photo}></Route>
             <Route exact path="/image/:imageId" component={SinglePhoto}></Route>
             <Route exact path="/edit/image/:imageId" component={EditPhoto}></Route>
+
+            <Route exact path="/translate" component={Translate}></Route>
 
         </Switch>
         
