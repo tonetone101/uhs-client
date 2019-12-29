@@ -2,7 +2,6 @@ import React from 'react'
 import { Navbar, Nav, NavDropdown} from 'react-bootstrap';
 import {signout, isAuthenticated} from '../auth';
 import {Link, withRouter} from 'react-router-dom'
-import Background from '../images/logo.png'
 
 const Header = ({history}) => {
     console.log(isAuthenticated().user)
