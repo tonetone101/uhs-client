@@ -34,7 +34,7 @@ class SingleEvent extends Component {
     }
 
     deleteConfirm = () => {
-        let answer = window.confirm('Are you sure you want to delete event?')
+        let answer = window.confirm('¿Estás seguro de que deseas eliminar el evento?')
         if(answer) {
             this.deleteEvent()
         }
@@ -68,19 +68,19 @@ class SingleEvent extends Component {
                     </p>
                     <div className='container' >
                         <p className="card-text">
-                            Name of event: {event.title}
+                        Nombre del evento: {event.title}
                         </p>
                         <p className="card-text">
-                            Date: {event.date}
+                        Fecha: {event.date}
                         </p>
                         <p className="card-text">
-                            Time: {event.time}
+                        Hora: {event.time}
                         </p>
                         <p className="card-text">
-                            Location: {event.where}
+                        Ubicación: {event.where}
                         </p>
                         <p className="card-text ">
-                            Description: {event.body}
+                        Descripción: {event.body}
                         </p>
                     </div>
                    <div >
@@ -96,26 +96,25 @@ class SingleEvent extends Component {
 
                     <div className='d-inline-block mb-5'>
                         <Link
-                            to={`/events`}
+                            to={`/spanishevents`}
                             className="btn btn-raised btn-primary btn-sm"
-                        >
-                            Back to events
+                        > Volver a los eventos
                         </Link>
 
                         {isAuthenticated().user && isAuthenticated().user.role === 'admin' && (
                             <div className='mt-5'>
                                 <div >
                                     <Link
-                                        to={`/edit/event/${event._id}`}
+                                        to={`/spanish/edit/event/${event._id}`}
                                         className='btn btn-raised btn-warning'
                                     >
-                                        Update Event
+                                        Actualizar evento
                                     </Link>
                                     <button
                                         onClick={this.deleteConfirm}
                                         className='btn btn-raised btn-danger ml-5'
                                     >
-                                        Delete
+                                        Eliminar
                                     </button>
                                 </div>
                             </div>

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { list, read } from "./apiEvent";
-import { Link } from "react-router-dom";
-import {isAuthenticated} from '../../auth'
+import { Link, Redirect } from "react-router-dom";
+import {isAuthenticated, signout} from '../../auth'
 import cookie from "react-cookies";
+import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
+
 
 
 class Events extends Component {
@@ -12,6 +14,8 @@ class Events extends Component {
             user: '',
             events: [],
             page: 1,
+            spanishPage: false,
+            englishPage: false
         };
     }
 
@@ -34,15 +38,111 @@ class Events extends Component {
         console.log(this.state.events)
     }
 
-    loadMore = number => {
-        this.setState({ page: this.state.page + number });
-        this.loadEvents(this.state.page + number);
-    };
+    translateSpanish = () => {
+        this.setState({spanishPage: true})
+    }
 
-    loadLess = number => {
-        this.setState({ page: this.state.page - number });
-        this.loadEvents(this.state.page - number);
-    };
+    translateEnglish = () => {
+        this.setState({englishPage: true})
+    }
+
+    renderTopHeader = () => {
+        return (
+            <div>
+                <Navbar id='topHeader' collapseOnSelect expand="lg" variant="dark" >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="mr-auto " >
+                    <DropdownButton id="dropdown-basic-button" title="Traductora"  >
+                                <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item ><a >Cambodian</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item><a>Hmong</a></Dropdown.Item>
+
+                                <Dropdown.Item><a onClick={this.translateEnglish}>English</a></Dropdown.Item>
+
+                                <Dropdown.Item><a>Portuguese</a></Dropdown.Item>
+                            
+                            </DropdownButton>
+                        
+                        {
+                            !isAuthenticated() && (
+                               <nav className='row'>
+                                <Nav.Link >
+                                    <Link className='ml-3' to='/signin' style={{color: 'black'}}>
+                                    Registrarse
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link>
+                                    <Link style={{color: 'black'}} to='/signup' >
+                                    Regístrate
+                                    </Link>
+                                </Nav.Link>
+                               </nav>
+                            )
+                        }
+                        
+                        {
+                            isAuthenticated() && isAuthenticated().user && (
+                                <Nav.Link>
+                                    <a style={{color: 'black'}}  onClick={() => signout(() => {
+                                        this.props.history.push('/spanish')
+                                    })}>
+                                      Desconectar
+                                    </a>
+                                </Nav.Link>
+                            )
+                        }
+                      
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
+    }
+
+    renderMenu = () => {
+        return (
+            <div>
+                 <Navbar id='menu' collapseOnSelect expand="lg" variant="dark"  >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    
+                    <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
+                         <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/spanish'>Hogar</Link></Nav.Link>
+                        </div>
+
+                       <div id='link'>                
+                           <Nav.Link href="#features"><Link style={{color: 'white'}} to='/faculty'>Facultad</Link></Nav.Link>
+                        </div>
+                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/student'>Estudiantes</Link></Nav.Link>
+                        
+                        
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/admission'>Admisión</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/partners'>Nuestros compañeros</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/images'>Galería</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/spanishevents'>Próximos Eventos</Link></Nav.Link>
+                        </div>
+                    
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
+    }
+
 
     renderEvents = events => {
 
@@ -74,21 +174,21 @@ class Events extends Component {
                                 
                                
                                 <p className="font-italic mark mt-4">
-                                    Event Posted{" "}
+                                    Evento publicado en{" "}
 
                                     {/* <Link to={`${posterId}`}>
                                         <img  style={{ height: "40px", borderRadius:'30px', width: "40px" }} className="img-thumbnail" src={photoUrl} alt='' />
 
                                         {posterName}{" "}
                                     </Link> */}
-                                    on{' '}
+                                   
                                     {new Date(event.created).toDateString()}
                                 </p>
                                 <br />
 
                                 <div className="card-text column mr-5">
                                     <p >
-                                        Event name: {event.title.substring(0, 100)}{' '}
+                                    Nombre del evento: {event.title.substring(0, 100)}{' '}
                                     </p>  
                                     
                                     {/* <p >
@@ -100,11 +200,11 @@ class Events extends Component {
                                     </p>  */}
 
                                      <p >
-                                       Location : {event.where.substring(0, 100)}{' '}
+                                        Ubicación: {event.where.substring(0, 100)}{' '}
                                     </p>      
 
                                     <p >
-                                       Description : {event.body.substring(0, 100)}{' '}
+                                        Descripción: {event.body.substring(0, 100)}{' '}
                                     </p>           
                                 </div>
                                                        
@@ -115,10 +215,10 @@ class Events extends Component {
                                     style={{ height: "200px", width: "100%" }}
                                 /> */}
                                 <Link
-                                    to={`/event/${event._id}`}
+                                    to={`/spanish/event/${event._id}`}
                                     className="btn btn-raised btn-primary btn-sm mb-4"
                                 >
-                                    Read more
+                                    Lee mas
                                 </Link>
                             </div>
                         </div>
@@ -129,25 +229,36 @@ class Events extends Component {
     };
 
     render() {
-        const { user, events } = this.state;
-        console.log(events)
+        const { user, spanishPage, englishPage, events } = this.state;
+        
+        if(spanishPage) {
+            return <Redirect to={`/spanish`} />
+         } else if (englishPage) {
+             return <Redirect to={'/'} />
+         }
+
         return (
-            <div className="container">
-                <h2 className="mt-5 mb-5">
-                    {!events.length ? "Loading..." : ""}
-                </h2>
-                {
-                    isAuthenticated() && isAuthenticated().user.role === 'admin' && (
-                        <div>
-                            <Link className='mb-5' to='/new/event'>Add Event</Link>
-                        </div>
-                    )
-                }
-               
-                <div>               
-                    {this.renderEvents(events)}
-                 </div>   
-               
+            <div>
+                {this.renderTopHeader()}
+                {this.renderMenu()}
+                <div className="container">
+                    
+                    <h2 className="mt-5 mb-5">
+                        {!events.length ? "Loading..." : ""}
+                    </h2>
+                    {
+                        isAuthenticated() && isAuthenticated().user.role === 'admin' && (
+                            <div>
+                                <Link className='mb-5' to='/spanish/new/event'>Añadir evento</Link>
+                            </div>
+                        )
+                    }
+                
+                    <div>               
+                        {this.renderEvents(events)}
+                    </div>   
+                
+                </div>
             </div>
         );
     }

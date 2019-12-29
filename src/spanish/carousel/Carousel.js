@@ -127,7 +127,7 @@ class Carol extends Component {
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/events'>Próximos Eventos</Link></Nav.Link>
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/spanishevents'>Próximos Eventos</Link></Nav.Link>
                         </div>
                     
                     </Nav>
@@ -259,7 +259,8 @@ class Carol extends Component {
                             <div >
                             {
                                 isAuthenticated() && isAuthenticated().user.role === 'admin' && (
-                                    <Link to={`/spanish/edit/carousel/${carousel._id}`} className='text-center btn btn-primary mt-4 mb-4'>Update</Link>
+                                    <Link to={`/spanish/edit/carousel/${carousel._id}`} className='text-center btn btn-primary mt-4 mb-4'>Actualizar
+                                    </Link>
                                 )
                             }
                             </div>

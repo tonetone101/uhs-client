@@ -97,7 +97,7 @@ const MainRouter = () => (
             <Route exact path="/spanish" component={CarolSpanish}></Route>
             <Route exact path="/spanish/new/carousel" component={NewSpanishCarousel}></Route>
             <Route exact path="/spanish/edit/carousel/:carouselId" component={EditSpanishCarousel}></Route>
-            <Route exact path="/events" component={EventSpanish}></Route>
+            <Route exact path="/spanishevents" component={EventSpanish}></Route>
             <Route exact path="/spanish/new/event" component={NewSpanishEvent}></Route>
             <Route exact path="/spanish/edit/event/:eventId" component={EditSpanishEvent}></Route>
             <Route exact path="/spanish/event/:eventId" component={SingleSpanishEvent}></Route>

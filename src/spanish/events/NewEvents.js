@@ -161,7 +161,7 @@ class NewEvent extends Component {
         } = this.state;
 
         if (redirectToEvents) {
-            return <Redirect to={`/events`} />;
+            return <Redirect to={`/spanishevents`} />;
         }
 
         return (

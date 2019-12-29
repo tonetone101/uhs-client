@@ -81,7 +81,7 @@ class EditCarousel extends Component {
         <form className='container'>
 
             <div className="form-group">
-                <label className="text-muted">Mission Statement</label>
+                <label className="text-muted">Estado de la misión</label>
                 <textarea
                     style={{height:'100px'}}
                     onChange={this.handleChange("missionStatement")}
@@ -95,7 +95,7 @@ class EditCarousel extends Component {
                 onClick={this.clickSubmit}
                 className="btn btn-raised btn-primary"
             >
-                Edit
+                Editar
             </button>
         </form>
     );
@@ -117,7 +117,7 @@ class EditCarousel extends Component {
 
                         {loading ? ( 
                         <div className='jumbotron text-center'>
-                            <h2>Loading....</h2>
+                            <h2>Cargando....</h2>
                         </div>
                         ) : (
                             ""
