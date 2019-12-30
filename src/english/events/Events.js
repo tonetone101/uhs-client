@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { list, read } from "./apiEvent";
-import { Link } from "react-router-dom";
-import {isAuthenticated} from '../../auth'
-import cookie from "react-cookies";
+import { Link, Redirect } from "react-router-dom";
+import {isAuthenticated, signout} from '../../auth'
+import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
 
 
 class Events extends Component {
@@ -11,7 +11,8 @@ class Events extends Component {
         this.state = {
             user: '',
             events: [],
-            page: 1,
+            spanishPage: false,
+            englishPage: false
         };
     }
 
@@ -28,21 +29,124 @@ class Events extends Component {
         });
     };
 
+    renderUser = () => {
+        this.setState({user: isAuthenticated().user })
+    }
 
     componentDidMount() {
         this.loadEvents(this.state.events)
+        this.renderUser()
         console.log(this.state.events)
     }
 
-    loadMore = number => {
-        this.setState({ page: this.state.page + number });
-        this.loadEvents(this.state.page + number);
-    };
+    componentWillReceiveProps() {
+        this.renderUser()
+    }
 
-    loadLess = number => {
-        this.setState({ page: this.state.page - number });
-        this.loadEvents(this.state.page - number);
-    };
+    translateSpanish = () => {
+        this.setState({spanishPage: true, englishPage: false})
+    }
+
+    translateEnglish = () => {
+        this.setState({englishPage: true, spanishPage: false})
+    }
+
+    renderTopHeader = () => {
+        return (
+            <div>
+                <Navbar id='topHeader' collapseOnSelect expand="lg" variant="dark" >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="mr-auto " >
+                    <DropdownButton id="dropdown-basic-button" title="Translator"  >
+                                <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item ><a >Cambodian</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item><a>Hmong</a></Dropdown.Item>
+
+                                <Dropdown.Item><a onClick={this.translateEnglish}>English</a></Dropdown.Item>
+
+                                <Dropdown.Item><a>Portuguese</a></Dropdown.Item>
+                            
+                            </DropdownButton>
+                        
+                        {
+                            !this.state.user && (
+                               <nav className='row'>
+                                <Nav.Link >
+                                    <Link className='ml-3' to='/signin' style={{color: 'black'}}>
+                                        Sign In 
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link>
+                                    <Link style={{color: 'black'}} to='/signup' >
+                                        Sign Up
+                                    </Link>
+                                </Nav.Link>
+                               </nav>
+                            )
+                        }
+                        
+                        {
+                            this.state.user && (
+                                <Nav.Link>
+                                    <a style={{color: 'black'}}  onClick={() => signout(() => {
+                                        this.props.history.push('/')
+                                    })}>
+                                        Sign Out
+                                    </a>
+                                </Nav.Link>
+                            )
+                        }
+                      
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
+    }
+
+    renderMenu = () => {
+        return (
+            <div>
+                 <Navbar id='menu' collapseOnSelect expand="lg" variant="dark"  >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    
+                    <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
+                         <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/'>Home</Link></Nav.Link>
+                        </div>
+
+                       <div id='link'>                
+                           <Nav.Link href="#features"><Link style={{color: 'white'}} to='/faculty'>Faculty</Link></Nav.Link>
+                        </div>
+                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/student'>Students</Link></Nav.Link>
+                        
+                        
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/admission'>Admission</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/partners'>Our Partners</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/images'>Gallery</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/events'>Upcoming Events</Link></Nav.Link>
+                        </div>
+                    
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
+    }
 
     renderEvents = events => {
 
@@ -129,25 +233,34 @@ class Events extends Component {
     };
 
     render() {
-        const { user, events } = this.state;
-        console.log(events)
+        const { user, events, spanishPage, englishPage } = this.state;
+        if(spanishPage) {
+            return <Redirect to={`/spanishevents`} />
+         } else if (englishPage) {
+             return <Redirect to={'/events'} />
+         } 
+
         return (
-            <div className="container">
-                <h2 className="mt-5 mb-5">
-                    {!events.length ? "Loading..." : ""}
-                </h2>
-                {
-                    isAuthenticated() && isAuthenticated().user.role === 'admin' && (
-                        <div>
-                            <Link className='mb-5' to='/new/event'>Add Event</Link>
-                        </div>
-                    )
-                }
-               
-                <div>               
-                    {this.renderEvents(events)}
-                 </div>   
-               
+            <div>
+                {this.renderTopHeader()}
+                {this.renderMenu()}
+                <div className="container">
+                    <h2 className="mt-5 mb-5">
+                        {!events.length ? "Loading..." : ""}
+                    </h2>
+                    {
+                        isAuthenticated() && isAuthenticated().user.role === 'admin' && (
+                            <div>
+                                <Link className='mb-5' to='/new/event'>Add Event</Link>
+                            </div>
+                        )
+                    }
+                
+                    <div>               
+                        {this.renderEvents(events)}
+                    </div>   
+                
+                </div>
             </div>
         );
     }

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { list, read } from "./apiFaculty";
 import { Link, Redirect } from "react-router-dom";
-import {isAuthenticated} from '../../auth'
-
+import {isAuthenticated, signout} from '../../auth'
+import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
 
 class Faculty extends Component {
     constructor() {
@@ -10,13 +10,18 @@ class Faculty extends Component {
         this.state = {
             user: '',
             faculties: [],
-            page: 1,
+            spanishPage: false,
+            englishPage: false,
             term: '',
             searched: false,
             searchedFaculty: '',
             error: '',
             searching: false,
         };
+    }
+
+    renderUser = () => {
+        this.setState({user: isAuthenticated().user })
     }
 
     loadFaculties = page => {
@@ -35,7 +40,21 @@ class Faculty extends Component {
 
     componentDidMount() {
         this.loadFaculties(this.state.faculties)
+        this.renderUser()
         console.log(this.state.faculties)
+    }
+
+
+    componentWillReceiveProps() {
+        this.renderUser()
+    }
+
+    translateSpanish = () => {
+        this.setState({spanishPage: true, englishPage: false})
+    }
+
+    translateEnglish = () => {
+        this.setState({englishPage: true, spanishPage: false})
     }
 
     handleChange = event => {
@@ -53,6 +72,103 @@ class Faculty extends Component {
             }
         })
 
+    }
+
+    renderTopHeader = () => {
+        return (
+            <div>
+                <Navbar id='topHeader' collapseOnSelect expand="lg" variant="dark" >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="mr-auto " >
+                    <DropdownButton id="dropdown-basic-button" title="Translator"  >
+                                <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item ><a >Cambodian</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item><a>Hmong</a></Dropdown.Item>
+
+                                <Dropdown.Item><a onClick={this.translateEnglish}>English</a></Dropdown.Item>
+
+                                <Dropdown.Item><a>Portuguese</a></Dropdown.Item>
+                            
+                            </DropdownButton>
+                        
+                        {
+                            !this.state.user && (
+                               <nav className='row'>
+                                <Nav.Link >
+                                    <Link className='ml-3' to='/signin' style={{color: 'black'}}>
+                                        Sign In 
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link>
+                                    <Link style={{color: 'black'}} to='/signup' >
+                                        Sign Up
+                                    </Link>
+                                </Nav.Link>
+                               </nav>
+                            )
+                        }
+                        
+                        {
+                            this.state.user && (
+                                <Nav.Link>
+                                    <a style={{color: 'black'}}  onClick={() => signout(() => {
+                                        this.props.history.push('/')
+                                    })}>
+                                        Sign Out
+                                    </a>
+                                </Nav.Link>
+                            )
+                        }
+                      
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
+    }
+
+    renderMenu = () => {
+        return (
+            <div>
+                 <Navbar id='menu' collapseOnSelect expand="lg" variant="dark"  >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    
+                    <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
+                         <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/'>Home</Link></Nav.Link>
+                        </div>
+
+                       <div id='link'>                
+                           <Nav.Link href="#features"><Link style={{color: 'white'}} to='/faculty'>Faculty</Link></Nav.Link>
+                        </div>
+                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/student'>Students</Link></Nav.Link>
+                        
+                        
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/admission'>Admission</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/partners'>Our Partners</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/images'>Gallery</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/events'>Upcoming Events</Link></Nav.Link>
+                        </div>
+                    
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
     }
 
     renderFaculties = faculties => {
@@ -129,37 +245,46 @@ class Faculty extends Component {
     };
 
     render() {
-        const { user, faculties, searched, searchedFaculty, error } = this.state;
+        const { user, faculties, searched, spanishPage, englishPage, searchedFaculty, error } = this.state;
+        if(spanishPage) {
+            return <Redirect to={`/spanish/faculty`} />
+         } else if (englishPage) {
+             return <Redirect to={'/faculty'} />
+         } 
 
         if (searched) { return <Redirect to={`faculty/${searchedFaculty._id}`}/> } 
 
         return (
-            <div className="container">
-                <div className='row mt-4 mb-3'>
-                    <h2 className="col-md-6">
-                        Our Team
-                        {!faculties.length ? "Loading..." : ""}
-                    </h2>
+            <div>
+                {this.renderTopHeader()}
+                {this.renderMenu()}
+                <div className="container">
+                    <div className='row mt-4 mb-3'>
+                        <h2 className="col-md-6">
+                            Our Team
+                            {!faculties.length ? "Loading..." : ""}
+                        </h2>
 
-                    <form className="col-md-6">
-                        <input placeholder='by faculty name' type='text' value={this.state.term} onChange={this.handleChange} />
-                        <button onClick={this.search}>Search</button>
-                        {"  "}{error}
-                    </form>
-                    <hr/>
+                        <form className="col-md-6">
+                            <input placeholder='by faculty name' type='text' value={this.state.term} onChange={this.handleChange} />
+                            <button onClick={this.search}>Search</button>
+                            {"  "}{error}
+                        </form>
+                        <hr/>
+                    </div>
+                    {
+                        isAuthenticated() && isAuthenticated().user.role === 'admin' && (
+                            <div>
+                                <Link className='mb-5' to='/new/faculty'>Add Faculty</Link>
+                            </div>
+                        )
+                    }
+                
+                    <div>               
+                        {this.renderFaculties(faculties)}
+                    </div>   
+                
                 </div>
-                {
-                    isAuthenticated() && isAuthenticated().user.role === 'admin' && (
-                        <div>
-                            <Link className='mb-5' to='/new/faculty'>Add Faculty</Link>
-                        </div>
-                    )
-                }
-               
-                <div>               
-                    {this.renderFaculties(faculties)}
-                 </div>   
-               
             </div>
         );
     }

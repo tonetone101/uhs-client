@@ -1,13 +1,20 @@
 import React, {Component} from 'react'
 import {singleEvent, remove} from './apiEvent'
 import {Link, Redirect} from 'react-router-dom'
-import {isAuthenticated} from '../../auth'
+import {isAuthenticated, signout} from '../../auth'
+import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
+
 
 class SingleEvent extends Component {
     state = {
+        user: '',
         event: '',
-        redirectToHome: false,
+        redirectToEvents: false,
         redirectToSignIn: false,
+    }
+
+    renderUser = () => {
+        this.setState({user: isAuthenticated().user })
     }
 
     componentDidMount = () => {
@@ -19,6 +26,11 @@ class SingleEvent extends Component {
                 this.setState({event: data})
             }
         }) 
+        this.renderUser()
+    }
+
+    componentWillReceiveProps() {
+        this.renderUser()
     }
 
     deleteEvent = () => {
@@ -28,7 +40,7 @@ class SingleEvent extends Component {
             if(data.error) {
                 console.log(data.error)
             } else {
-                this.setState({redirectToHome: true})
+                this.setState({redirectToEvents: true})
             }
         })
     }
@@ -126,14 +138,11 @@ class SingleEvent extends Component {
     }
 
     render() {
-        const {event, redirectToHome, redirectToSignIn} = this.state
+        const {event, redirectToEvents} = this.state
+        if(redirectToEvents) {
+            return <Redirect  to={'/events'} />
+        }
         
-        if(redirectToHome) {
-            return <Redirect to={`/`} />
-         } else if(redirectToSignIn) {
-            return <Redirect to={`/signin`} />
-         }
-
         return (
             <div>
                            <div className='container'>

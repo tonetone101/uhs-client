@@ -39,11 +39,11 @@ class Events extends Component {
     }
 
     translateSpanish = () => {
-        this.setState({spanishPage: true})
+        this.setState({spanishPage: true, englishPage: false})
     }
 
     translateEnglish = () => {
-        this.setState({englishPage: true})
+        this.setState({englishPage: true, spanishPage: false})
     }
 
     renderTopHeader = () => {
@@ -232,9 +232,9 @@ class Events extends Component {
         const { user, spanishPage, englishPage, events } = this.state;
         
         if(spanishPage) {
-            return <Redirect to={`/spanish`} />
+            return <Redirect to={`/spanishevents`} />
          } else if (englishPage) {
-             return <Redirect to={'/'} />
+             return <Redirect to={'/events'} />
          }
 
         return (
