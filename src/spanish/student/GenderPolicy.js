@@ -154,7 +154,7 @@ class GenderPolicy extends Component {
             <div>
                 {this.renderTopHeader()}
                 {this.renderMenu()}
-                <div className='container' >
+                <div className='container mt-4' >
                     <h3>PREGUNTAS MÁS FRECUENTES DEL ESTUDIANTE: Política para estudiantes expansivos de género y transgénero</h3>
                     <div>
                         <p>

@@ -71,12 +71,12 @@ class Carol extends Component {
                             !isAuthenticated() && (
                                <nav className='row'>
                                 <Nav.Link >
-                                    <Link className='ml-3' to='/signin' style={{color: 'black'}}>
+                                    <Link className='ml-3' to='/spanish/signin' style={{color: 'black'}}>
                                     Registrarse
                                     </Link>
                                 </Nav.Link>
                                 <Nav.Link>
-                                    <Link style={{color: 'black'}} to='/signup' >
+                                    <Link style={{color: 'black'}} to='/spanish/signup' >
                                     Regístrate
                                     </Link>
                                 </Nav.Link>

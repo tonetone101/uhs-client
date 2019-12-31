@@ -4,6 +4,9 @@ import {Route, Switch} from 'react-router-dom'
 import Signup from './user/SignUp'
 import Signin from './user/SignIn'
 
+import SpanishSignup from './user/SpanishSignUp'
+import SpanishSignin from './user/SpanishSignin'
+
 import Home from './core/Home'
 import Menu from './core/Menu'
 import Header from './core/Header'
@@ -94,6 +97,8 @@ const MainRouter = () => (
             {
             // spanish          
             }
+            <Route exact path="/spanish/signup" component={SpanishSignup}></Route>
+            <Route exact path="/spanish/signin" component={SpanishSignin}></Route>
             <Route exact path="/spanish" component={CarolSpanish}></Route>
             <Route exact path="/spanish/new/carousel" component={NewSpanishCarousel}></Route>
             <Route exact path="/spanish/edit/carousel/:carouselId" component={EditSpanishCarousel}></Route>

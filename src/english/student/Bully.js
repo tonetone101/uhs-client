@@ -154,7 +154,7 @@ class Bully extends Component {
             <div>
                 {this.renderTopHeader()}
                 {this.renderMenu()}
-                <div className='container' >
+                <div className='container mt-4' >
                     <h3>STUDENTS and STAFF BULLYING AND HARASSMENT POLICY </h3>
                     <div>
                         <p>
