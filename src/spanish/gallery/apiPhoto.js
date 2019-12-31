@@ -23,8 +23,8 @@ export const list = () => {
         .catch(err => console.log(err));
 };
 
-export const singlePhoto = (photoId) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/spanishImage/${photoId}`, {
+export const singlePhoto = (imageId) => {
+    return fetch(`${process.env.REACT_APP_API_URL}/spanishImage/${imageId}`, {
         method: "GET"
     })
         .then(response => {

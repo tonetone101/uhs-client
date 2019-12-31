@@ -72,7 +72,7 @@ class NewPhoto extends Component {
     newPhotoForm = (caption) => (
         <form >
             <div className="form-group">
-                <label className="text-muted">Photo</label>
+                <label className="text-muted">Foto</label>
                 <input
                     onChange={this.handleChange("photo")}
                     type="file"
@@ -81,7 +81,7 @@ class NewPhoto extends Component {
                 />
             </div>
             <div className="form-group">
-                <label className="text-muted">Caption</label>
+                <label className="text-muted">Subtítulo</label>
                 <input
                     onChange={this.handleChange("caption")}
                     type="text"
@@ -94,7 +94,7 @@ class NewPhoto extends Component {
                 onClick={this.clickSubmit}
                 className="btn btn-raised btn-primary"
             >
-                Add Photo
+                Añadir foto
             </button>
         </form>
     );
@@ -109,12 +109,12 @@ class NewPhoto extends Component {
         } = this.state;
 
         if (redirectToGallery) {
-            return <Redirect to={`/images`} />;
+            return <Redirect to={`/spanish/images`} />;
         }
 
         return (
             <div className='container'>
-                            <h2 className="mt-5 mb-5">Add Photo</h2>
+                            <h2 className="mt-5 mb-5">Añadir foto</h2>
                             <div
                                 className="alert alert-danger"
                                 style={{ display: error ? "" : "none" }}
@@ -124,7 +124,7 @@ class NewPhoto extends Component {
 
                             {loading ? (
                                 <div className="jumbotron text-center">
-                                    <h2>Loading...</h2>
+                                    <h2>Cargando...</h2>
                                 </div>
                             ) : (
                                 ""

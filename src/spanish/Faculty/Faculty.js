@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { list, read } from "./apiFaculty";
 import { Link, Redirect } from "react-router-dom";
-import {isAuthenticated} from '../../auth'
-
+import {isAuthenticated, signout} from '../../auth'
+import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
 
 class Faculty extends Component {
     constructor() {
@@ -16,7 +16,13 @@ class Faculty extends Component {
             searchedFaculty: '',
             error: '',
             searching: false,
+            spanishPage: false,
+            englishPage: false
         };
+    }
+
+    renderUser = () => {
+        this.setState({user: isAuthenticated().user })
     }
 
     loadFaculties = page => {
@@ -35,7 +41,116 @@ class Faculty extends Component {
 
     componentDidMount() {
         this.loadFaculties(this.state.faculties)
-        console.log(this.state.faculties)
+        this.renderUser()
+    }
+
+    componentWillReceiveProps() {
+        this.renderUser()
+    }
+
+    translateSpanish = () => {
+        this.setState({spanishPage: true})
+    }
+
+    translateEnglish = () => {
+        this.setState({englishPage: true})
+    }
+
+    renderTopHeader = () => {
+        return (
+            <div>
+                <Navbar id='topHeader' collapseOnSelect expand="lg" variant="dark" >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="mr-auto " >
+                    <DropdownButton id="dropdown-basic-button" title="Traductora"  >
+                                <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item ><a >Cambodian</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item><a>Hmong</a></Dropdown.Item>
+
+                                <Dropdown.Item><a onClick={this.translateEnglish}>English</a></Dropdown.Item>
+
+                                <Dropdown.Item><a>Portuguese</a></Dropdown.Item>
+                            
+                            </DropdownButton>
+                        
+                        {
+                            !isAuthenticated() && (
+                               <nav className='row'>
+                                <Nav.Link >
+                                    <Link className='ml-3' to='/signin' style={{color: 'black'}}>
+                                    Registrarse
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link>
+                                    <Link style={{color: 'black'}} to='/signup' >
+                                    Regístrate
+                                    </Link>
+                                </Nav.Link>
+                               </nav>
+                            )
+                        }
+                        
+                        {
+                            isAuthenticated() && isAuthenticated().user && (
+                                <Nav.Link>
+                                    <a style={{color: 'black'}}  onClick={() => signout(() => {
+                                        this.props.history.push('/spanish/faculty')
+                                    })}>
+                                      Desconectar
+                                    </a>
+                                </Nav.Link>
+                            )
+                        }
+                      
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
+    }
+
+    renderMenu = () => {
+        return (
+            <div>
+                 <Navbar id='menu' collapseOnSelect expand="lg" variant="dark"  >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    
+                    <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
+                         <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish'>Hogar</Link></Nav.Link>
+                        </div>
+
+                       <div id='link'>                
+                           <Nav.Link ><Link style={{color: 'white'}} to='/spanish/faculty'>Facultad</Link></Nav.Link>
+                        </div>
+                        <Nav.Link ><Link style={{color: 'white'}} to='/spanish/student'>Estudiantes</Link></Nav.Link>
+                        
+                        
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/admission'>Admisión</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/partners'>Nuestros compañeros</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/images'>Galería</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanishevents'>Próximos Eventos</Link></Nav.Link>
+                        </div>
+                    
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
     }
 
     handleChange = event => {
@@ -49,7 +164,7 @@ class Faculty extends Component {
             if (staff.name === this.state.term) {
                 this.setState({searched: true, searchedFaculty: staff})
             } else {
-                this.setState({searching: true, error: 'Staff member not found'})
+                this.setState({searching: true, error: 'Miembro del personal no encontrado'})
             }
         })
 
@@ -60,21 +175,8 @@ class Faculty extends Component {
         return (
             <div  id='event' className='row container'>
                 {faculties.map((faculty, i) => {
-                    const posterId = faculty.postedBy
-                        ? `/user/${faculty.postedBy._id}`
-                        : "";
-                    const posterName = faculty.postedBy
-                        ? faculty.postedBy.name
-                        : " Unknown";
-
-                        const photoUrl = faculty.postedBy
-                        ? `${process.env.REACT_APP_API_URL}/user/photo/${
-                            event.postedBy._id
-                          }?${new Date().getTime()}`
-                        : ''
-
                         const facultyPhoto = faculty._id
-                        ? `${process.env.REACT_APP_API_URL}/faculty/photo/${
+                        ? `${process.env.REACT_APP_API_URL}/spanishfaculty/photo/${
                             faculty._id
                           }?${new Date().getTime()}`
                         : ''
@@ -86,7 +188,7 @@ class Faculty extends Component {
 
                                 <div className="card-text column mr-5">
                                     <p >
-                                        Faculty Title: {faculty.title.substring(0, 100)}{' '}
+                                        Título de la facultad: {faculty.title.substring(0, 100)}{' '}
                                     </p>  
                                     
                                     {/* <p >
@@ -98,11 +200,11 @@ class Faculty extends Component {
                                     </p>  */}
 
                                      <p >
-                                      Name: {faculty.name.substring(0, 100)}{' '}
+                                      Nombre: {faculty.name.substring(0, 100)}{' '}
                                     </p>      
 
                                     <p >
-                                       About: {faculty.about.substring(0, 100)}{' '}
+                                        Acerca de: {faculty.about.substring(0, 100)}{' '}
                                     </p>           
                                 </div>
                                                        
@@ -114,10 +216,10 @@ class Faculty extends Component {
                                     />
                                 
                                     <Link
-                                        to={`/faculty/${faculty._id}`}
+                                        to={`/spanish/faculty/${faculty._id}`}
                                         className="btn btn-raised btn-primary btn-sm mb-4 ml-5"
                                     >
-                                        Read more
+                                        Lee mas
                                     </Link>
                                 </div>
                             </div>
@@ -129,37 +231,48 @@ class Faculty extends Component {
     };
 
     render() {
-        const { user, faculties, searched, searchedFaculty, error } = this.state;
+        const { user, faculties, searched, spanishPage, englishPage, searchedFaculty, error } = this.state;
+
+        if(spanishPage) {
+            return <Redirect to={`/spanish/faculty`} />
+         } else if (englishPage) {
+             return <Redirect to={'/faculty'} />
+         }
 
         if (searched) { return <Redirect to={`faculty/${searchedFaculty._id}`}/> } 
 
         return (
-            <div className="container">
-                <div className='row mt-4 mb-3'>
-                    <h2 className="col-md-6">
-                        Our Team
-                        {!faculties.length ? "Loading..." : ""}
-                    </h2>
+            <div>
+                {this.renderTopHeader()}
+                {this.renderMenu()}
+                <div className="container">
+                    <div className='row mt-4 mb-3'>
+                        <h2 className="col-md-6">
+                            
+                            Nuestro equipo
+                            {!faculties.length ? "Loading..." : ""}
+                        </h2>
 
-                    <form className="col-md-6">
-                        <input placeholder='by faculty name' type='text' value={this.state.term} onChange={this.handleChange} />
-                        <button onClick={this.search}>Search</button>
-                        {"  "}{error}
-                    </form>
-                    <hr/>
+                        <form className="col-md-6">
+                            <input placeholder='por nombre de la facultad' type='text' value={this.state.term} onChange={this.handleChange} />
+                            <button onClick={this.search}>Buscar</button>
+                            {"  "}{error}
+                        </form>
+                        <hr/>
+                    </div>
+                    {
+                        isAuthenticated() && isAuthenticated().user.role === 'admin' && (
+                            <div>
+                                <Link className='mb-5' to='/spanish/new/faculty'>Añadir facultad</Link>
+                            </div>
+                        )
+                    }
+                
+                    <div>               
+                        {this.renderFaculties(faculties)}
+                    </div>   
+                
                 </div>
-                {
-                    isAuthenticated() && isAuthenticated().user.role === 'admin' && (
-                        <div>
-                            <Link className='mb-5' to='/new/faculty'>Add Faculty</Link>
-                        </div>
-                    )
-                }
-               
-                <div>               
-                    {this.renderFaculties(faculties)}
-                 </div>   
-               
             </div>
         );
     }

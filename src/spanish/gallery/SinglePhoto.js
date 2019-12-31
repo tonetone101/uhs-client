@@ -3,7 +3,6 @@ import {singlePhoto, remove} from './apiPhoto'
 import {Link, Redirect} from 'react-router-dom'
 import {isAuthenticated} from '../../auth'
 
-
 class SinglePhoto extends Component {
     state = {
         image: '',
@@ -13,6 +12,7 @@ class SinglePhoto extends Component {
 
     componentDidMount = () => {
         const imageId = this.props.match.params.imageId
+        console.log(this.props.match.params.imageId)
         singlePhoto(imageId).then(data => {
             if (data.error) {
                 console.log(data.error)
@@ -35,7 +35,7 @@ class SinglePhoto extends Component {
     }
 
     deleteConfirm = () => {
-        let answer = window.confirm('Are you sure you want to delete your photo?')
+        let answer = window.confirm('¿Seguro que quieres eliminar tu foto?')
         if(answer) {
             this.deleteImage()
         }
@@ -44,7 +44,7 @@ class SinglePhoto extends Component {
     renderImage = (image) => {
 
         const photoUrl = image._id
-        ? `${process.env.REACT_APP_API_URL}/image/photo/${
+        ? `${process.env.REACT_APP_API_URL}/spanishimage/photo/${
             image._id
           }?${new Date().getTime()}`
         : '';
@@ -71,27 +71,27 @@ class SinglePhoto extends Component {
 
                     <div className='row'>
                         <Link
-                            to={`/images`}
+                            to={`/spanish/images`}
                             className="btn btn-raised btn-primary btn-sm "
                             style={{marginLeft: '30px'}}
                         >
-                            Back to gallery
+                            Volver a la galería
                         </Link>
 
                         {isAuthenticated().user && isAuthenticated().user.role === 'admin' && (
                             <div >
                                 <div >
                                     <Link
-                                        to={`/edit/image/${image._id}`}
+                                        to={`/spanish/edit/image/${image._id}`}
                                         className='btn btn-raised btn-warning ml-3'
                                     >
-                                        Edit Photo
+                                        Editar foto
                                     </Link>
                                     <button
                                         onClick={this.deleteConfirm}
                                         className='btn btn-raised btn-danger ml-3'
                                     >
-                                        Delete 
+                                        Eliminar 
                                     </button>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@ class SinglePhoto extends Component {
         const {image, redirectToGallery, redirectToSignIn} = this.state
         
         if(redirectToGallery) {
-            return <Redirect to={`/images`} />
+            return <Redirect to={`/spanish/images`} />
          } else if(redirectToSignIn) {
             return <Redirect to={`/signin`} />
          }

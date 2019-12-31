@@ -4,16 +4,18 @@ import {singleCarousel, update, list} from './apiCarousel'
 import {Link, Redirect} from 'react-router-dom'
 import {signout, isAuthenticated} from '../../auth'
 import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
-import {Animated} from "react-animated-css"
-import cookie from "react-cookies";
-import TopHeader from '../../core/TopHeader'
 
 class Carol extends Component {
     state = {
+        user: '',
         carousel: [],
         redirectToSignIn: false,
         spanishPage: false,
         englishPage: false
+    }
+
+    renderUser = () => {
+        this.setState({user: isAuthenticated().user })
     }
 
     componentDidMount() {
@@ -30,6 +32,11 @@ class Carol extends Component {
               
             }
         }) 
+        this.renderUser()
+    }
+
+    componentWillReceiveProps() {
+        this.renderUser()
     }
 
     translateSpanish = () => {
@@ -48,15 +55,15 @@ class Carol extends Component {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto " >
                     <DropdownButton id="dropdown-basic-button" title="Traductora"  >
-                                <Dropdown.Item href="#/action-1"><a onClick={this.translateSpanish}>Spanish</a>
+                                <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item href="#/action-2"><a >Cambodian</a>
+                                <Dropdown.Item ><a >Cambodian</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item href="#/action-3"><a>Hmong</a></Dropdown.Item>
+                                <Dropdown.Item><a>Hmong</a></Dropdown.Item>
 
-                                <Dropdown.Item href="#/action-3"><a onClick={this.translateEnglish}>English</a></Dropdown.Item>
+                                <Dropdown.Item><a onClick={this.translateEnglish}>English</a></Dropdown.Item>
 
-                                <Dropdown.Item href="#/action-3"><a>Portuguese</a></Dropdown.Item>
+                                <Dropdown.Item><a>Portuguese</a></Dropdown.Item>
                             
                             </DropdownButton>
                         
@@ -105,29 +112,29 @@ class Carol extends Component {
                     
                     <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
                          <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/spanish'>Hogar</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish'>Hogar</Link></Nav.Link>
                         </div>
 
                        <div id='link'>                
-                           <Nav.Link href="#features"><Link style={{color: 'white'}} to='/faculty'>Facultad</Link></Nav.Link>
+                           <Nav.Link ><Link style={{color: 'white'}} to='/spanish/faculty'>Facultad</Link></Nav.Link>
                         </div>
-                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/student'>Estudiantes</Link></Nav.Link>
+                        <Nav.Link ><Link style={{color: 'white'}} to='/spanish/student'>Estudiantes</Link></Nav.Link>
                         
                         
                         <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/admission'>Admisión</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/admission'>Admisión</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/partners'>Nuestros compañeros</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/partners'>Nuestros compañeros</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/images'>Galería</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/images'>Galería</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/spanishevents'>Próximos Eventos</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanishevents'>Próximos Eventos</Link></Nav.Link>
                         </div>
                     
                     </Nav>

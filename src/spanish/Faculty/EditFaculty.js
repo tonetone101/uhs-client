@@ -43,7 +43,7 @@ class EditFaculty extends Component {
             });
             return false;
         }
-        if (title.length === 0 || name.length === 0 || about.length ===0) {
+        if (title.length === 0 || name.length === 0 || about.length === 0) {
             this.setState({ error: "All fields are required", loading: false });
             return false;
         }
@@ -86,7 +86,7 @@ class EditFaculty extends Component {
     editFacultyForm = (title, name, about) => (
         <form>
             <div className="form-group">
-                <label className="text-muted">Faculty Photo</label>
+                <label className="text-muted">Foto de la facultad</label>
                 <input
                     onChange={this.handleChange("photo")}
                     type="file"
@@ -95,7 +95,7 @@ class EditFaculty extends Component {
                 />
             </div>
             <div className="form-group">
-                <label className="text-muted">Title</label>
+                <label className="text-muted">Título</label>
                 <input
                     onChange={this.handleChange("title")}
                     type="text"
@@ -105,7 +105,7 @@ class EditFaculty extends Component {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Name</label>
+                <label className="text-muted">Nombre</label>
                 <input
                     onChange={this.handleChange("name")}
                     type="text"
@@ -115,7 +115,7 @@ class EditFaculty extends Component {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">About</label>
+                <label className="text-muted">Acerca de</label>
                 <textarea
                     onChange={this.handleChange("about")}
                     type="text"
@@ -128,7 +128,7 @@ class EditFaculty extends Component {
                 onClick={this.clickSubmit}
                 className="btn btn-raised btn-primary"
             >
-                Edit Faculty
+                Editar facultad
             </button>
         </form>
     );
@@ -138,7 +138,7 @@ class EditFaculty extends Component {
         const {id, title, name, about, redirectToFaculty, error, loading} = this.state
 
         if (redirectToFaculty) {
-            return <Redirect to={`/faculty/${id}`} />;
+            return <Redirect to={`/spanish/faculty/${id}`} />;
         }
 
         return (
@@ -155,7 +155,7 @@ class EditFaculty extends Component {
                             ""
                         )
                     }
-                        <img style={{height: '200px', width: 'auto'}} className='img-thumbnail' src={`${process.env.REACT_APP_API_URL}/faculty/photo/${id}`} onError={i => (i.target.src = ``)} alt='' />
+                        <img style={{height: '200px', width: 'auto'}} className='img-thumbnail' src={`${process.env.REACT_APP_API_URL}/spanishfaculty/photo/${id}`} onError={i => (i.target.src = ``)} alt='' />
 
 
                         {this.editFacultyForm(title, name, about)}

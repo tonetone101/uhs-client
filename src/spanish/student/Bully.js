@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { isAuthenticated } from "../../auth";
+import { isAuthenticated, signout } from "../../auth";
 import { create } from "./apiStudent";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
+import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
 
 class Bully extends Component {
     constructor() {
@@ -15,143 +16,262 @@ class Bully extends Component {
             user: {},
             fileSize: 0,
             loading: false,
-            redirectToProfile: false
+            redirectToProfile: false,
+            spanishPage: false,
+            englishPage: false
         };
+    }
+
+    renderUser = () => {
+        this.setState({user: isAuthenticated().user })
+    }
+
+    componentDidMount() {
+        this.renderUser()
+    }
+
+    componentWillReceiveProps() {
+        this.renderUser()
+    }
+
+    translateSpanish = () => {
+        this.setState({spanishPage: true})
+    }
+
+    translateEnglish = () => {
+        this.setState({englishPage: true})
+    }
+
+    renderTopHeader = () => {
+        return (
+            <div>
+                <Navbar id='topHeader' collapseOnSelect expand="lg" variant="dark" >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="mr-auto " >
+                    <DropdownButton id="dropdown-basic-button" title="Traductora"  >
+                                <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item ><a >Cambodian</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item><a>Hmong</a></Dropdown.Item>
+
+                                <Dropdown.Item><a onClick={this.translateEnglish}>English</a></Dropdown.Item>
+
+                                <Dropdown.Item><a>Portuguese</a></Dropdown.Item>
+                            
+                            </DropdownButton>
+                        
+                        {
+                            !isAuthenticated() && (
+                               <nav className='row'>
+                                <Nav.Link >
+                                    <Link className='ml-3' to='/signin' style={{color: 'black'}}>
+                                    Registrarse
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link>
+                                    <Link style={{color: 'black'}} to='/signup' >
+                                    Regístrate
+                                    </Link>
+                                </Nav.Link>
+                               </nav>
+                            )
+                        }
+                        
+                        {
+                            isAuthenticated() && isAuthenticated().user && (
+                                <Nav.Link>
+                                    <a style={{color: 'black'}}  onClick={() => signout(() => {
+                                        this.props.history.push('/spanish/images')
+                                    })}>
+                                      Desconectar
+                                    </a>
+                                </Nav.Link>
+                            )
+                        }
+                      
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
+    }
+
+    renderMenu = () => {
+        return (
+            <div>
+                 <Navbar id='menu' collapseOnSelect expand="lg" variant="dark"  >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    
+                    <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
+                         <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish'>Hogar</Link></Nav.Link>
+                        </div>
+
+                       <div id='link'>                
+                           <Nav.Link ><Link style={{color: 'white'}} to='/spanish/faculty'>Facultad</Link></Nav.Link>
+                        </div>
+                        <Nav.Link ><Link style={{color: 'white'}} to='/spanish/student'>Estudiantes</Link></Nav.Link>
+                        
+                        
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/admission'>Admisión</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/partners'>Nuestros compañeros</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/images'>Galería</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanishevents'>Próximos Eventos</Link></Nav.Link>
+                        </div>
+                    
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
     }
 
     
     render() {
-        const {
-            parent,
-            student,
-            birthday,
-            contact,
-            user,
-            error,
-            loading,
-            redirectToProfile
-        } = this.state;
+        const {spanishPage, englishPage } = this.state;
+
+        if(spanishPage) {
+            return <Redirect to={`/spanish/bully`} />
+         } else if (englishPage) {
+             return <Redirect to={'/bully'} />
+         }
 
         return (
-            <div className='container' >
-                <h3>STUDENTS and STAFF BULLYING AND HARASSMENT POLICY </h3>
-                <div>
-                    <p>
-                    Guiding Principle:  The Providence School Board believes that preventing bullying and/or 
-                    harassment is critical for creating and maintaining a safe, secure, positive school climate and culture, which supports academic achievement, increases school engagement, respects the rights of all individuals and groups, and purposefully builds community. 
-                    </p>
+            <div>
+                {this.renderTopHeader()}
+                {this.renderMenu()}
+                <div className='container mt-4' >
+                    <h3>ESTUDIANTES Y POLÍTICA DE ACOSO Y ACOSO DE PERSONAL</h3>
+                    <div>
+                        <p>
+                        Principio rector: La Junta Escolar de Providence cree que prevenir el acoso escolar y / o
+                        El acoso es crítico para crear y mantener un clima y cultura escolar seguros y positivos, que respalden el rendimiento académico, aumenten la participación escolar, respeten los derechos de todas las personas y grupos, y construyan una comunidad a propósito.
+                        </p>
 
-                    <p>
-                    Purpose:  To protect the rights of all individuals to engage in teaching and learning, 
-                    bullying and/or harassment of/by any student, teacher, administrator, staff member, parent, or community partner, participating in any sanctioned school activity (as described under SCOPE below) is prohibited. 
-                    To clearly define what constitutes actions of bullying and/or harassment, to highlight the importance of responding to bullying and/or harassment behaviors, and to clarify the extent to which the Superintendent of the Providence Public School Department (PPSD) is directed to apply disciplinary actions, as specified in the following Providence School Board Policies and School District Procedures: Student Rights and Responsibilities, Code of Conduct, Student Discipline, and the Providence School Safety Plan. 
-                    </p>
+                        <p>
+                        Propósito: proteger los derechos de todas las personas a participar en la enseñanza y el aprendizaje,
+                        Se prohíbe la intimidación y / o el acoso de / por cualquier estudiante, maestro, administrador, miembro del personal, padre o socio de la comunidad, que participe en cualquier actividad escolar autorizada (como se describe en el ALCANCE a continuación).
+                        Para definir claramente qué constituyen acciones de intimidación y / o acoso, para resaltar la importancia de responder a las conductas de intimidación y / o acoso, y para aclarar en qué medida el Superintendente del Departamento de Escuelas Públicas de Providence (PPSD) debe aplicar medidas disciplinarias. acciones, como se especifica en las siguientes Políticas de la Junta Escolar de Providence y los Procedimientos del Distrito Escolar: Derechos y Responsabilidades de los Estudiantes, Código de Conducta, Disciplina del Estudiante y el Plan de Seguridad Escolar de Providence.
+                        </p>
 
-                    <p>
-                    Definitions: Bullying is defined as the victimization, intimidation or mistreatment by 
-                    others in the school community, based on unequal physical, psychological or social power or perceived power. Bullying does not include elements of bias (as defined below under Harassment). Bullying does include cyber-bullying and hazing (as defined below). 
-                    Bullying implies behaviors that can cause physical and/or emotional harm, are unwelcome, intentional, unprovoked, and usually repeated. Bullying can be verbal, physical, direct (face-to-face), or indirect (e.g. through another person, in writing, etc.). 
-                    </p>
+                        <p>
+                        Definiciones: La intimidación se define como la victimización, intimidación o maltrato por parte de
+                        otros en la comunidad escolar, basados ​​en desigual poder físico, psicológico o social o poder percibido. La intimidación no incluye elementos de parcialidad (como se define a continuación en Acoso). La intimidación incluye el acoso cibernético y las novatadas (como se define a continuación).
+                        La intimidación implica comportamientos que pueden causar daño físico y / o emocional, no son bienvenidos, intencionales, no provocados y generalmente se repiten. La intimidación puede ser verbal, física, directa (cara a cara) o indirecta (por ejemplo, a través de otra persona, por escrito, etc.).
+                        </p>
 
-                    <p>
-                    Harassment is defined as unwelcome, intentional, unprovoked discriminatory behavior toward an individual or individuals, motivated by prejudice based on any one or more of the following real or perceived characteristics and/or legally protected categories: race, color, religion, ethnicity/natural origin, disability, sex, sexual orientation, gender identity, and age. Harassment includes cyber-harassment (as defined below). 
-                    </p>
+                        <p>
+                        El acoso se define como un comportamiento discriminatorio no deseado, intencional y no provocado hacia una persona o personas, motivado por prejuicios basados ​​en una o más de las siguientes características reales o percibidas y / o categorías legalmente protegidas: raza, color, religión, origen étnico / origen natural , discapacidad, sexo, orientación sexual, identidad de género y edad. El acoso incluye el acoso cibernético (como se define a continuación).
+                        </p>
 
-                    <p>
-                    Sexual Harassment is defined as either Hostile Environment Sexual Harassment or Quid Pro Quo Sexual Harassment. Sexual harassment may occur student to student, adult to student, student to adult, adult to adult, male to female, female to male, female to female, and male to male. 
-                    Hostile Environment Sexual Harassment occurs when unwelcome sexual advances, requests for sexual favors, or other verbal, nonverbal or physical conduct of a sexual nature by another student, a school employee, or a third party on school property or at a school-related activity is sufficiently severe, pervasive or persistent so as interfere with or limit a student’s ability to participate in or benefit from PPSD programs or activities, or to interfere with or limit an individual’s or individuals’ 
-                    employment, by creating a hostile, humiliating, intimidating, or offensive educational or work environment. A victim may also be someone reasonably affected by conduct directed toward another individual. 
-                    </p>
+                        <p>
+                        El acoso sexual se define como acoso sexual en un entorno hostil o acoso sexual Quid Pro Quo. El acoso sexual puede ocurrir de estudiante a estudiante, de adulto a estudiante, de estudiante a adulto, de adulto a adulto, de hombre a mujer, de mujer a hombre, de mujer a mujer y de hombre a hombre.
+                        El hostigamiento sexual en un entorno hostil se produce cuando avances sexuales no deseados, solicitudes de favores sexuales u otra conducta verbal, no verbal o física de naturaleza sexual por parte de otro estudiante, un empleado de la escuela o un tercero en la propiedad escolar o en una actividad relacionada con la escuela. suficientemente grave, generalizado o persistente para interferir o limitar la capacidad de un estudiante para participar o beneficiarse de los programas o actividades del PPSD, o para interferir o limitar el individuo o los individuos '
+                        empleo, creando un ambiente educativo o laboral hostil, humillante, intimidante u ofensivo. Una víctima también puede ser alguien razonablemente afectado por una conducta dirigida hacia otra persona.
+                        </p>
 
-                    <p>
-                    Quid Pro Quo Sexual Harassment occurs when a PPSD employee or a student explicitly or implicitly conditions participation in an education program or activity or bases an educational decision on the student’s submission to sexual advances, requests for sexual favors, or other verbal or physical conduct of a sexual nature, whether or not the student submits to the conduct. Quid pro quo sexual harassment also occurs when a PPSD employee conditions a PPSD employee’s employment on submission to sexual advances, requests for sexual favors, or other verbal or physical conduct of a sexual nature or as a basis for an employment decision (including but not limited to promotion, demotion, alteration of duties or hours, or performance reviews). 
-                    </p>
-                    <p>
-                    Cyberbullying is defined as any willful and repeated harm inflicted through, but not limited to, the use of computers, cell phones, and other electronic devices. The following are examples of cyberbullying, when they are intentional and result in social-emotional harm and/or distress: 
-                    • Sending text messages over the Internet or using a cell phone or texting device or medium 
-                    • Sending or posting text, images, audio, or video on or over the Internet or through a cell phone or electronic network (sexting), including social networking sites 
-                    • Sending a threatening, intimidating, graphic or sexually explicit picture or video via the Internet or using a cell phone or electronic network, including social networking site 
-                    </p>
+                        <p>
+                        El acoso sexual Quid Pro Quo ocurre cuando un empleado del PPSD o un estudiante condiciona explícita o implícitamente la participación en un programa o actividad educativa o basa una decisión educativa en la sumisión del estudiante a avances sexuales, solicitudes de favores sexuales u otra conducta verbal o física de un naturaleza sexual, ya sea que el alumno se someta o no a la conducta. El acoso sexual quid pro quo también ocurre cuando un empleado de PPSD condiciona el empleo de un empleado de PPSD al someterse a avances sexuales, solicitudes de favores sexuales u otra conducta verbal o física de naturaleza sexual o como base para una decisión de empleo (incluyendo, entre otros) a promoción, degradación, alteración de deberes u horarios, o revisiones de desempeño).
+                        El hostigamiento sexual en un entorno hostil se produce cuando avances sexuales no deseados, solicitudes de favores sexuales u otra conducta verbal, no verbal o física de naturaleza sexual por parte de otro estudiante, un empleado de la escuela o un tercero en la propiedad escolar o en una actividad relacionada con la escuela. suficientemente grave, generalizado o persistente para interferir o limitar la capacidad de un estudiante para participar o beneficiarse de los programas o actividades del PPSD, o para interferir o limitar el individuo o los individuos '
+                        empleo, creando un ambiente educativo o laboral hostil, humillante, intimidante u ofensivo. Una víctima también puede ser alguien razonablemente afectado por una conducta dirigida hacia otra persona.
+                        </p>
+                        <p>
+                        El acoso cibernético se define como cualquier daño intencional y reiterado infligido, entre otros, mediante el uso de computadoras, teléfonos celulares y otros dispositivos electrónicos. Los siguientes son ejemplos de acoso cibernético, cuando son intencionales y resultan en daño y / o angustia socioemocional:
+                        • Enviar mensajes de texto a través de Internet o usar un teléfono celular o un dispositivo o medio de mensajes de texto
+                        • Enviar o publicar texto, imágenes, audio o video en Internet o por Internet, a través de un teléfono celular o una red electrónica (sexting), incluidos los sitios de redes sociales
+                        • Enviar una imagen o video amenazante, intimidante, gráfico o sexualmente explícito a través de Internet o utilizando un teléfono celular o una red electrónica, incluido un sitio de redes sociales
+                        </p>
 
-<p>                
-    Cyber-harassment is defined as any willful harm inflicted through, but not limited to, the use of computers, cell phones, and other electronic devices, motivated by prejudice based on any one or more of the following real or perceived characteristics and/or legally protected categories: race, color, religion, ethnicity/natural origin, disability, sex, sexual orientation, and gender identity. 
-</p>
-<p>
-Hazing is defined as any activity expected of someone joining a group that humiliates, degrades, abuses or endangers regardless of the persons willingness to participate. 
+    <p>                
+    El acoso cibernético se define como cualquier daño intencional causado, entre otros, por el uso de computadoras, teléfonos celulares y otros dispositivos electrónicos, motivado por prejuicios basados ​​en una o más de las siguientes características reales o percibidas y / o legalmente categorías protegidas: raza, color, religión, origen étnico / natural, discapacidad, sexo, orientación sexual e identidad de género.</p>
+    <p>
+    La novatada se define como cualquier actividad esperada de alguien que se une a un grupo que humilla, degrada, abusa o pone en peligro independientemente de la voluntad de las personas de participar.
 
-</p>
-<p>
-Retaliation is defined as any form of intimidation, reprisal, or harassment by a PPSD community member directed against another PPSD community member for reporting or filing a complaint, for aiding or encouraging the filing of a report or complaint, for cooperating in an investigation under this Policy, or for taking action consistent with this Policy. 
-
-</p>
-               <p>
-               Scope Every form of bullying, harassment, cyberbullying, and/or cyber- 
-                harassment is prohibited, whether in the classroom, on school premises, immediately adjacent to school premises, when a PPSD student is traveling to or from school (portal to portal), or at a school-sponsored event, whether or not held on school premises. 
-                Providence Public Schools Providence, Rhode Island “Traveling to or from school (portal to portal)” also includes, but is not limited to (henceforth “including”), on a school bus or other school related- vehicle (including using a district-issued bus pass), at official school bus stops, and walking to or from school within a reasonable time before or after school hours. 
-                Bullying or harassment, including cyberbullying or cyber-harassment, that is not initiated at a location defined above is covered by this policy if the incident results in a potentially substantial disruption of the school learning environment for one or more individuals and/or the orderly day- to-day operations of any school or school program. 
-               </p>
-
-               <p>
-               Reporting and Each member of the PPSD community is responsible for reporting Investigations knowledge of any behaviors covered in this Policy or credible information 
-                that such an act has taken place. A specific person responsible for receiving and following up on such reports for a school building shall be identified by the superintendent or his designee at the beginning of each school year, and such person shall coordinate and timely report investigative findings to the District-wide Title 9/Equity coordinator also designated by the superintendent or his designee. 
-                If a report of cyberbullying and/or cyber-harassment concerning an incident initiated outside the Scope (as defined above), such report will be investigated by the Superintendent to determine if the incident(s) resulted in a potentially substantial disruption of the school learning environment for one or more individuals and/or the orderly day-to-day operations of any school or school program. 
-
-               </p>
-               <p>
-               District Procedures The Superintendent shall define “Guidelines and Procedures to 
-                Implement the Bullying and Harassment Policy and Dating Violence Policy.” 
-                The Superintendent shall provide age-appropriate guidelines for each school for reporting and investigating incidents of bullying or harassment. Specific persons responsible for receiving and following up on reports will be identified in these procedures. Such guidelines will include a standardized reporting form to be used by any member of the PPSD community. The purpose of such a reporting form is to trigger an investigation, which protects the safety of the target, bystanders, and/or concerned family/guardian/community members. 
-                These guidelines shall include clear guidelines as to when and how reports on bullying or harassment should be made to law enforcement for investigation into possible criminal charges. 
-                Within the requirements of FERPA, the Guidelines and Procedures to Implement the Bullying and Harassment Policy and Dating Violence Policy shall include a specific amount of time within which parents will be informed of a complaint and a specific amount of time for investigations to be completed. 
-                Additionally, the Guidelines and Procedures to Implement the Bullying and Harassment Policy and Dating Violence Policy shall also include a plan for communicating with parents/guardians, professional development 
-                Providence Public Schools Providence, Rhode Island for all staff, and instruction for students at all school levels in social- emotional learning and violence prevention. 
-               </p>
-                
-
+    </p>
+    <p>
+    Las represalias se definen como cualquier forma de intimidación, represalia o acoso por parte de un miembro de la comunidad del PPSD dirigido contra otro miembro de la comunidad del PPSD por informar o presentar una queja, por ayudar o alentar la presentación de un informe o una queja, por cooperar en una investigación bajo este Política, o por tomar medidas consistentes con esta Política.
+    </p>
                 <p>
-                Consequences: Consequences and appropriate remedial action for students who commit 
-                acts of bullying or harassment may range from positive behavioral interventions up to and including suspension or exclusion, as outlined in the “District-Wide Code of Conduct, Grades PK-12.” 
-                Retaliation or threats of retaliation in any form designed to intimidate the victim of bullying or harassment, those who are witnesses or those investigating an incident of bullying or harassment will be subject to Level Two or Three in the “District-Wide Code of Conduct, Grade PK-12.” 
-                Acts of bullying or harassment allegedly committed by adult members (including teachers, administrators, staff members, other school personnel, parents, community partners, or other visitors to the school) of the school community will be reported to school administrators and/or the designated office of the PPSD for investigation and consequences, in accordance with applicable procedures, including appropriate legal actions. 
-                Retaliation or threats of retaliation by adult members (including teachers, administrators, staff members, other school personnel, parents, community partners, or other visitors to the school) of the PPSD community in any form designed to intimidate the victim of, witnesses to, or those investigating bullying or harassment will be subject to additional consequences, in accordance with appropriate procedures. 
-
-                </p>
-                
-                <p>
-                Accountability Annually, the Superintendent shall also report to the School 
-                Board prior to the start of each school year on the number of complaints, investigations, verified acts, and trends of bullying, harassment, cyber-bullying and cyber-harassment. 
+                Alcance Toda forma de intimidación, acoso, acoso cibernético y / o ciber-
+                    Se prohíbe el acoso, ya sea en el aula, en las instalaciones de la escuela, inmediatamente adyacente a las instalaciones de la escuela, cuando un estudiante de PPSD viaja hacia o desde la escuela (portal a portal), o en un evento patrocinado por la escuela, ya sea que se realice o no en las instalaciones de la escuela. .
+                    Providence Public Schools Providence, Rhode Island "Viajar hacia o desde la escuela (portal a portal)" también incluye, pero no se limita a (en adelante "incluido"), en un autobús escolar u otro vehículo relacionado con la escuela (incluido el uso de un distrito- pase de autobús emitido), en las paradas oficiales del autobús escolar y caminando hacia o desde la escuela dentro de un tiempo razonable antes o después del horario escolar.
+                    La intimidación o el acoso, incluido el acoso cibernético o el acoso cibernético, que no se inicie en un lugar definido anteriormente está cubierto por esta política si el incidente resulta en una interrupción potencialmente sustancial del entorno de aprendizaje escolar para una o más personas y / o el día ordenado - operaciones diarias de cualquier escuela o programa escolar.
                 </p>
 
-               <p>
-               Support for the Since bullying and harassment puts the mental health of the target Target at risk, an appropriate referral for support services will be made. 
-                The school shall maintain ongoing support and communication with the target to ensure that retaliation for the reporting any behaviors covered in this policy is addressed promptly. The target and the target’s parent should be afforded a range of options to ensure that person’s emotional and physical safety. 
-               </p>
-
-               <p>
-               Other Legal Any PPSD community member may also pursue legal remedies or Remedies other avenues of recourse, including but not limited to filing a complaint 
-                with: the Rhode Island Department of Education, at (401) 222-4600; the Rhode Island Office of Attorney General, Civil Rights Division, at (401) 274-4400; the Office of Civil Rights of the United States Department of Education, at (617) 289-0111, and/or the Equal Employment Opportunity Commission, at (800) 669-4000; filing a civil lawsuit; or pursuing criminal prosecution. 
-               </p>
-
                 <p>
-                Legal References R.I.G.L. section 16-21-24 (School Safety) 
-                R.I.G.L. section 16-21-26 (Bullying/Harassment) 
-                R.I.G.L. section 6-38-1.1 (Sex Discrimination) R.I. Gen. Laws section 42-112-1 et seq. (Rhode Island Civil Rights Act of 1990) RI 28-5-1 et seq. (Labor Employment Practices; State Fair Employment 
-                Practices) RI 42-28-1 et seq. (Hate Crimes) (racial, religious, ethnic, sexual 
-                orientation, gender or disability prejudice R.I.G.L. section 16-38-1 et seq. and 16-38-1.1 et seq. (Relating to age, 
-                race and sex discrimination in education) R.I.G.L. section 42-87-1 et seq.; (The Civil Rights of People With 
-                Disabilities Act) R.I.G.L. section 42-80.1-1 et seq. (The Religious Freedom Restoration 
-                Act) R .I. G. L. section 11-52-4.2, § 11-52-4.3 (criminal statutes relating to 
-                cyber crimes) R.I.G.L section 11-21-1 (RI Hazing Law) US Civil Rights Act of 1964, Title VI (Discrimination in Education based 
-                on Race, Color, or National Origin) US Civil Rights Act of 1964, Title VII (Employment Discrimination Based 
-                on Race, Color, Religion, Sex, National Origin) Title IX of the Education Amendments of 1972 (Gender Equity including 
-                Sexual Harassment) Section 504 of the Rehabilitation Act of 1973 (Disability) Americans with Disabilities Act of 1990 
-                </p>
-                
-                <p>
-                History Approved _______ 
-                Providence Public Schools Providence, Rhode Island 
+                Informar y Cada miembro de la comunidad de PPSD es responsable de informar a las Investigaciones el conocimiento de cualquier comportamiento cubierto en esta Política o información creíble
+                    que tal acto ha tenido lugar. El superintendente o su designado identificará a una persona específica responsable de recibir y dar seguimiento a dichos informes para un edificio escolar al comienzo de cada año escolar, y dicha persona deberá coordinar e informar oportunamente los resultados de la investigación al Título 9 de todo el Distrito / Coordinador de equidad también designado por el superintendente o su designado.
+                    Si un informe de acoso cibernético y / o acoso cibernético con respecto a un incidente iniciado fuera del alcance (como se define anteriormente), el superintendente investigará dicho informe para determinar si el incidente (s) resultó en una interrupción potencialmente sustancial del aprendizaje escolar entorno para uno o más individuos y / o las operaciones diarias ordenadas de cualquier escuela o programa escolar.
 
                 </p>
+                <p>
+                    Procedimientos del Distrito El Superintendente deberá definir "Directrices y Procedimientos para
+                    Implemente la Política de intimidación y acoso y la Política de violencia de pareja ".
+                    El Superintendente deberá proporcionar pautas apropiadas para la edad de cada escuela para informar e investigar incidentes de intimidación o acoso. Las personas específicas responsables de recibir y dar seguimiento a los informes se identificarán en estos procedimientos. Dichas pautas incluirán un formulario de informe estandarizado para ser utilizado por cualquier miembro de la comunidad de PPSD. El propósito de dicho formulario de informe es desencadenar una investigación, que protege la seguridad del objetivo, los espectadores y / o los familiares / tutores / miembros de la comunidad interesados.
+                    Estas pautas incluirán pautas claras sobre cuándo y cómo se deben hacer informes sobre acoso o hostigamiento a las fuerzas del orden público para la investigación de posibles cargos penales.
+                    Dentro de los requisitos de FERPA, las Pautas y procedimientos para implementar la Política de intimidación y acoso y la Política de violencia de pareja incluirán una cantidad específica de tiempo dentro del cual los padres serán informados de una queja y una cantidad específica de tiempo para completar las investigaciones.
+                    Además, las Pautas y procedimientos para implementar la Política de acoso y hostigamiento y la Política de violencia de pareja también incluirán un plan para comunicarse con los padres / tutores, desarrollo profesional
+                    Providence Public Schools Providence, Rhode Island para todo el personal e instrucción para estudiantes de todos los niveles escolares sobre aprendizaje socioemocional y prevención de la violencia.
+                </p>
+                    
+
+                    <p>
+                    Consecuencias: consecuencias y medidas correctivas apropiadas para los estudiantes que se comprometen
+                    los actos de acoso o hostigamiento pueden variar desde intervenciones conductuales positivas hasta la suspensión o exclusión, como se describe en el "Código de Conducta del Distrito, Grados PK-12".
+                    Represalias o amenazas de represalias en cualquier forma diseñada para intimidar a la víctima de hostigamiento o acoso, aquellos que son testigos o quienes investigan un incidente de hostigamiento o hostigamiento estarán sujetos al Nivel Dos o Tres en el "Código de Conducta del Distrito, Grado PK-12 ".
+                    Los actos de intimidación o acoso presuntamente cometidos por miembros adultos (incluidos maestros, administradores, miembros del personal, otro personal escolar, padres, socios de la comunidad u otros visitantes a la escuela) de la comunidad escolar se informarán a los administradores escolares y / o al designado oficina del PPSD para investigación y consecuencias, de acuerdo con los procedimientos aplicables, incluidas las acciones legales apropiadas.
+                    Represalias o amenazas de represalias por parte de miembros adultos (incluidos maestros, administradores, miembros del personal, otro personal de la escuela, padres, socios de la comunidad u otros visitantes a la escuela) de la comunidad del PPSD en cualquier forma diseñada para intimidar a la víctima de, testigos de, o aquellos que investigan la intimidación o el acoso estarán sujetos a consecuencias adicionales, de acuerdo con los procedimientos apropiados.
+                    </p>
+                    
+                    <p>
+                    Rendición de cuentas Anualmente, el Superintendente también deberá informar a la Escuela
+                    Junta antes del comienzo de cada año escolar sobre el número de quejas, investigaciones, actos verificados y tendencias de acoso, acoso cibernético y acoso cibernético.
+                    </p>
+
+                <p>
+                Apoyo para el Puesto que la intimidación y el acoso ponen en riesgo la salud mental del objetivo, se realizará una derivación adecuada para los servicios de apoyo.
+                    La escuela deberá mantener el apoyo y la comunicación continuos con el objetivo para garantizar que las represalias por informar cualquier comportamiento cubierto en esta política se aborden con prontitud. El objetivo y el padre del objetivo deben tener una variedad de opciones para garantizar la seguridad física y emocional de esa persona.
+                </p>
+
+                <p>
+                Otros aspectos legales Cualquier miembro de la comunidad de PPSD también puede buscar soluciones legales o remediar otras vías de recurso, que incluyen pero no se limitan a presentar una queja
+                    con: el Departamento de Educación de Rhode Island, al (401) 222-4600; la Oficina del Fiscal General de Rhode Island, División de Derechos Civiles, al (401) 274-4400; la Oficina de Derechos Civiles del Departamento de Educación de los Estados Unidos, al (617) 289-0111, y / o la Comisión de Igualdad de Oportunidades de Empleo, al (800) 669-4000; presentar una demanda civil; o perseguir el enjuiciamiento penal.
+                </p>
+
+                    <p>
+                    Referencias legales R.I.G.L. sección 16-21-24 (seguridad escolar)
+                    R.I.G.L. sección 16-21-26 (intimidación / acoso)
+                    R.I.G.L. sección 6-38-1.1 (Discriminación sexual) R.I. Gen. Laws sección 42-112-1 et seq. (Ley de Derechos Civiles de Rhode Island de 1990) RI 28-5-1 et seq. (Prácticas laborales de empleo; Empleo justo del estado
+                    Prácticas) RI 42-28-1 et seq. (Crímenes de odio) (raciales, religiosos, étnicos, sexuales
+                    orientación, género o prejuicio por discapacidad R.I.G.L. sección 16-38-1 y siguientes. y 16-38-1.1 y siguientes. (Relacionado con la edad,
+                    discriminación racial y sexual en la educación) R.I.G.L. sección 42-87-1 y siguientes; (Los derechos civiles de las personas con
+                    Ley de Discapacidades) R.I.G.L. sección 42-80.1-1 y siguientes. (La restauración de la libertad religiosa
+                    Ley) R .I. G. L. sección 11-52-4.2, § 11-52-4.3 (estatutos penales relacionados con
+                    delitos cibernéticos) R.I.G.L sección 11-21-1 (Ley de novatadas de RI) Ley de Derechos Civiles de EE. UU. de 1964, Título VI (Discriminación en la educación basada
+                    sobre raza, color u origen nacional) Ley de Derechos Civiles de EE. UU. de 1964, Título VII (Basado en discriminación laboral
+                    sobre raza, color, religión, sexo, origen nacional) Título IX de las enmiendas de educación de 1972 (equidad de género, incluyendo
+                    Acoso Sexual) Sección 504 de la Ley de Rehabilitación de 1973 (Discapacidad) Ley de Estadounidenses con Discapacidades de 1990
+                    </p>
+                    
+                    <p>
+                    Historia aprobada _______
+                    Escuelas públicas de Providence Providence, Rhode Island
+
+                    </p>
+                    </div>
                 </div>
             </div>
         );

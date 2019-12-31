@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { isAuthenticated } from "../../auth";
 import { create } from "./apiStudent";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 class NewStudent extends Component {
     constructor() {
@@ -86,7 +86,7 @@ class NewStudent extends Component {
                 />
             </div> */}
             <div className="form-group">
-                <label className="text-muted">Parent name</label>
+                <label className="text-muted">Nombre del padre</label>
                 <input
                     onChange={this.handleChange("parent")}
                     type="text"
@@ -96,7 +96,7 @@ class NewStudent extends Component {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Student Name</label>
+                <label className="text-muted">Nombre del estudiante</label>
                 <input
                     onChange={this.handleChange("student")}
                     type="text"
@@ -106,7 +106,7 @@ class NewStudent extends Component {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Student Birthday</label>
+                <label className="text-muted">Cumpleaños del estudiante</label>
                 <input
                     onChange={this.handleChange("birthday")}
                     type="text"
@@ -116,7 +116,7 @@ class NewStudent extends Component {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Contact</label>
+                <label className="text-muted">Contacto</label>
                 <input
                     onChange={this.handleChange("contact")}
                     type="text"
@@ -129,8 +129,16 @@ class NewStudent extends Component {
                 onClick={this.clickSubmit}
                 className="btn btn-raised btn-primary"
             >
-                Send
+                Enviar
             </button>
+
+            <Link
+                            to={`/spanish/admission`}
+                            className="btn btn-raised btn-primary btn-sm "
+                            style={{marginLeft: '30px'}}
+                        >
+                            Regresa
+                        </Link>
         </form>
     );
 
@@ -153,7 +161,7 @@ class NewStudent extends Component {
         return (
             <div className='container' >
                 
-                            <h2 className="mt-5 mb-5">Pre-Registeration form</h2>
+                            <h2 className="mt-5 mb-5">Formulario de preinscripción</h2>
                             <div
                                 className="alert alert-danger"
                                 style={{ display: error ? "" : "none" }}
@@ -163,7 +171,7 @@ class NewStudent extends Component {
 
                             {loading ? (
                                 <div className="jumbotron text-center">
-                                    <h2>Loading...</h2>
+                                    <h2>Cargando...</h2>
                                 </div>
                             ) : (
                                 ""
@@ -171,7 +179,7 @@ class NewStudent extends Component {
 
                             {
                                 isAuthenticated() && isAuthenticated().user ? (this.newStudentForm(parent, student, birthday, contact)) : (<div>
-                                    <p>In order to register your child, please create a user account by signing up and signing in. Once you are signed in, revisit this page. </p>
+                                    <p>Para registrar a su hijo, cree una cuenta de usuario registrándose e iniciando sesión. Una vez que haya iniciado sesión, vuelva a visitar esta página. </p>
                                 </div>)
                             }
 

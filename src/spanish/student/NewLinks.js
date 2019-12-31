@@ -79,7 +79,7 @@ class NewLink extends Component {
         <form>       
 
             <div className="form-group">
-                <label className="text-muted">Link explanatioon</label>
+                <label className="text-muted">Explicación de enlaces</label>
                 <input
                     onChange={this.handleChange("body")}
                     type="text"
@@ -89,7 +89,7 @@ class NewLink extends Component {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">URL of link</label>
+                <label className="text-muted">URL del enlace</label>
                 <input
                     onChange={this.handleChange("url")}
                     type="text"
@@ -104,9 +104,9 @@ class NewLink extends Component {
                     className="btn btn-raised btn-primary"
                     style={{'marginLeft': '10px'}}
                 >
-                    Post link
+                    Publicar enlace
                 </button>
-                <Link className='btn btn-raised ml-5' to={'/student'}>Back</Link>
+                <Link className='btn btn-raised ml-5' to={'/spanish/student'}>atrás</Link>
 
                
             </div>
@@ -124,7 +124,7 @@ class NewLink extends Component {
        
 
         if (redirectToLinks) {
-            return <Redirect to={'/student'} />;
+            return <Redirect to={'/spanish/student'} />;
             
         }
 

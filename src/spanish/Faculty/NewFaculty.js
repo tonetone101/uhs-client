@@ -76,7 +76,7 @@ class NewFaculty extends Component {
     newFacultyForm = (title, name, about) => (
         <form >
             <div className="form-group">
-                <label className="text-muted">Event Photo</label>
+                <label className="text-muted">Foto de la facultad</label>
                 <input
                     onChange={this.handleChange("photo")}
                     type="file"
@@ -85,7 +85,7 @@ class NewFaculty extends Component {
                 />
             </div>
             <div className="form-group">
-                <label className="text-muted">Title</label>
+                <label className="text-muted">Título</label>
                 <input
                     onChange={this.handleChange("title")}
                     type="text"
@@ -95,7 +95,7 @@ class NewFaculty extends Component {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Name</label>
+                <label className="text-muted">Nombre</label>
                 <input
                     onChange={this.handleChange("name")}
                     type="text"
@@ -105,7 +105,7 @@ class NewFaculty extends Component {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">About</label>
+                <label className="text-muted">Acerca de</label>
                 <input
                     onChange={this.handleChange("about")}
                     type="text"
@@ -118,7 +118,7 @@ class NewFaculty extends Component {
                 onClick={this.clickSubmit}
                 className="btn btn-raised btn-primary"
             >
-                Add Faculty Member
+                Añadir miembro de la facultad
             </button>
         </form>
     );
@@ -135,12 +135,12 @@ class NewFaculty extends Component {
         } = this.state;
 
         if (redirectToFaculties) {
-            return <Redirect to={`/`} />;
+            return <Redirect to={`/spanish/faculty`} />;
         }
 
         return (
             <div className='container'>
-                            <h2 className="mt-5 mb-5">Add new faculty member</h2>
+                            <h2 className="mt-5 mb-5">Agregar nuevo miembro de la facultad</h2>
                             <div
                                 className="alert alert-danger"
                                 style={{ display: error ? "" : "none" }}
@@ -150,7 +150,7 @@ class NewFaculty extends Component {
 
                             {loading ? (
                                 <div className="jumbotron text-center">
-                                    <h2>Loading...</h2>
+                                    <h2>Cargando...</h2>
                                 </div>
                             ) : (
                                 ""

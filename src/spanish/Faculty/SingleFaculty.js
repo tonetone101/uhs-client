@@ -3,7 +3,6 @@ import {singleFaculty, remove} from './apiFaculty'
 import {Link, Redirect} from 'react-router-dom'
 import {isAuthenticated} from '../../auth'
 
-
 class SingleFaculty extends Component {
     state = {
         faculty: '',
@@ -35,7 +34,7 @@ class SingleFaculty extends Component {
     }
 
     deleteConfirm = () => {
-        let answer = window.confirm('Are you sure you want to delete your post?')
+        let answer = window.confirm('¿Estás seguro de que deseas eliminar tu publicación?')
         if(answer) {
             this.deleteFaculty()
         }
@@ -51,7 +50,7 @@ class SingleFaculty extends Component {
         : " Unknown";
 
         const photoUrl = faculty._id
-        ? `${process.env.REACT_APP_API_URL}/faculty/photo/${
+        ? `${process.env.REACT_APP_API_URL}/spanishfaculty/photo/${
             faculty._id
           }?${new Date().getTime()}`
         : '';
@@ -72,39 +71,39 @@ class SingleFaculty extends Component {
 
                     <div className='col-md-6 mt-5'>
                         <p className="card-text">
-                            Faculty Title: {faculty.title}
+                            Título de la facultad: {faculty.title}
                         </p>
                         <p className="card-text">
-                            Name: {faculty.name}
+                            Nombre: {faculty.name}
                         </p>
                         <p className="card-text">
-                            About: {faculty.about}
+                            Acerca de: {faculty.about}
                         </p>
                     </div>
 
                     <div className='row'>
                         <Link
-                            to={`/faculty`}
+                            to={`/spanish/faculty`}
                             className="btn btn-raised btn-primary btn-sm "
                             style={{marginLeft: '30px'}}
                         >
-                            Back to faculties
+                            De vuelta a las facultades
                         </Link>
 
                         {isAuthenticated().user && isAuthenticated().user.role === 'admin' && (
                             <div >
                                 <div >
                                     <Link
-                                        to={`/edit/faculty/${faculty._id}`}
+                                        to={`/spanish/edit/faculty/${faculty._id}`}
                                         className='btn btn-raised btn-warning ml-3'
                                     >
-                                        Update Faculty
+                                        Actualizar facultad
                                     </Link>
                                     <button
                                         onClick={this.deleteConfirm}
                                         className='btn btn-raised btn-danger ml-3'
                                     >
-                                        Delete 
+                                        Eliminar
                                     </button>
                                 </div>
                             </div>
@@ -128,7 +127,7 @@ class SingleFaculty extends Component {
                            <div className='container'>
                                 {!faculty ? ( 
                                         <div className='jumbotron text-center '>
-                                            <h2>Loading....</h2>
+                                            <h2>Cargando....</h2>
                                         </div>
                                         ) : (
                                             this.renderFaculty(faculty)
