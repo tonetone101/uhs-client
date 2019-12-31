@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { isAuthenticated } from "../../auth";
+import { isAuthenticated, signout } from "../../auth";
 import { create } from "./apiStudent";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
+import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
 
 class GenderPolicy extends Component {
     constructor() {
@@ -15,81 +16,202 @@ class GenderPolicy extends Component {
             user: {},
             fileSize: 0,
             loading: false,
-            redirectToProfile: false
+            redirectToProfile: false,
+            spanishPage: false,
+            englishPage: false
         };
     }
 
+    renderUser = () => {
+        this.setState({user: isAuthenticated().user })
+    }
+
+    componentDidMount() {
+        this.renderUser()
+    }
+
+    componentWillReceiveProps() {
+        this.renderUser()
+    }
+
+    translateSpanish = () => {
+        this.setState({spanishPage: true})
+    }
+
+    translateEnglish = () => {
+        this.setState({englishPage: true})
+    }
+
+    renderTopHeader = () => {
+        return (
+            <div>
+                <Navbar id='topHeader' collapseOnSelect expand="lg" variant="dark" >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="mr-auto " >
+                    <DropdownButton id="dropdown-basic-button" title="Traductora"  >
+                                <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item ><a >Cambodian</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item><a>Hmong</a></Dropdown.Item>
+
+                                <Dropdown.Item><a onClick={this.translateEnglish}>English</a></Dropdown.Item>
+
+                                <Dropdown.Item><a>Portuguese</a></Dropdown.Item>
+                            
+                            </DropdownButton>
+                        
+                        {
+                            !isAuthenticated() && (
+                               <nav className='row'>
+                                <Nav.Link >
+                                    <Link className='ml-3' to='/signin' style={{color: 'black'}}>
+                                    Registrarse
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link>
+                                    <Link style={{color: 'black'}} to='/signup' >
+                                    Regístrate
+                                    </Link>
+                                </Nav.Link>
+                               </nav>
+                            )
+                        }
+                        
+                        {
+                            isAuthenticated() && isAuthenticated().user && (
+                                <Nav.Link>
+                                    <a style={{color: 'black'}}  onClick={() => signout(() => {
+                                        this.props.history.push('/spanish/images')
+                                    })}>
+                                      Desconectar
+                                    </a>
+                                </Nav.Link>
+                            )
+                        }
+                      
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
+    }
+
+    renderMenu = () => {
+        return (
+            <div>
+                 <Navbar id='menu' collapseOnSelect expand="lg" variant="dark"  >
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    
+                    <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
+                         <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish'>Hogar</Link></Nav.Link>
+                        </div>
+
+                       <div id='link'>                
+                           <Nav.Link ><Link style={{color: 'white'}} to='/spanish/faculty'>Facultad</Link></Nav.Link>
+                        </div>
+                        <Nav.Link ><Link style={{color: 'white'}} to='/spanish/student'>Estudiantes</Link></Nav.Link>
+                        
+                        
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/admission'>Admisión</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/partners'>Nuestros compañeros</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/images'>Galería</Link></Nav.Link>
+                        </div>
+
+                        <div id='link'>                        
+                            <Nav.Link ><Link style={{color: 'white'}} to='/spanishevents'>Próximos Eventos</Link></Nav.Link>
+                        </div>
+                    
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </div>
+        )
+    }
+
+
     
     render() {
-        const {
-            parent,
-            student,
-            birthday,
-            contact,
-            user,
-            error,
-            loading,
-            redirectToProfile
-        } = this.state;
+        const {spanishPage, englishPage } = this.state;
+
+        if(spanishPage) {
+            return <Redirect to={`/spanish/genderpolicy`} />
+         } else if (englishPage) {
+             return <Redirect to={'/genderpolicy'} />
+         }
 
         return (
-            <div className='container' >
-                <h3>STUDENT FAQ: Transgender and Gender Expansive Student Policy</h3>
-                <div>
-                    <p>
-                        What does the term “Transgender” mean?
-                        “Transgender” is an adjective describing a person whose gender identity or gender expression differs from the gender listed on that person’s 
-                        original birth certificate. “Gender identity” is just like it sounds – what gender terms (male, female, a combination of genders, or no gender) a person uses for self-identification. “Gender expression” is how that person expresses his, her or their own gender to others, 
-                        whether through dress, behavior or other activities.
-                    </p>
+            <div>
+                {this.renderTopHeader()}
+                {this.renderMenu()}
+                <div className='container' >
+                    <h3>PREGUNTAS MÁS FRECUENTES DEL ESTUDIANTE: Política para estudiantes expansivos de género y transgénero</h3>
+                    <div>
+                        <p>
+                            ¿Qué significa el término "transgénero"?
+                            "Transgénero" es un adjetivo que describe a una persona cuya identidad de género o expresión de género difiere del género que figura en esa persona.
+                            certificado de nacimiento original La "identidad de género" es tal como suena: qué términos de género (masculino, femenino, una combinación de géneros o sin género) utiliza una persona para su autoidentificación. La "expresión de género" es cómo esa persona expresa su propio género a los demás,
+                            ya sea por vestimenta, comportamiento u otras actividades.
+                        </p>
 
-                    <p>
-                        Why is there a policy specifically for transgender and gender expansive students?
-                        Providence Public Schools is committed to creating a safe and inclusive environment for all students. This policy describes ways that the school can create 
-                        an environment in which transgender and gender expansive students feel comfortable and supported.
-                    </p>
+                        <p>
+                            ¿Por qué hay una política específica para estudiantes transgénero y de género expansivo?
+                            Las Escuelas Públicas de Providence se comprometen a crear un ambiente seguro e inclusivo para todos los estudiantes. Esta política describe formas en que la escuela puede crear
+                            Un ambiente en el que los estudiantes transgénero y de género expansivo se sientan cómodos y apoyados.
+                        </p>
 
-                    <p>
-                        What is the district’s approach to transgender students’ using school restrooms and changing facilities?
-                        Providence Public Schools allows transgender students to choose their restroom or changing facilities, based on the gender 
-                        with which they identify or express themselves. Students who do not identify with the gender assigned to them at birth and who are uncomfortable choosing a male-segregated or female-segregated 
-                        restroom may request the use of private restrooms. Similarly, they may request changing room accommodations, such as partitioning or a separate changing schedule.
-                    </p>
+                        <p>
+                            ¿Cuál es el enfoque del distrito para los estudiantes transgénero que usan los baños escolares y los vestuarios?
+                            Las Escuelas Públicas de Providence permiten a los estudiantes transgénero elegir su baño o cambiarse de instalaciones, según el género.
+                            con el que se identifican o se expresan. Estudiantes que no se identifican con el género que se les asignó al nacer y que se sienten incómodos al elegir un hombre segregado o femenino
+                            los baños pueden solicitar el uso de baños privados. Del mismo modo, pueden solicitar acomodaciones en los vestuarios, como particiones o un horario de cambio por separado.
+                        </p>
 
-                    <p>
-                        On which sports teams do transgender students play?
-                        Transgender students may choose which physical education and intramural teams they wish to join, based on their gender identity and expression. Students involved in interscholastic sports 
-                        follow Rhode Island Interscholastic League rules: http://www.riil.org/index.php/resources/rules-and-regulations/.
-                    </p>
+                        <p>
+                            ¿En qué equipos deportivos juegan los estudiantes transgénero?
+                            Los estudiantes transgénero pueden elegir a qué equipos de educación física e intramuros desean unirse, según su identidad y expresión de género. Estudiantes involucrados en deportes interescolares.
+                            siga las reglas de Rhode Island Interscholastic League: http://www.riil.org/index.php/resources/rules-and-regulations/.
+                        </p>
 
-                    <p>
-                        How can I support transgender and gender expansive students?
+                        <p>
+                            ¿Cómo puedo apoyar a los estudiantes transgénero y de género expansivo?
 
-                        Honor their choices, including the gender identity and gender expression they choose.
-                        Follow their lead. Refer to transgender and gender expansive students with the same first names and pronouns they choose to identify themselves.
-                        Point them to support. If you know a student who is undergoing or considering a gender transition, make sure they know that trained and caring adults, known as the Transgender and Gender Expansive Student Point Team, exist for them right in their own school.
-                    </p>
+                            Honre sus elecciones, incluida la identidad de género y la expresión de género que elijan.
+                            Sigue su ejemplo. Refiérase a los estudiantes transgénero y de género expansivo con los mismos nombres y pronombres que eligen identificarse.
+                            Señalarlos para apoyar. Si conoce a un estudiante que está experimentando o considerando una transición de género, asegúrese de que sepan que los adultos capacitados y afectuosos, conocidos como el Equipo de Puntos de Estudiantes Transgénero y Expansivo de Género, existen para ellos en su propia escuela.
+                        </p>
 
-                    <p>
-                        If you are a transgender or gender expansive student enrolled in the Providence Public Schools,
-                        <h3>You decide:</h3>
-                        With whom you wish to share you gender identity and status.
-                        What name you should be called and what pronoun to use for yourself. The name you choose to call yourself does not have to match what is on your birth certificate.
-                        What restroom or changing room you want to use. You can also request a comfortable alternative, such as a partition or separate changing schedule or access to a private restroom.
-                        What physical education and intramural teams you want to join, regardless of gender. If you are involved in interscholastic sports, you should follow R.I. Interscholastic League rules: http://www.riil.org/index.php/resources/rules-and-regulations/.
-                    </p>
-                    <p>
-                        You can ask:
-                        For support from your schools’ Transgender and Gender Expansive Student Point Team any time you need it. If you are undergoing or are planning to undergo a gender transition, point team members can create customized supports for you, and if appropriate, your family.
-                    </p>
+                        <p>
+                            Si usted es un estudiante transgénero o expansivo de género inscrito en las Escuelas Públicas de Providence,
+                            <h3>Tú decides:</h3>
+                            Con quién desea compartir su identidad y estado de género.
+                            Qué nombre debe llamarte y qué pronombre usar para ti. El nombre que elija llamarse no tiene que coincidir con el que figura en su certificado de nacimiento.
+                            Qué baño o vestuario quieres usar. También puede solicitar una alternativa cómoda, como una partición o un horario de cambio por separado o acceso a un baño privado.
+                            A qué equipos de educación física e intramuros quieres unirte, independientemente del género. Si participa en deportes interescolares, debe seguir las reglas de la Liga Interscolástica de R.I .: http://www.riil.org/index.php/resources/rules-and-regulations/.
+                        </p>
+                        <p>
+                            Puedes pedir:
+                            Para obtener apoyo del Equipo de Puntos de Estudiantes Transgénero y Expansivo de Género de sus escuelas en cualquier momento que lo necesite Si está experimentando o planea someterse a una transición de género, los miembros del equipo pueden crear apoyos personalizados para usted y, si corresponde, su familia.
+                        </p>
 
-                    <p>  
-                        Always report: 
+                        <p>  
+                            Siempre informe:
 
-                        Incidents of bullying, harassment and discrimination whether directed at you or another student.
-                        These will be taken seriously and handled in a manner consistent with board policies and the law.             
-                    </p>
-                  </div>
+                            Incidentes de intimidación, acoso y discriminación, ya sea dirigido a usted u otro estudiante.
+                            Estos serán tomados en serio y manejados de manera consistente con las políticas de la junta y la ley.
+                        </p>
+                    </div>
+                </div>
             </div>
         );
     }
