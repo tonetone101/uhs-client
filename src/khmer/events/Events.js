@@ -15,7 +15,8 @@ class Events extends Component {
             events: [],
             page: 1,
             spanishPage: false,
-            englishPage: false
+            englishPage: false,
+            khmerPage: false
         };
     }
 
@@ -47,11 +48,15 @@ class Events extends Component {
     }
 
     translateSpanish = () => {
-        this.setState({spanishPage: true, englishPage: false})
+        this.setState({spanishPage: true, englishPage: false, khmerPage: false})
     }
 
     translateEnglish = () => {
-        this.setState({englishPage: true, spanishPage: false})
+        this.setState({englishPage: true, spanishPage: false, khmerPage: false})
+    }
+
+    translateKhmer = () => {
+        this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
  
@@ -62,10 +67,10 @@ class Events extends Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto " >
-                    <DropdownButton id="dropdown-basic-button" title="Traductora"  >
+                    <DropdownButton id="dropdown-basic-button" title="អ្នកបកប្រែ"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item ><a >Cambodian</a>
+                                <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item><a>Hmong</a></Dropdown.Item>
 
@@ -79,13 +84,13 @@ class Events extends Component {
                             !isAuthenticated() && (
                                <nav className='row'>
                                 <Nav.Link >
-                                    <Link className='ml-3' to='/signin' style={{color: 'black'}}>
-                                    Registrarse
+                                    <Link className='ml-3' to='/khmer/signin' style={{color: 'black'}}>
+                                    ចុះឈ្មោះ
                                     </Link>
                                 </Nav.Link>
                                 <Nav.Link>
-                                    <Link style={{color: 'black'}} to='/signup' >
-                                    Regístrate
+                                    <Link style={{color: 'black'}} to='/khmer/signup' >
+                                    ចុះឈ្មោះ
                                     </Link>
                                 </Nav.Link>
                                </nav>
@@ -96,9 +101,9 @@ class Events extends Component {
                             isAuthenticated() && isAuthenticated().user && (
                                 <Nav.Link>
                                     <a style={{color: 'black'}}  onClick={() => signout(() => {
-                                        this.props.history.push('/spanish/images')
+                                        this.props.history.push('/khmer')
                                     })}>
-                                      Desconectar
+                                      ផ្តាច់
                                     </a>
                                 </Nav.Link>
                             )
@@ -120,29 +125,29 @@ class Events extends Component {
                     
                     <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
                          <div id='link'>                        
-                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish'>Hogar</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer'>ផ្ទះ</Link></Nav.Link>
                         </div>
 
                        <div id='link'>                
-                           <Nav.Link ><Link style={{color: 'white'}} to='/spanish/faculty'>Facultad</Link></Nav.Link>
+                           <Nav.Link ><Link style={{color: 'white'}} to='/khmer/faculty'>មហាវិទ្យាល័យ</Link></Nav.Link>
                         </div>
-                        <Nav.Link ><Link style={{color: 'white'}} to='/spanish/student'>Estudiantes</Link></Nav.Link>
+                        <Nav.Link ><Link style={{color: 'white'}} to='/khmer/student'>និស្សិត</Link></Nav.Link>
                         
                         
                         <div id='link'>                        
-                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/admission'>Admisión</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer/admission'>ការចូលរៀន</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/partners'>Nuestros compañeros</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer/partners'>ដៃគូរបស់យើង</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/images'>Galería</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer/images'>វិចិត្រសាល</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link ><Link style={{color: 'white'}} to='/spanishevents'>Próximos Eventos</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmerevents'>ព្រឹត្តិការណ៍ជិតមកដល់</Link></Nav.Link>
                         </div>
                     
                     </Nav>
@@ -151,6 +156,7 @@ class Events extends Component {
             </div>
         )
     }
+
 
 
     renderEvents = events => {
@@ -172,7 +178,7 @@ class Events extends Component {
                         : ''
 
                         const eventPhoto = event._id
-                        ? `${process.env.REACT_APP_API_URL}/event/photo/${
+                        ? `${process.env.REACT_APP_API_URL}/khmer/event/photo/${
                             event._id
                           }?${new Date().getTime()}`
                         : ''
@@ -183,7 +189,7 @@ class Events extends Component {
                                 
                                
                                 <p className="font-italic mark mt-4">
-                                    Evento publicado en{" "}
+                                    ព្រឹត្តិការណ៍ដែលបានបោះពុម្ពផ្សាយនៅក្នុង{" "}
 
                                     {/* <Link to={`${posterId}`}>
                                         <img  style={{ height: "40px", borderRadius:'30px', width: "40px" }} className="img-thumbnail" src={photoUrl} alt='' />
@@ -197,7 +203,7 @@ class Events extends Component {
 
                                 <div className="card-text column mr-5">
                                     <p >
-                                    Nombre del evento: {event.title.substring(0, 100)}{' '}
+                                        ឈ្មោះព្រឹត្តិការណ៍: {event.title.substring(0, 100)}{' '}
                                     </p>  
                                     
                                     {/* <p >
@@ -209,11 +215,11 @@ class Events extends Component {
                                     </p>  */}
 
                                      <p >
-                                        Ubicación: {event.where.substring(0, 100)}{' '}
+                                        ទីតាំង: {event.where.substring(0, 100)}{' '}
                                     </p>      
 
                                     <p >
-                                        Descripción: {event.body.substring(0, 100)}{' '}
+                                        ការពិពណ៌នា: {event.body.substring(0, 100)}{' '}
                                     </p>           
                                 </div>
                                                        
@@ -224,10 +230,10 @@ class Events extends Component {
                                     style={{ height: "200px", width: "100%" }}
                                 /> */}
                                 <Link
-                                    to={`/spanish/event/${event._id}`}
+                                    to={`/khmer/event/${event._id}`}
                                     className="btn btn-raised btn-primary btn-sm mb-4"
                                 >
-                                    Lee mas
+                                    សូមអានបន្ថែម
                                 </Link>
                             </div>
                         </div>
@@ -238,13 +244,15 @@ class Events extends Component {
     };
 
     render() {
-        const { user, spanishPage, englishPage, events } = this.state;
+        const { user, spanishPage, englishPage, khmerPage, events } = this.state;
         
         if(spanishPage) {
-            return <Redirect to={`/spanishevents`} />
+            return <Redirect to={`/spanish`} />
          } else if (englishPage) {
-             return <Redirect to={'/events'} />
-         }
+             return <Redirect to={'/'} />
+         } else if (khmerPage) {
+            return <Redirect to={'/khmer'} />
+        }
 
         return (
             <div>
@@ -253,12 +261,12 @@ class Events extends Component {
                 <div className="container">
                     
                     <h2 className="mt-5 mb-5">
-                        {!events.length ? "Loading..." : ""}
+                        {!events.length ? "កំពុងផ្ទុក..." : ""}
                     </h2>
                     {
                         isAuthenticated() && isAuthenticated().user.role === 'admin' && (
                             <div>
-                                <Link className='mb-5' to='/spanish/new/event'>Añadir evento</Link>
+                                <Link className='mb-5' to='/khmer/new/event'>បន្ថែមព្រឹត្តិការណ៍</Link>
                             </div>
                         )
                     }

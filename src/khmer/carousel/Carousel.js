@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import { Carousel } from 'react-bootstrap';
 import {singleCarousel, update, list} from './apiCarousel'
-
-import {Link, Redirect } from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {signout, isAuthenticated} from '../../auth'
 import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
 
@@ -10,7 +9,6 @@ class Carol extends Component {
     state = {
         user: '',
         carousel: [],
-        redirectToHome: false,
         redirectToSignIn: false,
         spanishPage: false,
         englishPage: false,
@@ -27,7 +25,7 @@ class Carol extends Component {
                 console.log(data.error)
             } else {
                 this.setState({carousel: data.find(d => {
-                    if (d._id == "5df6804c6b53ac295ad15f78") {
+                    if (d._id == "5e10b34a180f7c94c6109860") {
                         return d
                     }
                 }) 
@@ -54,7 +52,6 @@ class Carol extends Component {
         this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
-    
     renderTopHeader = () => {
         return (
             <div>
@@ -62,7 +59,7 @@ class Carol extends Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto " >
-                    <DropdownButton id="dropdown-basic-button" title="Translator"  >
+                    <DropdownButton id="dropdown-basic-button" title="អ្នកបកប្រែ"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
@@ -76,16 +73,16 @@ class Carol extends Component {
                             </DropdownButton>
                         
                         {
-                            !this.state.user && (
+                            !isAuthenticated() && (
                                <nav className='row'>
                                 <Nav.Link >
-                                    <Link className='ml-3' to='/signin' style={{color: 'black'}}>
-                                        Sign In 
+                                    <Link className='ml-3' to='/khmer/signin' style={{color: 'black'}}>
+                                    ចុះឈ្មោះ
                                     </Link>
                                 </Nav.Link>
                                 <Nav.Link>
-                                    <Link style={{color: 'black'}} to='/signup' >
-                                        Sign Up
+                                    <Link style={{color: 'black'}} to='/khmer/signup' >
+                                    ចុះឈ្មោះ
                                     </Link>
                                 </Nav.Link>
                                </nav>
@@ -93,12 +90,12 @@ class Carol extends Component {
                         }
                         
                         {
-                            this.state.user && (
+                            isAuthenticated() && isAuthenticated().user && (
                                 <Nav.Link>
                                     <a style={{color: 'black'}}  onClick={() => signout(() => {
-                                        this.props.history.push('/')
+                                        this.props.history.push('/khmer')
                                     })}>
-                                        Sign Out
+                                      ផ្តាច់
                                     </a>
                                 </Nav.Link>
                             )
@@ -120,29 +117,29 @@ class Carol extends Component {
                     
                     <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
                          <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/'>Home</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer'>ផ្ទះ</Link></Nav.Link>
                         </div>
 
                        <div id='link'>                
-                           <Nav.Link href="#features"><Link style={{color: 'white'}} to='/faculty'>Faculty</Link></Nav.Link>
+                           <Nav.Link ><Link style={{color: 'white'}} to='/khmer/faculty'>មហាវិទ្យាល័យ</Link></Nav.Link>
                         </div>
-                        <Nav.Link href="#features"><Link style={{color: 'white'}} to='/student'>Students</Link></Nav.Link>
+                        <Nav.Link ><Link style={{color: 'white'}} to='/khmer/student'>និស្សិត</Link></Nav.Link>
                         
                         
                         <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/admission'>Admission</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer/admission'>ការចូលរៀន</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/partners'>Our Partners</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer/partners'>ដៃគូរបស់យើង</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/images'>Gallery</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer/images'>វិចិត្រសាល</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link href="#features"><Link style={{color: 'white'}} to='/events'>Upcoming Events</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmerevents'>ព្រឹត្តិការណ៍ជិតមកដល់</Link></Nav.Link>
                         </div>
                     
                     </Nav>
@@ -176,6 +173,8 @@ class Carol extends Component {
 
         return (
             <div >
+                
+           
                 <Carousel className='container'>
                     <Carousel.Item>
                         <img
@@ -228,8 +227,8 @@ class Carol extends Component {
     }
 
     render() {
-        const {carousel, spanishPage, englishPage, khmerPage, redirectToSignIn } = this.state
-        
+        const {carousel, spanishPage, englishPage, khmerPage, redirectToSignIn} = this.state
+       
         if(spanishPage) {
             return <Redirect to={`/spanish`} />
          } else if (englishPage) {
@@ -237,6 +236,7 @@ class Carol extends Component {
          } else if (khmerPage) {
             return <Redirect to={'/khmer'} />
         }
+         
          else if(redirectToSignIn) {
             return <Redirect to={`/signin`} />
          } 
@@ -246,12 +246,12 @@ class Carol extends Component {
                 {this.renderTopHeader()}
                 {this.renderMenu()}
                 <div className='text-center'>
-                    
                     {!carousel ? ( 
                             <div className='jumbotron text-center '>
-                                <h2>Loading....</h2>
+                                <h2>កំពុងផ្ទុក....</h2>
                             </div>
                             ) : (
+                                
                                 this.renderCarousel(carousel)
                                
                             )
@@ -273,7 +273,8 @@ class Carol extends Component {
                             <div >
                             {
                                 isAuthenticated() && isAuthenticated().user.role === 'admin' && (
-                                    <Link to={`/edit/carousel/${carousel._id}`} className='text-center btn btn-primary mt-4 mb-4'>Update</Link>
+                                    <Link to={`/khmer/edit/carousel/${carousel._id}`} className='text-center btn btn-primary mt-4 mb-4'>ធ្វើបច្ចុប្បន្នភាព
+                                    </Link>
                                 )
                             }
                             </div>
@@ -286,9 +287,9 @@ class Carol extends Component {
                                 <div className="col-md-6 d-flex justify-content-around align-items-baseline">
                                     <div >
                                         <p>123 Empire street | Providence, RI 02910</p>
-                                        <p>Phone: (401) 332- 2233 | Somaly@uhSchool.org</p>
+                                        <p>លេខទូរស័ព្ទ: (401) 332- 2233 | អ៊ីមែល: Somaly@uhSchool.org</p>
                                         <h5 className="text-capitalize">
-                                        &copy;2019 copyright : Coder
+                                        &copy;2019 រក្សាសិទ្ធិ៖ ឌិគ្រីប
                                         </h5> 
                                      </div>
                                 </div>

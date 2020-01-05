@@ -7,6 +7,9 @@ import Signin from './user/SignIn'
 import SpanishSignup from './user/SpanishSignUp'
 import SpanishSignin from './user/SpanishSignin'
 
+import khmerSignUp from './user/khmerSignUp'
+import khmerSignIn from './user/khmerSignIn'
+
 import Home from './core/Home'
 import Menu from './core/Menu'
 import Header from './core/Header'
@@ -59,6 +62,30 @@ import NewSpanishPhoto from './spanish/gallery/NewPhoto'
 import PhotoSpanish from './spanish/gallery/Photo'
 import SingleSpanishPhoto from './spanish/gallery/SinglePhoto'
 import EditSpanishPhoto from './spanish/gallery/EditPhoto'
+
+// khmer
+import NewkhmerCarousel from './khmer/carousel/NewCarousel'
+import EditkhmerCarousel from './khmer/carousel/EditCarousel'
+import Carolkhmer from './khmer/carousel/Carousel'
+import NewkhmerEvent from './khmer/events/NewEvents'
+import Eventkhmer from './khmer/events/Events'
+import EditkhmerEvent from './khmer/events/EditEvent'
+import SinglekhmerEvent from './khmer/events/SingleEvent'
+import NewkhmerFaculty from './khmer/Faculty/NewFaculty'
+import Facultykhmer from './khmer/Faculty/Faculty'
+import SinglekhmerFaculty from './khmer/Faculty/SingleFaculty'
+import EditkhmerFaculty from './khmer/Faculty/EditFaculty'
+import NewkhmerStudent from './khmer/student/NewStudent'
+import Admissionkhmer from './khmer/student/Admission'
+import Bullykhmer from './khmer/student/Bully'
+import Studentkhmer from './khmer/student/Student'
+import GenderkhmerPolicy from './khmer/student/GenderPolicy'
+import NewkhmerLinks from './khmer/student/NewLinks'
+import SinglekhmerLink from './khmer/student/SingleLink'
+import NewkhmerPhoto from './khmer/gallery/NewPhoto'
+import Photokhmer from './khmer/gallery/Photo'
+import SinglekhmerPhoto from './khmer/gallery/SinglePhoto'
+import EditkhmerPhoto from './khmer/gallery/EditPhoto'
 
 const MainRouter = () => (
     <div >
@@ -122,6 +149,34 @@ const MainRouter = () => (
             <Route exact path="/spanish/image/:imageId" component={SingleSpanishPhoto}></Route>
             <Route exact path="/spanish/edit/image/:imageId" component={EditSpanishPhoto}></Route>
 
+
+            {
+            // khmer          
+            }
+            <Route exact path="/khmer/signup" component={khmerSignUp}></Route>
+            <Route exact path="/khmer/signin" component={khmerSignIn}></Route>
+            <Route exact path="/khmer" component={Carolkhmer}></Route>
+            <Route exact path="/khmer/new/carousel" component={NewkhmerCarousel}></Route>
+            <Route exact path="/khmer/edit/carousel/:carouselId" component={EditkhmerCarousel}></Route>
+            <Route exact path="/khmerevents" component={Eventkhmer}></Route>
+            <Route exact path="/khmer/new/event" component={NewkhmerEvent}></Route>
+            <Route exact path="/khmer/edit/event/:eventId" component={EditkhmerEvent}></Route>
+            <Route exact path="/khmer/event/:eventId" component={SinglekhmerEvent}></Route>
+            <Route exact path="/khmer/new/faculty" component={NewkhmerFaculty}></Route>
+            <Route exact path="/khmer/faculty" component={Facultykhmer}></Route>
+            <Route exact path="/khmer/faculty/:facultyId" component={SinglekhmerFaculty}></Route>
+            <Route exact path="/khmer/edit/faculty/:facultyId" component={EditkhmerFaculty}></Route>
+            <Route exact path="/khmer/new/student" component={NewkhmerStudent}></Route>
+            <Route exact path="/khmer/admission" component={Admissionkhmer}></Route>
+            <Route exact path="/khmer/bully" component={Bullykhmer}></Route>
+            <Route exact path="/khmer/student" component={Studentkhmer}></Route>
+            <Route exact path="/khmer/genderpolicy" component={GenderkhmerPolicy}></Route>
+            <Route exact path="/khmer/newlink" component={NewkhmerLinks}></Route>
+            <Route exact path="/khmer/link/:linkId" component={SinglekhmerLink}></Route>
+            <Route exact path="/khmer/new/image" component={NewkhmerPhoto}></Route>
+            <Route exact path="/khmer/images" component={Photokhmer}></Route>
+            <Route exact path="/khmer/image/:imageId" component={SinglekhmerPhoto}></Route>
+            <Route exact path="/khmer/edit/image/:imageId" component={EditkhmerPhoto}></Route>
 
         </Switch>
         

@@ -5,22 +5,15 @@ import { Redirect, Link } from "react-router-dom";
 import Links from './Links'
 import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
 
-
-class Student extends Component {
+class Admission extends Component {
     constructor() {
         super();
         this.state = {
-            parent: "",
-            student: "",
-            birthday: "",
-            contact: "",
             error: "",
             user: {},
-            fileSize: 0,
-            loading: false,
-            redirectToProfile: false,
             spanishPage: false,
-            englishPage: false
+            englishPage: false,
+            khmerPage: false
         };
     }
 
@@ -37,11 +30,15 @@ class Student extends Component {
     }
 
     translateSpanish = () => {
-        this.setState({spanishPage: true})
+        this.setState({spanishPage: true, englishPage: false, khmerPage: false})
     }
 
     translateEnglish = () => {
-        this.setState({englishPage: true})
+        this.setState({englishPage: true, spanishPage: false, khmerPage: false})
+    }
+
+    translateKhmer = () => {
+        this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
     renderTopHeader = () => {
@@ -51,10 +48,10 @@ class Student extends Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto " >
-                    <DropdownButton id="dropdown-basic-button" title="Traductora"  >
+                    <DropdownButton id="dropdown-basic-button" title="អ្នកបកប្រែ"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item ><a >Cambodian</a>
+                                <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item><a>Hmong</a></Dropdown.Item>
 
@@ -68,13 +65,13 @@ class Student extends Component {
                             !isAuthenticated() && (
                                <nav className='row'>
                                 <Nav.Link >
-                                    <Link className='ml-3' to='/signin' style={{color: 'black'}}>
-                                    Registrarse
+                                    <Link className='ml-3' to='/khmer/signin' style={{color: 'black'}}>
+                                    ចុះឈ្មោះ
                                     </Link>
                                 </Nav.Link>
                                 <Nav.Link>
-                                    <Link style={{color: 'black'}} to='/signup' >
-                                    Regístrate
+                                    <Link style={{color: 'black'}} to='/khmer/signup' >
+                                    ចុះឈ្មោះ
                                     </Link>
                                 </Nav.Link>
                                </nav>
@@ -85,9 +82,9 @@ class Student extends Component {
                             isAuthenticated() && isAuthenticated().user && (
                                 <Nav.Link>
                                     <a style={{color: 'black'}}  onClick={() => signout(() => {
-                                        this.props.history.push('/spanish/student')
+                                        this.props.history.push('/khmer')
                                     })}>
-                                      Desconectar
+                                      ផ្តាច់
                                     </a>
                                 </Nav.Link>
                             )
@@ -109,29 +106,29 @@ class Student extends Component {
                     
                     <Nav className="mr-auto " className="col d-flex justify-content-around align-items-baseline">
                          <div id='link'>                        
-                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish'>Hogar</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer'>ផ្ទះ</Link></Nav.Link>
                         </div>
 
                        <div id='link'>                
-                           <Nav.Link ><Link style={{color: 'white'}} to='/spanish/faculty'>Facultad</Link></Nav.Link>
+                           <Nav.Link ><Link style={{color: 'white'}} to='/khmer/faculty'>មហាវិទ្យាល័យ</Link></Nav.Link>
                         </div>
-                        <Nav.Link ><Link style={{color: 'white'}} to='/spanish/student'>Estudiantes</Link></Nav.Link>
+                        <Nav.Link ><Link style={{color: 'white'}} to='/khmer/student'>និស្សិត</Link></Nav.Link>
                         
                         
                         <div id='link'>                        
-                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/admission'>Admisión</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer/admission'>ការចូលរៀន</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/partners'>Nuestros compañeros</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer/partners'>ដៃគូរបស់យើង</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link ><Link style={{color: 'white'}} to='/spanish/images'>Galería</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmer/images'>វិចិត្រសាល</Link></Nav.Link>
                         </div>
 
                         <div id='link'>                        
-                            <Nav.Link ><Link style={{color: 'white'}} to='/spanishevents'>Próximos Eventos</Link></Nav.Link>
+                            <Nav.Link ><Link style={{color: 'white'}} to='/khmerevents'>ព្រឹត្តិការណ៍ជិតមកដល់</Link></Nav.Link>
                         </div>
                     
                     </Nav>
@@ -140,49 +137,36 @@ class Student extends Component {
             </div>
         )
     }
-    
     render() {
-        const {spanishPage, englishPage } = this.state;
+        const { spanishPage, englishPage, khmerPage} = this.state;
 
         if(spanishPage) {
-            return <Redirect to={`/spanish/student`} />
+            return <Redirect to={`/spanish/images`} />
          } else if (englishPage) {
-             return <Redirect to={'/student'} />
-         }
+             return <Redirect to={'/images'} />
+         } else if (khmerPage) {
+            return <Redirect to={'/khmer/images'} />
+        }
 
         return (
             <div>
                 {this.renderTopHeader()}
                 {this.renderMenu()}
-                <div className='container' >
-                    <h3 className='text-center'>Bienvenido a nuestra sección de estudiantes</h3>
-                    <p className='text-center'>A continuación encontrará una lista de contenido sobre nuestras políticas y otros enlaces importantes que creemos que beneficiarán a nuestros estudiantes.</p>
+                <div className='container mt-4' >
+                    <h3 className='text-center'>សូមស្វាគមន៍ចំពោះផ្នែកចូលរៀនរបស់យើង</h3>
                 <ul>
                     <li>
-                        <Link to='/spanish/bully'>
-                                Política de intimidación
-                        </Link>
-                    </li>
-
-                    <li>
-                        <Link  onClick={() => { window.open('https://docs.google.com/document/d/1jlafDy_caOu5EjBXnyKkk9eZIkKYJOgiocmEsYWtIM8/edit?usp=sharing', '_blank') }} >
-                                Manual de intimidación
-                        </Link>
-                    </li>
-
-                    <li>
-                        <Link to='/spanish/genderpolicy'>
-                                Política de género estudiantil
+                        <Link to='/khmer/new/student'>
+                        ការចុះឈ្មោះជាមុន
                         </Link>
                     </li>
                     
                     
                 </ul>
-                <Links />
                 </div>
             </div>
         );
     }
 }
 
-export default Student;
+export default Admission;

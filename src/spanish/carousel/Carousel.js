@@ -11,7 +11,8 @@ class Carol extends Component {
         carousel: [],
         redirectToSignIn: false,
         spanishPage: false,
-        englishPage: false
+        englishPage: false,
+        khmerPage: false
     }
 
     renderUser = () => {
@@ -40,11 +41,15 @@ class Carol extends Component {
     }
 
     translateSpanish = () => {
-        this.setState({spanishPage: true})
+        this.setState({spanishPage: true, englishPage: false, khmerPage: false})
     }
 
     translateEnglish = () => {
-        this.setState({englishPage: true})
+        this.setState({englishPage: true, spanishPage: false, khmerPage: false})
+    }
+
+    translateKhmer = () => {
+        this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
     renderTopHeader = () => {
@@ -57,7 +62,7 @@ class Carol extends Component {
                     <DropdownButton id="dropdown-basic-button" title="Traductora"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item ><a >Cambodian</a>
+                                <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item><a>Hmong</a></Dropdown.Item>
 
@@ -222,13 +227,15 @@ class Carol extends Component {
     }
 
     render() {
-        const {carousel, spanishPage, englishPage, redirectToSignIn} = this.state
+        const {carousel, spanishPage, englishPage, khmerPage, redirectToSignIn} = this.state
        
         if(spanishPage) {
             return <Redirect to={`/spanish`} />
          } else if (englishPage) {
              return <Redirect to={'/'} />
-         }
+         } else if (khmerPage) {
+            return <Redirect to={'/khmer'} />
+        }
          
          else if(redirectToSignIn) {
             return <Redirect to={`/signin`} />

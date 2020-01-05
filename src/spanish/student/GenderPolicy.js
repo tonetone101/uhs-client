@@ -83,7 +83,7 @@ class GenderPolicy extends Component {
                             isAuthenticated() && isAuthenticated().user && (
                                 <Nav.Link>
                                     <a style={{color: 'black'}}  onClick={() => signout(() => {
-                                        this.props.history.push('/spanish/images')
+                                        this.props.history.push('/spanish/genderpolicy')
                                     })}>
                                       Desconectar
                                     </a>
