@@ -13,7 +13,8 @@ class Photo extends Component {
             page: 1,
             error: '',
             spanishPage: false,
-            englishPage: false
+            englishPage: false,
+            khmerPage: false
         };
     }
 
@@ -43,11 +44,15 @@ class Photo extends Component {
     }
 
     translateSpanish = () => {
-        this.setState({spanishPage: true})
+        this.setState({spanishPage: true, englishPage: false, khmerPage: false})
     }
 
     translateEnglish = () => {
-        this.setState({englishPage: true})
+        this.setState({englishPage: true, spanishPage: false, khmerPage: false})
+    }
+
+    translateKhmer = () => {
+        this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
     renderTopHeader = () => {
@@ -60,7 +65,7 @@ class Photo extends Component {
                     <DropdownButton id="dropdown-basic-button" title="Traductora"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item ><a >Cambodian</a>
+                                <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item><a>Hmong</a></Dropdown.Item>
 
@@ -224,13 +229,15 @@ class Photo extends Component {
     };
 
     render() {
-        const {images, spanishPage, englishPage } = this.state;
+        const {images, spanishPage, khmerPage, englishPage } = this.state;
 
         if(spanishPage) {
             return <Redirect to={`/spanish/images`} />
          } else if (englishPage) {
              return <Redirect to={'/images'} />
-         }
+         } else if (khmerPage) {
+            return <Redirect to={'/khmer/images'} />
+        }
 
         return (
             <div>

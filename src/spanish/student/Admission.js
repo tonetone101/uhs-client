@@ -12,7 +12,8 @@ class Admission extends Component {
             error: "",
             user: {},
             spanishPage: false,
-            englishPage: false
+            englishPage: false,
+            khmerPage: false
         };
     }
 
@@ -29,11 +30,15 @@ class Admission extends Component {
     }
 
     translateSpanish = () => {
-        this.setState({spanishPage: true})
+        this.setState({spanishPage: true, englishPage: false, khmerPage: false})
     }
 
     translateEnglish = () => {
-        this.setState({englishPage: true})
+        this.setState({englishPage: true, spanishPage: false, khmerPage: false})
+    }
+
+    translateKhmer = () => {
+        this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
     renderTopHeader = () => {
@@ -46,7 +51,7 @@ class Admission extends Component {
                     <DropdownButton id="dropdown-basic-button" title="Traductora"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item ><a >Cambodian</a>
+                                <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item><a>Hmong</a></Dropdown.Item>
 
@@ -135,13 +140,15 @@ class Admission extends Component {
 
     
     render() {
-        const { spanishPage, englishPage} = this.state;
+        const { spanishPage, khmerPage, englishPage} = this.state;
 
         if(spanishPage) {
             return <Redirect to={`/spanish/admission`} />
          } else if (englishPage) {
              return <Redirect to={'/admission'} />
-         }
+         } else if (khmerPage) {
+            return <Redirect to={'/khmer/admission'} />
+        }
         return (
             <div>
                 {this.renderTopHeader()}

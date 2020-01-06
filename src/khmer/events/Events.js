@@ -247,11 +247,11 @@ class Events extends Component {
         const { user, spanishPage, englishPage, khmerPage, events } = this.state;
         
         if(spanishPage) {
-            return <Redirect to={`/spanish`} />
+            return <Redirect to={`/spanishevents`} />
          } else if (englishPage) {
-             return <Redirect to={'/'} />
+             return <Redirect to={'/events'} />
          } else if (khmerPage) {
-            return <Redirect to={'/khmer'} />
+            return <Redirect to={'/khmerevents'} />
         }
 
         return (

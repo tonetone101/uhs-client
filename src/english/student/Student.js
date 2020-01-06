@@ -3,7 +3,7 @@ import { isAuthenticated, signout } from "../../auth";
 import { create } from "./apiStudent";
 import { Redirect, Link } from "react-router-dom";
 import Links from './Links'
-import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
+import { Navbar, Nav, ListGroup, Dropdown, DropdownButton} from 'react-bootstrap';
 
 
 class Student extends Component {
@@ -20,7 +20,8 @@ class Student extends Component {
             loading: false,
             redirectToProfile: false,
             spanishPage: false,
-            englishPage: false
+            englishPage: false,
+            khmerPage: false
         };
     }
 
@@ -37,11 +38,15 @@ class Student extends Component {
     }
 
     translateSpanish = () => {
-        this.setState({spanishPage: true, englishPage: false})
+        this.setState({spanishPage: true, englishPage: false, khmerPage: false})
     }
 
     translateEnglish = () => {
-        this.setState({englishPage: true, spanishPage: false})
+        this.setState({englishPage: true, spanishPage: false, khmerPage: false})
+    }
+
+    translateKhmer = () => {
+        this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
     renderTopHeader = () => {
@@ -51,10 +56,10 @@ class Student extends Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto " >
-                    <DropdownButton id="dropdown-basic-button" title="Translator"  >
+                    <DropdownButton id="dropdown-basic-button" title="translator"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item ><a >Cambodian</a>
+                                <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item><a>Hmong</a></Dropdown.Item>
 
@@ -144,51 +149,43 @@ class Student extends Component {
     
     render() {
         const {
-            parent,
-            student,
-            birthday,
-            contact,
-            user,
-            error,
-            loading,
-            redirectToProfile,
-            spanishPage, englishPage
+            spanishPage, englishPage,
+            khmerPage
         } = this.state;
 
         if(spanishPage) {
             return <Redirect to={`/spanish/student`} />
          } else if (englishPage) {
              return <Redirect to={'/student'} />
-         } 
+         } else if (khmerPage) {
+            return <Redirect to={'/khmer/student'} />
+        } 
 
         return (
             <div>
                 {this.renderTopHeader()}
                 {this.renderMenu()}
                 <div className='container' >
-                    <h3 className='text-center'>Welcome to our Student section</h3>
+                    <h3 className='text-center mt-4'>Welcome to our Student section</h3>
                     <p className='text-center'>Below you'll find a list of content about our policies and other important links we believe will benefit our students</p>
-                <ul>
-                    <li>
-                        <Link to='/bully'>
+
+                    <ListGroup variant="flush">
+                        <ListGroup.Item>
+                            <Link to='/bully'>
                                 Bullying policy
-                        </Link>
-                    </li>
-
-                    <li>
-                        <Link  onClick={() => { window.open('https://docs.google.com/document/d/1jlafDy_caOu5EjBXnyKkk9eZIkKYJOgiocmEsYWtIM8/edit?usp=sharing', '_blank') }} >
+                            </Link>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Link  onClick={() => { window.open('https://docs.google.com/document/d/1jlafDy_caOu5EjBXnyKkk9eZIkKYJOgiocmEsYWtIM8/edit?usp=sharing', '_blank') }} >
                                 Bullying Manual 
-                        </Link>
-                    </li>
-
-                    <li>
-                        <Link to='/genderpolicy'>
+                            </Link>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Link to='/genderpolicy'>
                                 Student gender policy
-                        </Link>
-                    </li>
-                    
-                    
-                </ul>
+                            </Link>
+                        </ListGroup.Item>
+                    </ListGroup>
                 {//LINKS
                 }
                 <Links />

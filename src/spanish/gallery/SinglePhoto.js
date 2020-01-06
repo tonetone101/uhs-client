@@ -50,29 +50,28 @@ class SinglePhoto extends Component {
         : '';
 
         return (
-                <div  className='row'>
-                     <div className='col-md-6 mt-5'>
+                <div  className='text-center mt-5'>
+                     <div>
                         <img 
                             src={photoUrl}
                             alt=''
                             onError={i =>
                                 (i.target.src = ``)
                             }
-                            className="img-thunbnail mb-3 ml-50"
+                            className="img-thunbnail "
                             style={{height: '500px', width: '500px', objectFit: 'cover', borderRadius: '10px'}}
                         />
                    </div>
 
-                    <div className='col-md-6 mt-5'>
                         <p className="card-text">
                             {image.caption}
                         </p>
-                    </div>
+                    
 
-                    <div className='row'>
+                    <div className=' text-center'>
                         <Link
                             to={`/spanish/images`}
-                            className="btn btn-raised btn-primary btn-sm "
+                            className="btn btn-raised btn-primary btn-sm mb-2"
                             style={{marginLeft: '30px'}}
                         >
                             Volver a la galería
@@ -111,7 +110,12 @@ class SinglePhoto extends Component {
          }
 
         return (
-            <div>
+            <div className='text-center'>
+                 <div className='mt-5 container' style={{borderBottom: 'solid black 1px'}}>
+                    <h2>
+                    Un momento capturado
+                    </h2>
+                </div>
                            <div className='container'>
                                 {!image ? ( 
                                         <div className='jumbotron text-center '>

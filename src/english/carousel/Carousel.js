@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import { Carousel } from 'react-bootstrap';
-import {singleCarousel, update, list} from './apiCarousel'
-
+import {list} from './apiCarousel'
+import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 import {Link, Redirect } from 'react-router-dom'
 import {signout, isAuthenticated} from '../../auth'
 import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
+import {Animated} from 'react-animated-css'
 
 class Carol extends Component {
     state = {
@@ -49,12 +50,11 @@ class Carol extends Component {
     translateEnglish = () => {
         this.setState({englishPage: true, spanishPage: false, khmerPage: false})
     }
-
+ 
     translateKhmer = () => {
         this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
-    
     renderTopHeader = () => {
         return (
             <div>
@@ -62,7 +62,7 @@ class Carol extends Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto " >
-                    <DropdownButton id="dropdown-basic-button" title="Translator"  >
+                    <DropdownButton id="dropdown-basic-button" title="translator"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
@@ -113,7 +113,7 @@ class Carol extends Component {
 
     renderMenu = () => {
         return (
-            <div>
+            <div style={{position: 'relative fixed'}}>
                  <Navbar id='menu' collapseOnSelect expand="lg" variant="dark"  >
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
@@ -176,7 +176,7 @@ class Carol extends Component {
 
         return (
             <div >
-                <Carousel className='container'>
+                <Carousel >
                     <Carousel.Item>
                         <img
                         // style={{ height: "350px", width: "300px" }}
@@ -223,7 +223,10 @@ class Carol extends Component {
                         </Carousel.Caption>
                     </Carousel.Item>
                 </Carousel>   
-            </div>      
+
+                
+            </div>    
+              
         );
     }
 
@@ -246,7 +249,6 @@ class Carol extends Component {
                 {this.renderTopHeader()}
                 {this.renderMenu()}
                 <div className='text-center'>
-                    
                     {!carousel ? ( 
                             <div className='jumbotron text-center '>
                                 <h2>Loading....</h2>
@@ -255,33 +257,38 @@ class Carol extends Component {
                                 this.renderCarousel(carousel)
                                
                             )
+                        } 
+                    <div  id='stats' style={{height: '100px', borderBottom: 'solid black 1px'}}>
+                                <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{color:'white'}} >
+                                    <h4  >{carousel.caption1}</h4>
+                                </Animated>
+                                <div className='container'>
+                                        <h5 style={{color:'white', marginTop: '10px'}} className='mb-5'>{carousel.missionStatement}</h5>
+                                       
+                                </div>                          
+                    </div>
+                    
+                </div>
+                <div>                       
+                    <div className='text-center' >
+                        {
+                            isAuthenticated() && isAuthenticated().user.role === 'admin' && (
+                                <Link to={`/edit/carousel/${carousel._id}`} className='text-center btn btn-primary mt-4 mb-4'>Update</Link>
+                            )
                         }
-                    <div>    
-                                        
+                    </div>
+                                        </div>
+                        <div className='text-center'>
                         <img 
-                        style={{ height: "300px", width: "auto" }}
-                        className=""
-                        src={require("../../images/uhsStat.png")}
-                        alt="Second slide" 
-                        
-                        />
-                    </div>
-                        <div className=' text-center mt-5 mb-5' style={{color: 'black'}}> <div className='container'>
-                            <p>{carousel.missionStatement}</p>
-                        </div>
-                    </div>
-                            <div >
-                            {
-                                isAuthenticated() && isAuthenticated().user.role === 'admin' && (
-                                    <Link to={`/edit/carousel/${carousel._id}`} className='text-center btn btn-primary mt-4 mb-4'>Update</Link>
-                                )
-                            }
-                            </div>
-                            <hr/>
-            
-                        <footer >
-                            
-                            <div className="container row ml-5">
+                                            style={{ height: "300px", width: "auto", border: 'solid blue 1px' }}
+                                            className="mt-4 "
+                                            src={require("../../images/uhsStat.png")}
+                                            alt="Second slide" 
+                                            
+                                        />   
+                                </div>
+                                <footer className='mt-5'>
+                            <div class="container row ml-5">
                                 <img className='col-md-6 mb-4' style={{height: '150px', marginTop: '10px'}} src={require("../../images/banner.png")} /> 
                                 <div className="col-md-6 d-flex justify-content-around align-items-baseline">
                                     <div >
@@ -294,10 +301,37 @@ class Carol extends Component {
                                 </div>
                                 </div>
                         </footer> 
-                </div>
             </div>
         )
     }
 }
 
 export default Carol
+
+{/* <MDBFooter color="blue" className="font-small pt-4 mt-4" >
+<MDBContainer fluid className="text-center text-md-left">
+    <MDBRow>
+    <MDBCol md="6">
+        <img className='col-md-6 mt-4 mb-4' style={{height: '150px', marginTop: '10px'}} src={require("../../images/banner.png")} /> 
+    </MDBCol>
+    <MDBCol md="6">
+        <ul>
+        <li className="list-unstyled">
+            <a href="https://www.google.com/maps/place/Roger+Williams+University/@41.6511285,-71.2598636,17z/data=!3m1!4b1!4m5!3m4!1s0x89e454ec321d3d7f:0x5c138da5433de6e8!8m2!3d41.6511285!4d-71.2598636">1 Old Ferry Rd, Bristol, RI 02809</a>
+        </li>
+        <li className="list-unstyled">
+            <p>Phone: (401) 332- 2233 </p>
+        </li>
+        <li className="list-unstyled">
+            <a href="#!">Email: Somaly@uhSchool.org</a>
+        </li>
+        </ul>
+    </MDBCol>
+    </MDBRow>
+</MDBContainer>
+<div id='bottomFooter' style={{borderTop: 'solid 2px'}} className="footer-copyright text-center py-3">
+    <MDBContainer fluid>
+    &copy; {new Date().getFullYear()} Copyright: <a href="https://www.uhSchool.org">www.uhSchool.org </a>
+    </MDBContainer>
+</div>
+</MDBFooter> */}

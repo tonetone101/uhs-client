@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { list, read } from "./apiFaculty";
 import { Link, Redirect } from "react-router-dom";
 import {isAuthenticated, signout} from '../../auth'
-import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Dropdown, Card, DropdownButton} from 'react-bootstrap';
 
 class Faculty extends Component {
     constructor() {
@@ -17,7 +17,8 @@ class Faculty extends Component {
             error: '',
             searching: false,
             spanishPage: false,
-            englishPage: false
+            englishPage: false,
+            khmerPage: false
         };
     }
 
@@ -49,11 +50,15 @@ class Faculty extends Component {
     }
 
     translateSpanish = () => {
-        this.setState({spanishPage: true})
+        this.setState({spanishPage: true, englishPage: false, khmerPage: false})
     }
 
     translateEnglish = () => {
-        this.setState({englishPage: true})
+        this.setState({englishPage: true, spanishPage: false, khmerPage: false})
+    }
+
+    translateKhmer = () => {
+        this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
     renderTopHeader = () => {
@@ -66,8 +71,9 @@ class Faculty extends Component {
                     <DropdownButton id="dropdown-basic-button" title="Traductora"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item ><a >Cambodian</a>
+                                <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
                                 </Dropdown.Item>
+                               
                                 <Dropdown.Item><a>Hmong</a></Dropdown.Item>
 
                                 <Dropdown.Item><a onClick={this.translateEnglish}>English</a></Dropdown.Item>
@@ -182,48 +188,26 @@ class Faculty extends Component {
                         : ''
                         
                     return (
-                        <div  className="card col-md-6 mb-4" key={i}>
-                            <div  >
-                                <br />
-
-                                <div className="card-text column mr-5">
-                                    <p >
-                                        Título de la facultad: {faculty.title.substring(0, 100)}{' '}
-                                    </p>  
-                                    
-                                    {/* <p >
-                                       Date : {event.date.substring(0, 100)}{' '}
-                                    </p>   */}
-
-                                    {/* <p >
-                                       Time: {event.time.substring(0, 100)}{' '}
-                                    </p>  */}
-
-                                     <p >
-                                      Nombre: {faculty.name.substring(0, 100)}{' '}
-                                    </p>      
-
-                                    <p >
-                                        Acerca de: {faculty.about.substring(0, 100)}{' '}
-                                    </p>           
-                                </div>
-                                                       
-                                <div className='column'>
-                                    <img
-                                        src={facultyPhoto}
-                                        className="img-thunbnail mb-3"
-                                        style={{ height: "200px", width: "300px" }}
-                                    />
-                                
-                                    <Link
-                                        to={`/spanish/faculty/${faculty._id}`}
-                                        className="btn btn-raised btn-primary btn-sm mb-4 ml-5"
-                                    >
-                                        Lee mas
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
+                        <div  className='col-md-4' key={i}>
+                        <Card style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src={facultyPhoto} />
+                        <Card.Body>
+                            <Card.Title>{faculty.name.substring(0, 100)}</Card.Title>
+                            <Card.Text>
+                                {faculty.title.substring(0, 100)}
+                            </Card.Text>
+                            <Card.Text>
+                                {faculty.about.substring(0, 100)}
+                            </Card.Text>
+                            <Link
+                                    to={`/spanish/faculty/${faculty._id}`}
+                                    className="btn btn-raised btn-primary btn-sm mb-4 ml-5"
+                                >
+                                    Lee mas
+                                </Link>
+                        </Card.Body>
+                        </Card>
+                    </div>
                     );
                 })}
             </div>
@@ -231,13 +215,15 @@ class Faculty extends Component {
     };
 
     render() {
-        const { user, faculties, searched, spanishPage, englishPage, searchedFaculty, error } = this.state;
+        const { user, faculties, searched, spanishPage, englishPage, khmerPage, searchedFaculty, error } = this.state;
 
         if(spanishPage) {
             return <Redirect to={`/spanish/faculty`} />
          } else if (englishPage) {
              return <Redirect to={'/faculty'} />
-         }
+         } else if (khmerPage) {
+            return <Redirect to={'/khmer/faculty'} />
+        }
 
         if (searched) { return <Redirect to={`faculty/${searchedFaculty._id}`}/> } 
 

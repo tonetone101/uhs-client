@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { list, read, remove  } from "./apiStudent";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../../auth";
+import { ListGroup} from 'react-bootstrap';
+
 
 
 class Links extends Component {
@@ -78,9 +80,8 @@ class Links extends Component {
                         {links.reverse().map((link,  i) => (
                         
                             <div key={i}>
-                              
-                                <ul>
-                                    <li>
+                                <ListGroup variant="flush">
+                                    <ListGroup.Item> 
                                         <Link onClick={() => { 
                                             window.open(`http://${link.url}`) 
                                             }}  
@@ -92,9 +93,10 @@ class Links extends Component {
                                                 <Link to={`/link/${link._id}`} className='ml-2 text-danger'>view</Link>
                                             ) : (null)
                                         }
-                                        
-                                    </li>
-                                </ul>
+                                    </ListGroup.Item>
+                                    <ListGroup.Item></ListGroup.Item>
+                                </ListGroup>
+                          
                             </div>
                         ))}
                          

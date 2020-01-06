@@ -79,6 +79,15 @@ class EditCarousel extends Component {
 
     editCarouselForm = (caption1, missionStatement) => (
         <form className='container'>
+             <div className="form-group">
+                <label className="text-muted">បឋមកថា</label>
+                <input
+                    onChange={this.handleChange("caption1")}
+                    type="text"
+                    className="form-control"
+                    value={caption1}
+                />
+            </div>
 
             <div className="form-group">
                 <label className="text-muted">ស្ថានភាពបេសកកម្ម</label>
@@ -125,7 +134,7 @@ class EditCarousel extends Component {
                     }
 
 
-                        {this.editCarouselForm(id, missionStatement)}
+                        {this.editCarouselForm(caption1, missionStatement)}
              
             </div>
         )

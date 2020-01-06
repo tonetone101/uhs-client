@@ -18,7 +18,8 @@ class Bully extends Component {
             loading: false,
             redirectToProfile: false,
             spanishPage: false,
-            englishPage: false
+            englishPage: false,
+            khmerPage: false
         };
     }
 
@@ -35,11 +36,15 @@ class Bully extends Component {
     }
 
     translateSpanish = () => {
-        this.setState({spanishPage: true})
+        this.setState({spanishPage: true, englishPage: false, khmerPage: false})
     }
 
     translateEnglish = () => {
-        this.setState({englishPage: true})
+        this.setState({englishPage: true, spanishPage: false, khmerPage: false})
+    }
+
+    translateKhmer = () => {
+        this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
     renderTopHeader = () => {
@@ -52,7 +57,7 @@ class Bully extends Component {
                     <DropdownButton id="dropdown-basic-button" title="Traductora"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item ><a >Cambodian</a>
+                                <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item><a>Hmong</a></Dropdown.Item>
 
@@ -141,14 +146,15 @@ class Bully extends Component {
 
     
     render() {
-        const {spanishPage, englishPage } = this.state;
+        const {spanishPage, englishPage, khmerPage } = this.state;
 
         if(spanishPage) {
             return <Redirect to={`/spanish/bully`} />
          } else if (englishPage) {
              return <Redirect to={'/bully'} />
-         }
-
+         } else if (khmerPage) {
+            return <Redirect to={'/khmer/bully'} />
+        }
         return (
             <div>
                 {this.renderTopHeader()}

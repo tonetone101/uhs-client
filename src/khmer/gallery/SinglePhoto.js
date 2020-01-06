@@ -50,8 +50,8 @@ class SinglePhoto extends Component {
         : '';
 
         return (
-                <div  className='row'>
-                     <div className='col-md-6 mt-5'>
+                <div  >
+                     <div className=' mt-5'>
                         <img 
                             src={photoUrl}
                             alt=''
@@ -63,16 +63,16 @@ class SinglePhoto extends Component {
                         />
                    </div>
 
-                    <div className='col-md-6 mt-5'>
-                        <p className="card-text">
+                    
+                        <p >
                             {image.caption}
                         </p>
-                    </div>
+                   
 
-                    <div className='row'>
+                    <div >
                         <Link
                             to={`/khmer/images`}
-                            className="btn btn-raised btn-primary btn-sm "
+                            className="btn btn-raised btn-primary btn-sm mb-2"
                             style={{marginLeft: '30px'}}
                         >
                             ត្រឡប់ទៅវិចិត្រសាលវិញ
@@ -111,7 +111,12 @@ class SinglePhoto extends Component {
          }
 
         return (
-            <div>
+            <div className='text-center'>
+                 <div className='mt-5 container' style={{borderBottom: 'solid black 1px'}}>
+                    <h2>
+                    ពេលចាប់បាន
+                    </h2>
+                </div>
                            <div className='container'>
                                 {!image ? ( 
                                         <div className='jumbotron text-center '>

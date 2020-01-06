@@ -4,6 +4,7 @@ import {singleCarousel, update, list} from './apiCarousel'
 import {Link, Redirect} from 'react-router-dom'
 import {signout, isAuthenticated} from '../../auth'
 import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
+import {Animated} from 'react-animated-css'
 
 class Carol extends Component {
     state = {
@@ -175,7 +176,7 @@ class Carol extends Component {
             <div >
                 
            
-                <Carousel className='container'>
+                <Carousel>
                     <Carousel.Item>
                         <img
                         // style={{ height: "350px", width: "300px" }}
@@ -251,34 +252,39 @@ class Carol extends Component {
                                 <h2>កំពុងផ្ទុក....</h2>
                             </div>
                             ) : (
-                                
                                 this.renderCarousel(carousel)
                                
                             )
+                        } 
+                    <div  id='stats' style={{height: '100px', borderBottom: 'solid black 1px'}}>
+                                <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{color:'white'}} >
+                                    <h4  >{carousel.caption1}</h4>
+                                </Animated>
+                                <div className='container'>
+                                        <h5 style={{color:'white', marginTop: '10px'}} className='mb-5'>{carousel.missionStatement}</h5>
+                                       
+                                </div>                          
+                    </div>
+                    
+                </div>
+                <div>                       
+                    <div className='text-center' >
+                        {
+                            isAuthenticated() && isAuthenticated().user.role === 'admin' && (
+                                <Link to={`/khmer/edit/carousel/${carousel._id}`} className='text-center btn btn-primary mt-4 mb-4'>ធ្វើបច្ចុប្បន្នភាព</Link>
+                            )
                         }
-                    <div>    
+                    </div>
                                         
+                        <div className='text-center'>
                         <img 
-                        style={{ height: "300px", width: "auto" }}
-                        className=""
-                        src={require("../../images/uhsStat.png")}
-                        alt="Second slide" 
-                        
-                        />
-                    </div>
-                        <div className=' text-center mt-5 mb-5' style={{color: 'black'}}> <div className='container'>
-                            <p>{carousel.missionStatement}</p>
+                                            style={{ height: "300px", width: "auto", border: 'solid blue 1px' }}
+                                            className="mt-4 "
+                                            src={require("../../images/uhsStat.png")}
+                                            alt="Second slide" 
+                                            
+                                        />   
                         </div>
-                    </div>
-                            <div >
-                            {
-                                isAuthenticated() && isAuthenticated().user.role === 'admin' && (
-                                    <Link to={`/khmer/edit/carousel/${carousel._id}`} className='text-center btn btn-primary mt-4 mb-4'>ធ្វើបច្ចុប្បន្នភាព
-                                    </Link>
-                                )
-                            }
-                            </div>
-                            <hr/>
             
                         <footer >
                             
@@ -295,6 +301,7 @@ class Carol extends Component {
                                 </div>
                                 </div>
                         </footer> 
+                        
                 </div>
             </div>
         )

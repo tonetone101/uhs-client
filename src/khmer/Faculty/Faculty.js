@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { list, read } from "./apiFaculty";
 import { Link, Redirect } from "react-router-dom";
 import {isAuthenticated, signout} from '../../auth'
-import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Card, Dropdown, DropdownButton} from 'react-bootstrap';
 
 class Faculty extends Component {
     constructor() {
@@ -189,48 +189,27 @@ class Faculty extends Component {
                         : ''
                         
                     return (
-                        <div  className="card col-md-6 mb-4" key={i}>
-                            <div  >
-                                <br />
-
-                                <div className="card-text column mr-5">
-                                    <p >
-                                    ចំណងជើងមហាវិទ្យាល័យ: {faculty.title.substring(0, 100)}{' '}
-                                    </p>  
-                                    
-                                    {/* <p >
-                                       Date : {event.date.substring(0, 100)}{' '}
-                                    </p>   */}
-
-                                    {/* <p >
-                                       Time: {event.time.substring(0, 100)}{' '}
-                                    </p>  */}
-
-                                     <p >
-                                     នាមខ្លួន: {faculty.name.substring(0, 100)}{' '}
-                                    </p>      
-
-                                    <p >
-                                    អំពី: {faculty.about.substring(0, 100)}{' '}
-                                    </p>           
-                                </div>
-                                                       
-                                <div className='column'>
-                                    <img
-                                        src={facultyPhoto}
-                                        className="img-thunbnail mb-3"
-                                        style={{ height: "200px", width: "300px" }}
-                                    />
-                                
-                                    <Link
+                        <div  className='col-md-4' key={i}>
+                            <Card style={{ width: '18rem' }}>
+                            <Card.Img variant="top" src={facultyPhoto} />
+                            <Card.Body>
+                                <Card.Title>{faculty.name.substring(0, 100)}</Card.Title>
+                                <Card.Text>
+                                    {faculty.title.substring(0, 100)}
+                                </Card.Text>
+                                <Card.Text>
+                                    {faculty.about.substring(0, 100)}
+                                </Card.Text>
+                                <Link
                                         to={`/khmer/faculty/${faculty._id}`}
                                         className="btn btn-raised btn-primary btn-sm mb-4 ml-5"
                                     >
                                         សូមអានបន្ថែម
                                     </Link>
-                                </div>
-                            </div>
+                            </Card.Body>
+                            </Card>
                         </div>
+                        
                     );
                 })}
             </div>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { list, read } from "./apiPhoto";
 import { Link, Redirect } from "react-router-dom";
 import {isAuthenticated, signout} from '../../auth'
-import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Dropdown, DropdownButton, Image} from 'react-bootstrap';
 
 
 
@@ -15,7 +15,8 @@ class Photo extends Component {
             page: 1,
             error: '',
             spanishPage: false,
-            englishPage: false
+            englishPage: false,
+            khmerPage: false
         };
     }
 
@@ -45,11 +46,15 @@ class Photo extends Component {
     }
 
     translateSpanish = () => {
-        this.setState({spanishPage: true, englishPage: false})
+        this.setState({spanishPage: true, englishPage: false, khmerPage: false})
     }
 
     translateEnglish = () => {
-        this.setState({englishPage: true, spanishPage: false})
+        this.setState({englishPage: true, spanishPage: false, khmerPage: false})
+    }
+
+    translateKhmer = () => {
+        this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
     renderTopHeader = () => {
@@ -62,7 +67,7 @@ class Photo extends Component {
                     <DropdownButton id="dropdown-basic-button" title="Translator"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item ><a >Cambodian</a>
+                                <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item><a>Hmong</a></Dropdown.Item>
 
@@ -162,40 +167,18 @@ class Photo extends Component {
                         : ''
                         
                     return (
-                        <div  className="card col-md-6 mb-4" key={i}>
-                            <div  >
-                                <br />
-
-                                <div className="card-text column mr-5">
-                                    <p >
-                                        {image.caption.substring(0, 100)}{' '}
-                                    </p>  
-                                    
-                                    {/* <p >
-                                       Date : {event.date.substring(0, 100)}{' '}
-                                    </p>   */}
-
-                                    {/* <p >
-                                       Time: {event.time.substring(0, 100)}{' '}
-                                    </p>  */}
-          
-                                </div>
-                                                       
-                                <div className='column'>
-                                    <img
-                                        src={imagePhoto}
-                                        className="img-thunbnail mb-3"
-                                        style={{ height: "200px", width: "300px" }}
-                                    />
-                                
-                                    <Link
-                                        to={`/image/${image._id}`}
-                                        className="btn btn-raised btn-primary btn-sm mb-4 ml-5"
-                                    >
-                                        View
-                                    </Link>
-                                </div>
-                            </div>
+                        <div  className="col-md-4 mb-4" key={i}>
+                            <Image src={imagePhoto} fluid />
+                            <p >
+                                {image.caption.substring(0, 100)}{' '}
+                            </p> 
+                           
+                            <Link
+                                to={`/image/${image._id}`}
+                                className="btn btn-raised btn-primary btn-sm mb-4 "
+                            >
+                                View
+                            </Link>
                         </div>
                     );
                 })}
@@ -204,12 +187,14 @@ class Photo extends Component {
     };
 
     render() {
-        const { user, images, error, spanishPage, englishPage } = this.state;
+        const { user, images, error, spanishPage, khmerPage, englishPage } = this.state;
         if(spanishPage) {
             return <Redirect to={`/spanish/images`} />
          } else if (englishPage) {
              return <Redirect to={'/images'} />
-         } 
+         } else if (khmerPage) {
+            return <Redirect to={'/khmer/images'} />
+        } 
 
         return (
             <div>

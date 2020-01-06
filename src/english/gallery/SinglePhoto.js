@@ -50,53 +50,53 @@ class SinglePhoto extends Component {
         : '';
 
         return (
-                <div  className='row'>
-                     <div className='col-md-6 mt-5'>
+                <div className='text-center'>
+                    
+                     <div className='mt-5'>
                         <img 
                             src={photoUrl}
                             alt=''
                             onError={i =>
                                 (i.target.src = ``)
                             }
-                            className="img-thunbnail mb-3 ml-50"
+                            className="img-thunbnail "
                             style={{height: '500px', width: '500px', objectFit: 'cover', borderRadius: '10px'}}
                         />
-                   </div>
+                        <p>{image.caption}</p>
 
-                    <div className='col-md-6 mt-5'>
-                        <p className="card-text">
-                            {image.caption}
-                        </p>
-                    </div>
+                        <div className=' text-center'>
+                                <Link
+                                    to={`/images`}
+                                    className="btn btn-raised btn-primary btn-sm mb-2"
+                                    style={{marginLeft: '30px'}}
+                                >
+                                    Back to gallery
+                                </Link>
 
-                    <div className='row'>
-                        <Link
-                            to={`/images`}
-                            className="btn btn-raised btn-primary btn-sm "
-                            style={{marginLeft: '30px'}}
-                        >
-                            Back to gallery
-                        </Link>
-
-                        {isAuthenticated().user && isAuthenticated().user.role === 'admin' && (
-                            <div >
-                                <div >
-                                    <Link
-                                        to={`/edit/image/${image._id}`}
-                                        className='btn btn-raised btn-warning ml-3'
-                                    >
-                                        Edit Photo
-                                    </Link>
-                                    <button
-                                        onClick={this.deleteConfirm}
-                                        className='btn btn-raised btn-danger ml-3'
-                                    >
-                                        Delete 
-                                    </button>
-                                </div>
+                                {isAuthenticated().user && isAuthenticated().user.role === 'admin' && (
+                                    <div >
+                                        <div >
+                                            <Link
+                                                to={`/edit/image/${image._id}`}
+                                                className='btn btn-raised btn-warning ml-3'
+                                            >
+                                                Edit Photo
+                                            </Link>
+                                            <button
+                                                onClick={this.deleteConfirm}
+                                                className='btn btn-raised btn-danger ml-3'
+                                            >
+                                                Delete 
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </div>
+                        </div>
+
+                   
+
+                  
                 </div>
         );
     }
@@ -111,7 +111,12 @@ class SinglePhoto extends Component {
          }
 
         return (
-            <div>
+            <div className='text-center'>
+                <div className='mt-5 container' style={{borderBottom: 'solid black 1px'}}>
+                    <h2>
+                        A Captured Moment
+                    </h2>
+                </div>
                            <div className='container'>
                                 {!image ? ( 
                                         <div className='jumbotron text-center '>

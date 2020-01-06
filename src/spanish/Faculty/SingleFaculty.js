@@ -70,14 +70,12 @@ class SingleFaculty extends Component {
                    </div>
 
                     <div className='col-md-6 mt-5'>
-                        <p className="card-text">
-                            Título de la facultad: {faculty.title}
+                        <p style={{color: 'black'}} className="card-text">
+                           {faculty.title}
                         </p>
-                        <p className="card-text">
-                            Nombre: {faculty.name}
-                        </p>
-                        <p className="card-text">
-                            Acerca de: {faculty.about}
+    
+                        <p style={{color: 'black'}} className="card-text">
+                           {faculty.about}
                         </p>
                     </div>
 
@@ -124,7 +122,10 @@ class SingleFaculty extends Component {
 
         return (
             <div>
-                           <div className='container'>
+                           <div className='container mt-5'>
+                                <div style={{borderBottom: 'solid black 1px'}}>
+                                    <h3 style={{color: 'black'}}>{faculty.name}</h3>
+                                </div>
                                 {!faculty ? ( 
                                         <div className='jumbotron text-center '>
                                             <h2>Cargando....</h2>

@@ -19,7 +19,8 @@ class GenderPolicy extends Component {
             loading: false,
             redirectToProfile: false,
             spanishPage: false,
-            englishPage: false
+            englishPage: false,
+            khmerPage: false
         };
     }
 
@@ -36,11 +37,15 @@ class GenderPolicy extends Component {
     }
 
     translateSpanish = () => {
-        this.setState({spanishPage: true, englishPage: false})
+        this.setState({spanishPage: true, englishPage: false, khmerPage: false})
     }
 
     translateEnglish = () => {
-        this.setState({englishPage: true, spanishPage: false})
+        this.setState({englishPage: true, spanishPage: false, khmerPage: false})
+    }
+
+    translateKhmer = () => {
+        this.setState({khmerPage: true, spanishPage: false, englishPage: false,})
     }
 
     renderTopHeader = () => {
@@ -50,10 +55,10 @@ class GenderPolicy extends Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto " >
-                    <DropdownButton id="dropdown-basic-button" title="Translator"  >
+                    <DropdownButton id="dropdown-basic-button" title="translator"  >
                                 <Dropdown.Item ><a onClick={this.translateSpanish}>Spanish</a>
                                 </Dropdown.Item>
-                                <Dropdown.Item ><a >Cambodian</a>
+                                <Dropdown.Item ><a onClick={this.translateKhmer}>Cambodian</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item><a>Hmong</a></Dropdown.Item>
 
@@ -143,14 +148,16 @@ class GenderPolicy extends Component {
     
     render() {
         const {
-            spanishPage, englishPage
+            spanishPage, englishPage, khmerPage
         } = this.state;
 
         if(spanishPage) {
             return <Redirect to={`/spanish/genderpolicy`} />
          } else if (englishPage) {
              return <Redirect to={'/genderpolicy'} />
-         } 
+         } else if (khmerPage) {
+            return <Redirect to={'/khmer/genderpolicy'} />
+        } 
 
         return (
             <div>
